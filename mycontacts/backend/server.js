@@ -22,9 +22,12 @@ connection.once('open', () => {
 })
 
 //Hello world from the server!
-app.use("/", (req, res) => {
-    res.send("Hello World!");
-});
+// app.use("/", (req, res) => {
+//     res.send("Hello from the server!");
+// });
+
+const contactsRouter = require('./routes/contacts');
+app.use('/contacts', contactsRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
