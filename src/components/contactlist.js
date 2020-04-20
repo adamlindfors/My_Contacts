@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { connect } from "react-redux";
+import { getContacts, deleteContact } from "../actions/contactActions";
+import PropTypes from "prop-types";
 
 //Contact component. Maybe put in its own file.
 //Props = contact and deleteContact
@@ -26,40 +28,21 @@ const Contact = (props) => (
 );
 
 class ContactList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { contacts: [] };
-  }
-
   componentDidMount() {
-    axios
-      .get("http://localhost:5000/contacts/")
-      .then((response) => {
-        this.setState({ contacts: response.data });
-        //test
-        console.log(this.state.contacts);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.props.getContacts();
   }
 
-  deleteContact = (id) => {
-    axios.delete("http://localhost:5000/contacts/" + id).then((response) => {
-      console.log(response.data);
-    });
-
-    this.setState({
-      contacts: this.state.contacts.filter((del) => del._id !== id),
-    });
+  onDeleteContact = (id) => {
+    this.props.deleteContact(id);
   };
 
   contactList = () => {
-    return this.state.contacts.map((currentContact) => {
+    console.log(this.props.contact);
+    return this.props.contact.contact.contacts.map((currentContact) => {
       return (
         <Contact
           contact={currentContact}
-          deleteContact={this.deleteContact}
+          deleteContact={this.onDeleteContact}
           key={currentContact._id}
         />
       );
@@ -86,4 +69,16 @@ class ContactList extends Component {
   }
 }
 
-export default ContactList;
+ContactList.propTypes = {
+  getContacts: PropTypes.func.isRequired,
+  deleteContact: PropTypes.func.isRequired,
+  contact: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  contact: state,
+});
+
+export default connect(mapStateToProps, { getContacts, deleteContact })(
+  ContactList
+);
