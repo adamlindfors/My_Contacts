@@ -6,18 +6,22 @@ import Navbar from "./components/navbar";
 import ContactList from "./components/contactlist";
 import EditContact from "./components/edit-contact";
 import CreateContact from "./components/create-contact";
+import { Provider } from "react-redux";
+import store from "./store";
 
 function App() {
   return (
-    <Router>
-      <div className="container">
-        <Navbar />
-        <br />
-        <Route path="/" exact component={ContactList} />
-        <Route path="/edit/:id" component={EditContact} />
-        <Route path="/create" component={CreateContact} />
-      </div>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <div className="container">
+          <Navbar />
+          <br />
+          <Route path="/" exact component={ContactList} />
+          <Route path="/edit/:id" component={EditContact} />
+          <Route path="/create" component={CreateContact} />
+        </div>
+      </Router>
+    </Provider>
   );
 }
 

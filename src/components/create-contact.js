@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import axios from "axios";
+import { addContact } from "../actions/contactActions";
+import { connect } from "react-redux";
 
 class CreateContact extends Component {
   constructor(props) {
@@ -34,20 +35,17 @@ class CreateContact extends Component {
     e.preventDefault();
 
     //Kan vi inte bara slänga in this.state direkt i .post() ?
-    const contact = {
+    const newContact = {
       name: this.state.name,
       address: this.state.address,
       phoneNumber: this.state.phoneNumber,
     };
 
-    console.log(contact);
-
-    axios
-      .post("http://localhost:5000/contacts/add", contact)
-      .then((res) => console.log(res.data));
+    this.props.addContact(newContact);
+    console.log(this.props.contact);
 
     //fult?
-    window.location = "/";
+    //window.location = "/";
   };
 
   render() {
@@ -97,4 +95,8 @@ class CreateContact extends Component {
   }
 }
 
-export default CreateContact;
+const mapStateToProps = (state) => ({
+  contact: state,
+});
+
+export default connect(mapStateToProps, { addContact })(CreateContact);
