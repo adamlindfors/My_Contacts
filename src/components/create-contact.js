@@ -3,15 +3,11 @@ import { addContact } from "../actions/contactActions";
 import { connect } from "react-redux";
 
 class CreateContact extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      name: "",
-      address: "",
-      phoneNumber: 0,
-    };
-  }
+  state = {
+    name: "",
+    address: "",
+    phoneNumber: 0,
+  };
 
   onChangeName = (e) => {
     this.setState({
@@ -34,7 +30,6 @@ class CreateContact extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    //Kan vi inte bara slänga in this.state direkt i .post() ?
     const newContact = {
       name: this.state.name,
       address: this.state.address,
@@ -42,10 +37,8 @@ class CreateContact extends Component {
     };
 
     this.props.addContact(newContact);
-    console.log(this.props.contact);
 
-    //fult?
-    //window.location = "/";
+    window.location = "/";
   };
 
   render() {

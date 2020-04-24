@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { getContacts, deleteContact } from "../actions/contactActions";
 import PropTypes from "prop-types";
 
-//Contact component. Maybe put in its own file.
 //Props = contact and deleteContact
 //key = contactID
 const Contact = (props) => (
@@ -37,8 +36,7 @@ class ContactList extends Component {
   };
 
   contactList = () => {
-    console.log(this.props.contact);
-    return this.props.contact.contact.contacts.map((currentContact) => {
+    return this.props.contactReducer.contacts.map((currentContact) => {
       return (
         <Contact
           contact={currentContact}
@@ -72,13 +70,14 @@ class ContactList extends Component {
 ContactList.propTypes = {
   getContacts: PropTypes.func.isRequired,
   deleteContact: PropTypes.func.isRequired,
-  contact: PropTypes.object.isRequired,
+  contactReducer: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  contact: state,
+  contactReducer: state.contactReducer,
 });
 
+//Connect component to the store
 export default connect(mapStateToProps, { getContacts, deleteContact })(
   ContactList
 );

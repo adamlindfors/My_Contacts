@@ -14,7 +14,7 @@ class EditContact extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/contacts/" + this.props.match.params.id)
+      .get("/contacts/" + this.props.match.params.id)
       .then((response) => {
         this.setState({
           name: response.data.name,
@@ -55,10 +55,7 @@ class EditContact extends Component {
     };
 
     axios
-      .post(
-        "http://localhost:5000/contacts/update/" + this.props.match.params.id,
-        contact
-      )
+      .post("/contacts/update/" + this.props.match.params.id, contact)
       .then((res) => console.log(res.data));
 
     window.location = "/";

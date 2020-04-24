@@ -18,6 +18,7 @@ export default function (state = initialState, action) {
         contacts: action.payload,
         loading: false,
       };
+
     case DELETE_CONTACT:
       return {
         ...state,
@@ -31,11 +32,13 @@ export default function (state = initialState, action) {
         ...state,
         contacts: [action.payload, ...state.contacts],
       };
+
     case CONTACTS_LOADING:
       return {
         ...state,
         loading: true,
       };
+
     default:
       return state;
   }
