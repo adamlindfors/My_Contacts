@@ -1,4 +1,4 @@
-# TDDD27_2020_MyContacts 
+# TDDD27_2020_MyContacts 📙
 
 MyContacts is a website for storing and managing your contacts. This project is a part of the course TDDD27 - Advanced Web Programming at Link�ping University.
 
@@ -21,7 +21,13 @@ We will also use:
 * [Axios](https://github.com/axios/axios) - Promise based HTTP client for the browser and node.js
 * [Okta](https://www.google.com/search?q=okta&oq=okta&aqs=chrome..69i57j35i39l2j0j69i60l4.366j0j4&sourceid=chrome&ie=UTF-8) - For user authentication (Might be changed later in the process)
 
-### Authors
+### Get started 🚀
+
+1. Npm install
+2. Npm run install-backend
+3. npm run dev
+
+### Authors 
 Adam Moren - adamo472 | Adam Lindfors - adali414
 
 
