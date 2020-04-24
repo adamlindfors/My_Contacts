@@ -1,6 +1,6 @@
 # TDDD27_2020_MyContacts 📙
 
-MyContacts is a website for storing and managing your contacts. This project is a part of the course TDDD27 - Advanced Web Programming at Link�ping University.
+MyContacts is a website for storing and managing your contacts. This project is a part of the course TDDD27 - Advanced Web Programming at [Linkoping University](https://liu.se/en).
 
 ### Functional specification
 
