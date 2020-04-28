@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { withAuth } from "@okta/okta-react";
 import Contactlist from "./Contactlist";
+import User from "./User";
 
 export default withAuth(
   class Home extends Component {
@@ -35,6 +35,9 @@ export default withAuth(
 
       const mainContent = this.state.authenticated ? (
         <div>
+          <h1>
+            <User />
+          </h1>
           <Contactlist />
           <button className="btn btn-light btn-lg" onClick={this.logout}>
             Logout
@@ -43,6 +46,7 @@ export default withAuth(
       ) : (
         <div>
           <div>
+            <h1 className="display-4">My Contacts</h1>
             <p className="lead">
               My Contacts helps you store important info about your family and
               friends.
@@ -59,12 +63,7 @@ export default withAuth(
         </div>
       );
 
-      return (
-        <div className="jumbotron">
-          <h1 className="display-4">My Contacts</h1>
-          {mainContent}
-        </div>
-      );
+      return <div className="jumbotron">{mainContent}</div>;
     }
   }
 );

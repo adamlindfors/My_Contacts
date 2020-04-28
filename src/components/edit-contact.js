@@ -2,15 +2,11 @@ import React, { Component } from "react";
 import axios from "axios";
 
 class EditContact extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      name: "",
-      address: "",
-      phoneNumber: 0,
-    };
-  }
+  state = {
+    name: "",
+    address: "",
+    phoneNumber: 0,
+  };
 
   componentDidMount() {
     axios
@@ -47,15 +43,8 @@ class EditContact extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-
-    const contact = {
-      name: this.state.name,
-      address: this.state.address,
-      phoneNumber: this.state.phoneNumber,
-    };
-
     axios
-      .post("/contacts/update/" + this.props.match.params.id, contact)
+      .post("/contacts/update/" + this.props.match.params.id, this.state)
       .then((res) => console.log(res.data));
 
     window.location = "/";
