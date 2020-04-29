@@ -1,57 +1,82 @@
 const router = require("express").Router();
 let Contact = require("../models/contacts.model");
+let User = require("../models/user.model");
 
-//Get request for getting all cotnacts
+//Get the contacts of the logged in user
 router.route("/").get((req, res) => {
-  //Use the Contact model to find all the contacts that are in the DB
-  Contact.find()
-    .then((contacts) => res.json(contacts))
+  //change 123 to the req-tokenID
+  User.findOne({ tokenID: "123" })
+    .then((userData) => {
+      if (userData) res.json(userData.contacts);
+      else {
+        const newUser = new User({ tokenID: "123" });
+        newUser.save().then(() => res.json([]));
+      }
+    })
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-//Post request for adding a new contact
+//Add a new contact
 router.route("/add").post((req, res) => {
   const name = req.body.name;
   const address = req.body.address;
   const phoneNumber = Number(req.body.phoneNumber);
 
-  const newContact = new Contact({
+  const newContact = {
     name,
     address,
     phoneNumber,
+  };
+
+  User.findOne({ tokenID: "123" }).then((user) => {
+    if (user) user.contacts.push(newContact);
+    user
+      .save()
+      .then(() => res.json("Contact updated!"))
+      .catch((err) => res.status(400).json("Error: " + err));
   });
-
-  newContact
-    .save()
-    .then(() => res.json("Contact added!"))
-    .catch((err) => res.status(400).json("Error: " + err));
 });
 
+//GET contact by ID
 router.route("/:id").get((req, res) => {
-  Contact.findById(req.params.id)
-    .then((Contact) => res.json(Contact))
-    .catch((err) => res.status(400).json("Error: " + err));
+  User.findOne({ tokenID: "123" }).then((user) => {
+    if (user) {
+      contact = user.contacts.filter((contact) => contact._id == req.params.id);
+      //console.log(contact[0]);
+      res.json(contact[0]);
+    }
+  });
 });
 
+//Delete contact by ID
 router.route("/:id").delete((req, res) => {
-  Contact.findByIdAndDelete(req.params.id)
-    .then(() => res.json("Contact deleted."))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-router.route("/update/:id").post((req, res) => {
-  Contact.findById(req.params.id)
-    .then((contact) => {
-      contact.name = req.body.name;
-      contact.address = req.body.address;
-      contact.phoneNumber = Number(req.body.phoneNumber);
-
-      contact
+  User.findOne({ tokenID: "123" }).then((user) => {
+    if (user) {
+      contact = user.contacts.filter((contact) => contact._id == req.params.id);
+      user.contacts.pop(contact);
+      user
         .save()
         .then(() => res.json("Contact updated!"))
         .catch((err) => res.status(400).json("Error: " + err));
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
+    }
+  });
+});
+
+//Edit contact
+router.route("/update/:id").post((req, res) => {
+  User.findOne({ tokenID: "123" }).then((user) => {
+    if (user) {
+      contact = user.contacts.filter((contact) => contact._id == req.params.id);
+      contact[0].name = req.body.name;
+      contact[0].address = req.body.address;
+      contact[0].phoneNumber = req.body.phoneNumber;
+
+      user
+        .save()
+        .then(() => res.json("Contact updated!"))
+        .catch((err) => res.status(400).json("Error: " + err));
+    }
+  });
 });
 
 //Export the router

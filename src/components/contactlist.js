@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 import { getContacts, deleteContact } from "../actions/contactActions";
 import PropTypes from "prop-types";
 
-//Props = contact and deleteContact
-//key = contactID
 const Contact = (props) => (
   <tr>
     <td>{props.contact.name}</td>
@@ -28,6 +26,7 @@ const Contact = (props) => (
 
 class ContactList extends Component {
   componentDidMount() {
+    //Fixa så authenticated user skickas
     this.props.getContacts();
   }
 

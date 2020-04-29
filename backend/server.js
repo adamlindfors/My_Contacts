@@ -24,11 +24,6 @@ connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
-//Hello world from the server!
-// app.use("/", (req, res) => {
-//   res.send("Hello from the server!");
-// });
-
 const contactsRouter = require("./routes/contacts");
 app.use("/contacts", contactsRouter);
 
