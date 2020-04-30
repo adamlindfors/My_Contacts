@@ -26,12 +26,16 @@ const Contact = (props) => (
 
 class ContactList extends Component {
   componentDidMount() {
-    //Fixa så authenticated user skickas
-    this.props.getContacts();
+    this.props.getContacts(
+      JSON.parse(localStorage.getItem("okta-token-storage")).idToken.claims.sub
+    );
   }
 
   onDeleteContact = (id) => {
-    this.props.deleteContact(id);
+    this.props.deleteContact(
+      id,
+      JSON.parse(localStorage.getItem("okta-token-storage")).idToken.claims.sub
+    );
   };
 
   contactList = () => {

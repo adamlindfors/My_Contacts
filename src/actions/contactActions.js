@@ -6,10 +6,10 @@ import {
   CONTACTS_LOADING,
 } from "./types";
 
-export const getContacts = () => (dispatch) => {
+export const getContacts = (idToken) => (dispatch) => {
   dispatch(setContactsLoading());
   axios
-    .get("/contacts/")
+    .get("/contacts/", { params: { idToken: idToken } })
     .then((res) =>
       dispatch({
         type: GET_CONTACTS,
@@ -19,9 +19,9 @@ export const getContacts = () => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const deleteContact = (id) => (dispatch) => {
+export const deleteContact = (id, idToken) => (dispatch) => {
   axios
-    .delete("/contacts/" + id)
+    .delete("/contacts/" + id, { params: { idToken: idToken } })
     .then((res) =>
       dispatch({
         type: DELETE_CONTACT,
@@ -31,9 +31,9 @@ export const deleteContact = (id) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const addContact = (contact) => (dispatch) => {
+export const addContact = (contact, idToken) => (dispatch) => {
   axios
-    .post("/contacts/add", contact)
+    .post("/contacts/add", contact, { params: { idToken: idToken } })
     .then((res) =>
       dispatch({
         type: ADD_CONTACT,

@@ -36,7 +36,10 @@ class CreateContact extends Component {
       phoneNumber: this.state.phoneNumber,
     };
 
-    this.props.addContact(newContact);
+    this.props.addContact(
+      newContact,
+      JSON.parse(localStorage.getItem("okta-token-storage")).idToken.claims.sub
+    );
 
     window.location = "/";
   };
