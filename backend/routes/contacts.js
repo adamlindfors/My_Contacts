@@ -4,11 +4,11 @@ let User = require("../models/user.model");
 
 //Get the contacts of the logged in user
 router.route("/").get((req, res) => {
-  User.findOne({ tokenID: req.query.idToken })
+  User.findOne({ tokenID: req.query.subID })
     .then((userData) => {
       if (userData) res.json(userData.contacts);
       else {
-        const newUser = new User({ tokenID: req.query.idToken });
+        const newUser = new User({ tokenID: req.query.subID });
         newUser.save().then(() => res.json([]));
       }
     })
@@ -27,7 +27,7 @@ router.route("/add").post((req, res) => {
     phoneNumber,
   };
 
-  User.findOne({ tokenID: req.query.idToken }).then((user) => {
+  User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) user.contacts.push(newContact);
     user
       .save()
@@ -38,7 +38,7 @@ router.route("/add").post((req, res) => {
 
 //GET contact by ID
 router.route("/:id").get((req, res) => {
-  User.findOne({ tokenID: req.query.idToken }).then((user) => {
+  User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) {
       contact = user.contacts.filter((contact) => contact._id == req.params.id);
       //console.log(contact[0]);
@@ -49,7 +49,7 @@ router.route("/:id").get((req, res) => {
 
 //Delete contact by ID
 router.route("/:id").delete((req, res) => {
-  User.findOne({ tokenID: req.query.idToken }).then((user) => {
+  User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) {
       contact = user.contacts.filter((contact) => contact._id == req.params.id);
       user.contacts.pop(contact);
@@ -63,7 +63,7 @@ router.route("/:id").delete((req, res) => {
 
 //Edit contact
 router.route("/update/:id").post((req, res) => {
-  User.findOne({ tokenID: req.query.idToken }).then((user) => {
+  User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) {
       contact = user.contacts.filter((contact) => contact._id == req.params.id);
       contact[0].name = req.body.name;

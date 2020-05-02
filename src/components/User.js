@@ -6,10 +6,10 @@ class Staff extends Component {
   };
 
   componentDidMount() {
-    const idToken = JSON.parse(localStorage.getItem("okta-token-storage"));
-    console.log(idToken);
+    const idToken = JSON.parse(localStorage.getItem("okta-token-storage"))
+      .idToken;
     this.setState({
-      Name: idToken.idToken.claims.name,
+      Name: idToken.claims.name,
     });
   }
 
