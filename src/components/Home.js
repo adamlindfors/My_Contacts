@@ -37,9 +37,9 @@ class Home extends Component {
   };
 
   render() {
-    if (this.props.authReducer.subID === null) return null;
+    if (this.props.authReducer.authenticated === null) return null;
 
-    const mainContent = this.props.authReducer.Authenticated ? (
+    const mainContent = this.props.authReducer.subID ? (
       <div>
         <h1>
           <User />
