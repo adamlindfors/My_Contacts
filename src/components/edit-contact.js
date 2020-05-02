@@ -1,30 +1,27 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class EditContact extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      name: "",
-      address: "",
-      phoneNumber: 0,
-    };
-  }
+  state = {
+    name: "",
+    address: "",
+    phoneNumber: 0,
+  };
 
   componentDidMount() {
-    axios
-      .get("/contacts/" + this.props.match.params.id)
-      .then((response) => {
-        this.setState({
-          name: response.data.name,
-          address: response.data.address,
-          phoneNumber: response.data.phoneNumber,
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
+    const contact = this.props.contactReducer.contacts.filter(
+      (contact) => contact._id === this.props.match.params.id
+    );
+    console.log(contact[0]);
+    if (contact[0]) {
+      this.setState({
+        name: contact[0].name,
+        address: contact[0].address,
+        phoneNumber: contact[0].phoneNumber,
       });
+    }
   }
 
   onChangeName = (e) => {
@@ -47,15 +44,12 @@ class EditContact extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-
-    const contact = {
-      name: this.state.name,
-      address: this.state.address,
-      phoneNumber: this.state.phoneNumber,
-    };
-
     axios
-      .post("/contacts/update/" + this.props.match.params.id, contact)
+      .post("/contacts/update/" + this.props.match.params.id, this.state, {
+        params: {
+          subID: this.props.authReducer.subID,
+        },
+      })
       .then((res) => console.log(res.data));
 
     window.location = "/";
@@ -108,4 +102,14 @@ class EditContact extends Component {
   }
 }
 
-export default EditContact;
+EditContact.propTypes = {
+  contactReducer: PropTypes.object.isRequired,
+  authReducer: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  contactReducer: state.contactReducer,
+  authReducer: state.authReducer,
+});
+
+export default connect(mapStateToProps, {})(EditContact);

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { addContact } from "../actions/contactActions";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class CreateContact extends Component {
   state = {
@@ -36,7 +37,7 @@ class CreateContact extends Component {
       phoneNumber: this.state.phoneNumber,
     };
 
-    this.props.addContact(newContact);
+    this.props.addContact(newContact, this.props.authReducer.subID);
 
     window.location = "/";
   };
@@ -88,8 +89,15 @@ class CreateContact extends Component {
   }
 }
 
+CreateContact.propTypes = {
+  addContact: PropTypes.func.isRequired,
+  contactReducer: PropTypes.object.isRequired,
+  authReducer: PropTypes.object.isRequired,
+};
+
 const mapStateToProps = (state) => ({
-  contact: state,
+  contactReducer: state.contactReducer,
+  authReducer: state.authReducer,
 });
 
 export default connect(mapStateToProps, { addContact })(CreateContact);

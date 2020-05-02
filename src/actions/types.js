@@ -1,5 +1,11 @@
-//Keeping our actions constant
+//CONTACT TYPES
 export const GET_CONTACTS = "GET_CONTACTS";
 export const ADD_CONTACT = "ADD_CONTACT";
 export const DELETE_CONTACT = "DELETE_CONTACT";
 export const CONTACTS_LOADING = "CONTACTS_LOADING";
+export const LOGOUT_CONTACTS = "LOGOUT_CONTACTS";
+
+//USER TYPES
+export const USER_LOGIN = "USER_LOGIN";
+export const USER_LOGOUT = "USER_LOGOUT";
+export const SET_AUTH = "SET_AUTH";

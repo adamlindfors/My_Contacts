@@ -1,25 +1,43 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-
-import Navbar from "./components/navbar";
-import ContactList from "./components/contactlist";
-import EditContact from "./components/edit-contact";
-import CreateContact from "./components/create-contact";
+import { Security, SecureRoute, ImplicitCallback } from "@okta/okta-react";
+import Navbar from "./components/Navbar";
+import EditContact from "./components/Edit-contact";
+import CreateContact from "./components/Create-contact";
 import { Provider } from "react-redux";
 import store from "./store";
+import Home from "./components/Home";
+import Login from "./auth/Login";
+
+function onAuthRequired({ history }) {
+  history.push("/login");
+}
 
 function App() {
   return (
     <Provider store={store}>
       <Router>
-        <div className="container">
-          <Navbar />
-          <br />
-          <Route path="/" exact component={ContactList} />
-          <Route path="/edit/:id" component={EditContact} />
-          <Route path="/create" component={CreateContact} />
-        </div>
+        <Security
+          // Fixa en bättre lösning av detta
+          issuer="https://dev-180699.okta.com/oauth2/default"
+          client_id="0oaadg34wgFvicdmZ4x6"
+          redirect_uri={window.location.origin + "/implicit/callback"}
+          onAuthRequired={onAuthRequired}
+        >
+          <div className="container">
+            <Navbar />
+            <br />
+            <Route path="/" exact component={Home} />
+            <SecureRoute path="/edit/:id" component={EditContact} />
+            <SecureRoute path="/create" component={CreateContact} />
+            <Route
+              path="/login"
+              render={() => <Login baseUrl="https://dev-180699.okta.com/" />}
+            />
+            <Route path="/implicit/callback" component={ImplicitCallback} />
+          </div>
+        </Security>
       </Router>
     </Provider>
   );

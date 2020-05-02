@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 import { getContacts, deleteContact } from "../actions/contactActions";
 import PropTypes from "prop-types";
 
-//Props = contact and deleteContact
-//key = contactID
 const Contact = (props) => (
   <tr>
     <td>{props.contact.name}</td>
@@ -28,11 +26,11 @@ const Contact = (props) => (
 
 class ContactList extends Component {
   componentDidMount() {
-    this.props.getContacts();
+    this.props.getContacts(this.props.authReducer.subID);
   }
 
   onDeleteContact = (id) => {
-    this.props.deleteContact(id);
+    this.props.deleteContact(id, this.props.authReducer.subID);
   };
 
   contactList = () => {
@@ -71,10 +69,12 @@ ContactList.propTypes = {
   getContacts: PropTypes.func.isRequired,
   deleteContact: PropTypes.func.isRequired,
   contactReducer: PropTypes.object.isRequired,
+  authReducer: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   contactReducer: state.contactReducer,
+  authReducer: state.authReducer,
 });
 
 //Connect component to the store

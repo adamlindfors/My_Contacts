@@ -4,12 +4,13 @@ import {
   ADD_CONTACT,
   DELETE_CONTACT,
   CONTACTS_LOADING,
+  LOGOUT_CONTACTS,
 } from "./types";
 
-export const getContacts = () => (dispatch) => {
+export const getContacts = (subID) => (dispatch) => {
   dispatch(setContactsLoading());
   axios
-    .get("/contacts/")
+    .get("/contacts/", { params: { subID } })
     .then((res) =>
       dispatch({
         type: GET_CONTACTS,
@@ -19,9 +20,9 @@ export const getContacts = () => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const deleteContact = (id) => (dispatch) => {
+export const deleteContact = (id, subID) => (dispatch) => {
   axios
-    .delete("/contacts/" + id)
+    .delete("/contacts/" + id, { params: { subID } })
     .then((res) =>
       dispatch({
         type: DELETE_CONTACT,
@@ -31,9 +32,9 @@ export const deleteContact = (id) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const addContact = (contact) => (dispatch) => {
+export const addContact = (contact, subID) => (dispatch) => {
   axios
-    .post("/contacts/add", contact)
+    .post("/contacts/add", contact, { params: { subID } })
     .then((res) =>
       dispatch({
         type: ADD_CONTACT,
@@ -47,4 +48,10 @@ export const setContactsLoading = () => {
   return {
     type: CONTACTS_LOADING,
   };
+};
+
+export const logoutContacts = () => (dispatch) => {
+  dispatch({
+    type: LOGOUT_CONTACTS,
+  });
 };

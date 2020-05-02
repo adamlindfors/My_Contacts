@@ -3,6 +3,7 @@ import {
   ADD_CONTACT,
   DELETE_CONTACT,
   CONTACTS_LOADING,
+  LOGOUT_CONTACTS,
 } from "../actions/types";
 
 const initialState = {
@@ -37,6 +38,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: true,
+      };
+
+    case LOGOUT_CONTACTS:
+      return {
+        state: initialState,
       };
 
     default:
