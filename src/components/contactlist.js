@@ -1,27 +1,35 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getContacts, deleteContact } from "../actions/contactActions";
 import PropTypes from "prop-types";
+import {
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  Button,
+  Container,
+  Row,
+  Col,
+} from "reactstrap";
 
 const Contact = (props) => (
-  <tr>
-    <td>{props.contact.name}</td>
-    <td>{props.contact.address}</td>
-    <td>{props.contact.phoneNumber}</td>
-    <td>
-      <Link to={"/edit/" + props.contact._id}>edit</Link> |{" "}
-      {/* Should be a real button */}
-      <a
-        href="#"
-        onClick={() => {
-          props.deleteContact(props.contact._id);
-        }}
-      >
-        delete
-      </a>
-    </td>
-  </tr>
+  <Col xs="3">
+    <Card>
+      <CardImg
+        top
+        width="100%"
+        src="https://img.huffingtonpost.com/asset/5dcc613f1f00009304dee539.jpeg?cache=QaTFuOj2IM&ops=crop_834_777_4651_2994%2Cscalefit_720_noupscale&format=webp"
+        alt="Card image cap"
+      />
+      <CardBody>
+        <CardTitle>{props.contact.name}</CardTitle>
+        <CardText>Some quick example text</CardText>
+        <Button>Button</Button>
+      </CardBody>
+    </Card>
+  </Col>
 );
 
 class ContactList extends Component {
@@ -49,17 +57,10 @@ class ContactList extends Component {
     return (
       <div>
         <h3>Contacts</h3>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>name</th>
-              <th>Address</th>
-              <th>Phone number</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>{this.contactList()}</tbody>
-        </table>
+        <thead className="thead-light"></thead>
+        <Container>
+          <Row>{this.contactList()}</Row>
+        </Container>
       </div>
     );
   }
