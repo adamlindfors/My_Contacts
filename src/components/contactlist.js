@@ -3,6 +3,14 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getContacts, deleteContact } from "../actions/contactActions";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUser,
+  faMapMarkedAlt,
+  faPhoneAlt,
+  faEdit,
+  faTrashAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Contact = (props) => (
   <tr>
@@ -10,15 +18,22 @@ const Contact = (props) => (
     <td>{props.contact.address}</td>
     <td>{props.contact.phoneNumber}</td>
     <td>
-      <Link to={"/edit/" + props.contact._id}>edit</Link> |{" "}
-      {/* Should be a real button */}
+      <Link
+        to={"/edit/" + props.contact._id}
+        style={{ color: "black", textDecoration: "none" }}
+      >
+        {" "}
+        <FontAwesomeIcon icon={faEdit} /> {"  "}
+      </Link>{" "}
+      | {/* Should be a real button */}
       <a
-        href="#"
+        style={{ color: "black", textDecoration: "none" }}
+        href=""
         onClick={() => {
           props.deleteContact(props.contact._id);
         }}
       >
-        delete
+        <FontAwesomeIcon icon={faTrashAlt} /> {"  "}
       </a>
     </td>
   </tr>
@@ -30,7 +45,9 @@ class ContactList extends Component {
   }
 
   onDeleteContact = (id) => {
-    this.props.deleteContact(id, this.props.authReducer.subID);
+    if (window.confirm("Are you sure you wish to delete this item?")) {
+      this.props.deleteContact(id, this.props.authReducer.subID);
+    }
   };
 
   contactList = () => {
@@ -52,9 +69,20 @@ class ContactList extends Component {
         <table className="table">
           <thead className="thead-light">
             <tr>
-              <th>name</th>
-              <th>Address</th>
-              <th>Phone number</th>
+              <th>
+                <FontAwesomeIcon icon={faUser} /> {"  "}
+                Name
+              </th>
+              <th>
+                {" "}
+                <FontAwesomeIcon icon={faMapMarkedAlt} /> {"  "}
+                Address
+              </th>
+              <th>
+                {" "}
+                <FontAwesomeIcon icon={faPhoneAlt} /> {"  "}
+                Phone number
+              </th>
               <th>Actions</th>
             </tr>
           </thead>

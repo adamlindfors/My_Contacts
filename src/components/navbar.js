@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { logoutContacts } from "../actions/contactActions";
 import { userLogin, userLogout } from "../actions/authActions";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 class Navbar extends Component {
   login = async () => {
@@ -12,14 +14,18 @@ class Navbar extends Component {
   };
 
   logout = async () => {
+    await this.props.auth.logout("/");
     this.props.userLogout();
     this.props.logoutContacts();
-    await this.props.auth.logout("/");
   };
 
   render() {
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
+        {/* Försvinner när man loggar in */}
+        {/* <a className="navbar-brand" href="">
+          <img src="Contacts.png" alt="logo" style={{ width: "35px" }} />
+        </a> */}
         <Link to="/" className="navbar-brand">
           My Contacts
         </Link>
@@ -37,7 +43,8 @@ class Navbar extends Component {
           </ul>
           {this.props.authReducer.subID ? (
             <button className="btn btn-dark my-2 my-sm-0" onClick={this.logout}>
-              Logout
+              Logout {"  "}
+              <FontAwesomeIcon icon={faSignOutAlt} />
             </button>
           ) : (
             <div>
@@ -45,13 +52,14 @@ class Navbar extends Component {
                 className="btn btn-dark my-2 my-sm-0"
                 onClick={this.login}
               >
-                Login
+                Sign Up |
               </button>
               <button
                 className="btn btn-dark my-2 my-sm-0"
                 onClick={this.login}
               >
-                Sign Up
+                Login {"  "}
+                <FontAwesomeIcon icon={faSignInAlt} />
               </button>
             </div>
           )}
