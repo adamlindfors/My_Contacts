@@ -45,7 +45,7 @@ class ContactList extends Component {
   }
 
   onDeleteContact = (id) => {
-    if (window.confirm("Are you sure you wish to delete this item?")) {
+    if (window.confirm("Do you want to delete this contact?")) {
       this.props.deleteContact(id, this.props.authReducer.subID);
     }
   };

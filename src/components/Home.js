@@ -66,7 +66,7 @@ class Home extends Component {
       </div>
     );
 
-    return <div className="jumbotron">{mainContent}</div>;
+    return <div className="container-fluid">{mainContent}</div>;
   }
 }
 

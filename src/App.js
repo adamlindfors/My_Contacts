@@ -26,20 +26,24 @@ function App() {
           redirect_uri={window.location.origin + "/implicit/callback"}
           onAuthRequired={onAuthRequired}
         >
-          <div className="container">
+          <div>
             <Navbar />
             <br />
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <SecureRoute path="/edit/:id" component={EditContact} />
-              <SecureRoute path="/create" component={CreateContact} />
-              <Route
-                path="/login"
-                render={() => <Login baseUrl="https://dev-180699.okta.com/" />}
-              />
-              <Route path="/implicit/callback" component={ImplicitCallback} />
-              <Route component={error404} />
-            </Switch>
+            <div className="container">
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <SecureRoute path="/edit/:id" component={EditContact} />
+                <SecureRoute path="/create" component={CreateContact} />
+                <Route
+                  path="/login"
+                  render={() => (
+                    <Login baseUrl="https://dev-180699.okta.com/" />
+                  )}
+                />
+                <Route path="/implicit/callback" component={ImplicitCallback} />
+                <Route component={error404} />
+              </Switch>
+            </div>
           </div>
         </Security>
       </Router>
