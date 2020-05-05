@@ -69,7 +69,7 @@ class Home extends Component {
       </div>
     );
 
-    return <div className="jumbotron">{mainContent}</div>;
+    return mainContent;
   }
 }
 

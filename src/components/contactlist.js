@@ -1,34 +1,36 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { getContacts, deleteContact } from "../actions/contactActions";
 import PropTypes from "prop-types";
 import {
   Card,
   CardImg,
-  CardText,
   CardBody,
   CardTitle,
-  Button,
-  Container,
   Row,
   Col,
+  CardText,
 } from "reactstrap";
 
 const Contact = (props) => (
   <Col xs="3">
-    <Card>
-      <CardImg
-        top
-        width="100%"
-        src="https://img.huffingtonpost.com/asset/5dcc613f1f00009304dee539.jpeg?cache=QaTFuOj2IM&ops=crop_834_777_4651_2994%2Cscalefit_720_noupscale&format=webp"
-        alt="Card image cap"
-      />
-      <CardBody>
-        <CardTitle>{props.contact.name}</CardTitle>
-        <CardText>Some quick example text</CardText>
-        <Button>Button</Button>
-      </CardBody>
-    </Card>
+    <div>
+      <Card>
+        <Link to={"/edit/" + props.contact._id}>
+          <CardImg
+            top
+            width="100%"
+            src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"
+            alt="Card image cap"
+          />
+        </Link>
+        <CardBody>
+          <CardTitle>Name: {props.contact.name}</CardTitle>
+          <CardText>Phonenumber: {props.contact.phoneNumber}</CardText>
+        </CardBody>
+      </Card>
+    </div>
   </Col>
 );
 
@@ -56,11 +58,11 @@ class ContactList extends Component {
   render() {
     return (
       <div>
-        <h3>Contacts</h3>
-        <thead className="thead-light"></thead>
-        <Container>
+        <div className="container">
+          <h3 className="text-center">Contacts</h3>
+
           <Row>{this.contactList()}</Row>
-        </Container>
+        </div>
       </div>
     );
   }
