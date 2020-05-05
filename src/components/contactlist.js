@@ -1,8 +1,17 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { getContacts, deleteContact } from "../actions/contactActions";
 import PropTypes from "prop-types";
+import {
+  Card,
+  CardImg,
+  CardBody,
+  CardTitle,
+  Row,
+  Col,
+  CardText,
+} from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
@@ -12,31 +21,26 @@ import {
   faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
+
 const Contact = (props) => (
-  <tr>
-    <td>{props.contact.name}</td>
-    <td>{props.contact.address}</td>
-    <td>{props.contact.phoneNumber}</td>
-    <td>
-      <Link
-        to={"/edit/" + props.contact._id}
-        style={{ color: "black", textDecoration: "none" }}
-      >
-        {" "}
-        <FontAwesomeIcon icon={faEdit} /> {"  "}
-      </Link>{" "}
-      | {/* Should be a real button */}
-      <a
-        style={{ color: "black", textDecoration: "none" }}
-        href=""
-        onClick={() => {
-          props.deleteContact(props.contact._id);
-        }}
-      >
-        <FontAwesomeIcon icon={faTrashAlt} /> {"  "}
-      </a>
-    </td>
-  </tr>
+  <Col xs="3">
+    <div>
+      <Card>
+        <Link to={"/edit/" + props.contact._id}>
+          <CardImg
+            top
+            width="100%"
+            src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"
+            alt="Card image cap"
+          />
+        </Link>
+        <CardBody>
+          <CardTitle>Name: {props.contact.name}</CardTitle>
+          <CardText>Phonenumber: {props.contact.phoneNumber}</CardText>
+        </CardBody>
+      </Card>
+    </div>
+  </Col>
 );
 
 class ContactList extends Component {
@@ -65,29 +69,11 @@ class ContactList extends Component {
   render() {
     return (
       <div>
-        <h3>Contacts</h3>
-        <table className="table">
-          <thead className="thead-light">
-            <tr>
-              <th>
-                <FontAwesomeIcon icon={faUser} /> {"  "}
-                Name
-              </th>
-              <th>
-                {" "}
-                <FontAwesomeIcon icon={faMapMarkedAlt} /> {"  "}
-                Address
-              </th>
-              <th>
-                {" "}
-                <FontAwesomeIcon icon={faPhoneAlt} /> {"  "}
-                Phone number
-              </th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>{this.contactList()}</tbody>
-        </table>
+        <div className="container">
+          <h3 className="text-center">Contacts</h3>
+
+          <Row>{this.contactList()}</Row>
+        </div>
       </div>
     );
   }
