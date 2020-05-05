@@ -21,7 +21,6 @@ import {
   faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
-
 const Contact = (props) => (
   <Col xs="3">
     <div>
@@ -35,8 +34,17 @@ const Contact = (props) => (
           />
         </Link>
         <CardBody>
-          <CardTitle>Name: {props.contact.name}</CardTitle>
-          <CardText>Phonenumber: {props.contact.phoneNumber}</CardText>
+          <CardTitle>
+            <FontAwesomeIcon icon={faUser} /> {props.contact.name}
+          </CardTitle>
+          <CardText>
+            <FontAwesomeIcon icon={faPhoneAlt} />
+            {props.contact.phoneNumber}
+          </CardText>
+          <CardText>
+            <FontAwesomeIcon icon={faMapMarkedAlt} />
+            {props.contact.address}
+          </CardText>
         </CardBody>
       </Card>
     </div>
