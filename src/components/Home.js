@@ -45,9 +45,6 @@ class Home extends Component {
           <User />
         </h1>
         <Contactlist />
-        <button className="btn btn-light btn-lg" onClick={this.logout}>
-          Logout
-        </button>
       </div>
     ) : (
       <div>
@@ -69,7 +66,7 @@ class Home extends Component {
       </div>
     );
 
-    return mainContent;
+    return <div className="container-fluid">{mainContent}</div>;
   }
 }
 

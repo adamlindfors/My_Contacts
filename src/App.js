@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Security, SecureRoute, ImplicitCallback } from "@okta/okta-react";
 import Navbar from "./components/Navbar";
 import EditContact from "./components/Edit-contact";
@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import Home from "./components/Home";
 import Login from "./auth/Login";
+import error404 from "./components/404";
 
 function onAuthRequired({ history }) {
   history.push("/login");
@@ -25,17 +26,24 @@ function App() {
           redirect_uri={window.location.origin + "/implicit/callback"}
           onAuthRequired={onAuthRequired}
         >
-          <div className="container">
+          <div>
             <Navbar />
             <br />
-            <Route path="/" exact component={Home} />
-            <SecureRoute path="/edit/:id" component={EditContact} />
-            <SecureRoute path="/create" component={CreateContact} />
-            <Route
-              path="/login"
-              render={() => <Login baseUrl="https://dev-180699.okta.com/" />}
-            />
-            <Route path="/implicit/callback" component={ImplicitCallback} />
+            <div className="container">
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <SecureRoute path="/edit/:id" component={EditContact} />
+                <SecureRoute path="/create" component={CreateContact} />
+                <Route
+                  path="/login"
+                  render={() => (
+                    <Login baseUrl="https://dev-180699.okta.com/" />
+                  )}
+                />
+                <Route path="/implicit/callback" component={ImplicitCallback} />
+                <Route component={error404} />
+              </Switch>
+            </div>
           </div>
         </Security>
       </Router>

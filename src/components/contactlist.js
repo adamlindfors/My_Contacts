@@ -12,6 +12,14 @@ import {
   Col,
   CardText,
 } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUser,
+  faMapMarkedAlt,
+  faPhoneAlt,
+  faEdit,
+  faTrashAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Contact = (props) => (
   <Col xs="3">
@@ -26,8 +34,17 @@ const Contact = (props) => (
           />
         </Link>
         <CardBody>
-          <CardTitle>Name: {props.contact.name}</CardTitle>
-          <CardText>Phonenumber: {props.contact.phoneNumber}</CardText>
+          <CardTitle>
+            <FontAwesomeIcon icon={faUser} /> {props.contact.name}
+          </CardTitle>
+          <CardText>
+            <FontAwesomeIcon icon={faPhoneAlt} />
+            {props.contact.phoneNumber}
+          </CardText>
+          <CardText>
+            <FontAwesomeIcon icon={faMapMarkedAlt} />
+            {props.contact.address}
+          </CardText>
         </CardBody>
       </Card>
     </div>
@@ -40,7 +57,9 @@ class ContactList extends Component {
   }
 
   onDeleteContact = (id) => {
-    this.props.deleteContact(id, this.props.authReducer.subID);
+    if (window.confirm("Do you want to delete this contact?")) {
+      this.props.deleteContact(id, this.props.authReducer.subID);
+    }
   };
 
   contactList = () => {
