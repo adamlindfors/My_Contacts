@@ -20,11 +20,13 @@ router.route("/add").post((req, res) => {
   const name = req.body.name;
   const address = req.body.address;
   const phoneNumber = Number(req.body.phoneNumber);
+  const favorite = true;
 
   const newContact = {
     name,
     address,
     phoneNumber,
+    favorite,
   };
 
   User.findOne({ tokenID: req.query.subID }).then((user) => {
@@ -69,6 +71,20 @@ router.route("/update/:id").post((req, res) => {
       contact[0].name = req.body.name;
       contact[0].address = req.body.address;
       contact[0].phoneNumber = req.body.phoneNumber;
+
+      user
+        .save()
+        .then(() => res.json("Contact updated!"))
+        .catch((err) => res.status(400).json("Error: " + err));
+    }
+  });
+});
+
+router.route("/togglefavorite/:id").post((req, res) => {
+  User.findOne({ tokenID: req.query.subID }).then((user) => {
+    if (user) {
+      contact = user.contacts.filter((contact) => contact._id == req.params.id);
+      contact[0].favorite = !contact[0].favorite;
 
       user
         .save()
