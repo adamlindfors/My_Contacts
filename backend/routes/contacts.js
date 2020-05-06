@@ -53,8 +53,10 @@ router.route("/:id").get((req, res) => {
 router.route("/:id").delete((req, res) => {
   User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) {
-      contact = user.contacts.filter((contact) => contact._id == req.params.id);
-      user.contacts.pop(contact);
+      user.contacts = user.contacts.filter(
+        (contact) => contact._id != req.params.id
+      );
+
       user
         .save()
         .then(() => res.json("Contact updated!"))
