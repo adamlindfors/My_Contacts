@@ -21,6 +21,12 @@ We will also use:
 * [Axios](https://github.com/axios/axios) - Promise based HTTP client for the browser and node.js
 * [Okta](https://www.google.com/search?q=okta&oq=okta&aqs=chrome..69i57j35i39l2j0j69i60l4.366j0j4&sourceid=chrome&ie=UTF-8) - For user authentication (Might be changed later in the process)
 
+### Screen casts
+* [Mid course screecast
+](https://www.youtube.com/watch?v=uphe7jRGu-Y)
+
+
+
 ### Get started 🚀
 
 1. Npm install
