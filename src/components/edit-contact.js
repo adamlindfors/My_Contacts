@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { withAuth } from "@okta/okta-react";
+import { setAuth, userLogin } from "../actions/authActions";
+import { getContacts } from "../actions/contactActions";
 
 class EditContact extends Component {
   state = {
@@ -10,17 +13,34 @@ class EditContact extends Component {
     phoneNumber: 0,
   };
 
-  componentDidMount() {
-    const contact = this.props.contactReducer.contacts.filter(
-      (contact) => contact._id === this.props.match.params.id
-    );
-    console.log(contact[0]);
-    if (contact[0]) {
-      this.setState({
-        name: contact[0].name,
-        address: contact[0].address,
-        phoneNumber: contact[0].phoneNumber,
-      });
+  checkAuthentication = async () => {
+    const authenticated = await this.props.auth.isAuthenticated();
+    if (authenticated !== this.props.authReducer.Authenticated) {
+      this.props.setAuth(authenticated);
+    }
+  };
+
+  async componentDidMount() {
+    await this.checkAuthentication();
+    if (this.props.authReducer.Authenticated) {
+      await this.props.userLogin();
+    }
+    this.props.getContacts(this.props.authReducer.subID);
+  }
+
+  //When the props are loaded from the store
+  componentDidUpdate(prevProps) {
+    if (prevProps.contactReducer !== this.props.contactReducer) {
+      const contact = this.props.contactReducer.contacts.filter(
+        (contact) => contact._id === this.props.match.params.id
+      );
+      if (contact[0]) {
+        this.setState({
+          name: contact[0].name,
+          address: contact[0].address,
+          phoneNumber: contact[0].phoneNumber,
+        });
+      }
     }
   }
 
@@ -105,6 +125,9 @@ class EditContact extends Component {
 EditContact.propTypes = {
   contactReducer: PropTypes.object.isRequired,
   authReducer: PropTypes.object.isRequired,
+  userLogin: PropTypes.func.isRequired,
+  setAuth: PropTypes.func.isRequired,
+  getContacts: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -112,4 +135,6 @@ const mapStateToProps = (state) => ({
   authReducer: state.authReducer,
 });
 
-export default connect(mapStateToProps, {})(EditContact);
+export default connect(mapStateToProps, { setAuth, userLogin, getContacts })(
+  withAuth(EditContact)
+);
