@@ -92,13 +92,8 @@ router.route("/update/:id").post((req, res) => {
 
 //toggleFavorite
 router.route("/togglefavorite/:id").post((req, res) => {
-  console.log("Toggle called");
-  console.log(req.body);
-  console.log(req.body.subID);
-
   User.findOne({ tokenID: req.body.subID }).then((user) => {
     if (user) {
-      console.log("yes user");
       contact = user.contacts.filter((contact) => contact._id == req.params.id);
       contact[0].favorite = !contact[0].favorite;
 

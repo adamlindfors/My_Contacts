@@ -125,11 +125,17 @@ class ContactList extends Component {
     });
   };
 
+  isFavorite = (contact) => contact.favorite === true;
+
   render() {
     return (
       <div>
         <div className="container">
-          <h3 className="text-center">Favorites</h3>
+          {this.props.contactReducer.contacts.some(this.isFavorite) ? (
+            <h3 className="text-center">Favorites</h3>
+          ) : (
+            ""
+          )}
           <Row>{this.favorites()}</Row>
           <h3 className="text-center">Contacts</h3>
           <Row>{this.contactList()}</Row>
