@@ -5,6 +5,7 @@ import {
   DELETE_CONTACT,
   CONTACTS_LOADING,
   LOGOUT_CONTACTS,
+  FAVORITE_CONTACT,
 } from "./types";
 
 export const getContacts = (subID) => (dispatch) => {
@@ -32,7 +33,23 @@ export const deleteContact = (id, subID) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
+export const toggleFavorite = (id, subID) => (dispatch) => {
+  console.log("Before axios");
+  console.log(id);
+  console.log(subID);
+  axios
+    .post("/contacts/togglefavorite/" + id, { subID })
+    .then((res) =>
+      dispatch({
+        type: FAVORITE_CONTACT,
+        payload: id,
+      })
+    )
+    .catch((err) => console.log(err));
+};
+
 export const addContact = (contact, subID) => (dispatch) => {
+  console.log(subID);
   axios
     .post("/contacts/add", contact, { params: { subID } })
     .then((res) =>

@@ -8,6 +8,7 @@ const userSchema = new Schema({
       name: { type: String },
       address: { type: String },
       phoneNumber: { type: Number },
+      favorite: { type: Boolean },
     },
   ],
 });
