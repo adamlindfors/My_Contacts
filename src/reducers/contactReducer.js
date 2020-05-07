@@ -4,6 +4,7 @@ import {
   DELETE_CONTACT,
   CONTACTS_LOADING,
   LOGOUT_CONTACTS,
+  FAVORITE_CONTACT,
 } from "../actions/types";
 
 const initialState = {
@@ -26,6 +27,12 @@ export default function (state = initialState, action) {
         contacts: state.contacts.filter(
           (contact) => contact._id !== action.payload
         ),
+      };
+
+    case FAVORITE_CONTACT:
+      return {
+        ...state,
+        //Change state of favorite
       };
 
     case ADD_CONTACT:

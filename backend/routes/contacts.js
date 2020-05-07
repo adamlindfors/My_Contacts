@@ -20,7 +20,9 @@ router.route("/add").post((req, res) => {
   const name = req.body.name;
   const address = req.body.address;
   const phoneNumber = Number(req.body.phoneNumber);
-  const favorite = true;
+  const favorite = false;
+
+  console.log(req.query.subID);
 
   const newContact = {
     name,
@@ -51,6 +53,10 @@ router.route("/:id").get((req, res) => {
 
 //Delete contact by ID
 router.route("/:id").delete((req, res) => {
+  console.log(req.query);
+
+  console.log(req.query.subID);
+
   User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) {
       user.contacts = user.contacts.filter(
@@ -67,6 +73,8 @@ router.route("/:id").delete((req, res) => {
 
 //Edit contact
 router.route("/update/:id").post((req, res) => {
+  console.log(req.query);
+  console.log(req.query.subID);
   User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) {
       contact = user.contacts.filter((contact) => contact._id == req.params.id);
@@ -82,9 +90,15 @@ router.route("/update/:id").post((req, res) => {
   });
 });
 
+//toggleFavorite
 router.route("/togglefavorite/:id").post((req, res) => {
-  User.findOne({ tokenID: req.query.subID }).then((user) => {
+  console.log("Toggle called");
+  console.log(req.body);
+  console.log(req.body.subID);
+
+  User.findOne({ tokenID: req.body.subID }).then((user) => {
     if (user) {
+      console.log("yes user");
       contact = user.contacts.filter((contact) => contact._id == req.params.id);
       contact[0].favorite = !contact[0].favorite;
 

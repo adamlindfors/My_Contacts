@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { getContacts, deleteContact } from "../actions/contactActions";
+import {
+  getContacts,
+  deleteContact,
+  toggleFavorite,
+} from "../actions/contactActions";
 import PropTypes from "prop-types";
 import {
   Card,
@@ -11,7 +15,6 @@ import {
   Row,
   Col,
   CardText,
-  Button,
   CardFooter,
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -40,7 +43,6 @@ const Contact = (props) => (
         <CardBody>
           <CardTitle>
             <FontAwesomeIcon icon={faUser} /> {props.contact.name}
-            <FontAwesomeIcon icon="coffee" />
           </CardTitle>
           <CardText>
             <FontAwesomeIcon icon={faPhoneAlt} />
@@ -56,7 +58,7 @@ const Contact = (props) => (
             style={{ color: "black", textDecoration: "none" }}
             href=""
             onClick={() => {
-              props.deleteContact(props.contact._id);
+              props.toggleFavorite(props.contact._id);
             }}
           >
             {props.contact.favorite ? (
@@ -91,12 +93,18 @@ class ContactList extends Component {
     }
   };
 
+  onToggleFavorite = (id) => {
+    console.log("From onToggleFavorite");
+    this.props.toggleFavorite(id, this.props.authReducer.subID);
+  };
+
   contactList = () => {
     return this.props.contactReducer.contacts.map((currentContact) => {
       return (
         <Contact
           contact={currentContact}
           deleteContact={this.onDeleteContact}
+          toggleFavorite={this.onToggleFavorite}
           key={currentContact._id}
         />
       );
@@ -110,6 +118,7 @@ class ContactList extends Component {
           <Contact
             contact={currentContact}
             deleteContact={this.onDeleteContact}
+            toggleFavorite={this.onToggleFavorite}
             key={currentContact._id}
           />
         );
@@ -135,6 +144,7 @@ ContactList.propTypes = {
   deleteContact: PropTypes.func.isRequired,
   contactReducer: PropTypes.object.isRequired,
   authReducer: PropTypes.object.isRequired,
+  toggleFavorite: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -143,6 +153,8 @@ const mapStateToProps = (state) => ({
 });
 
 //Connect component to the store
-export default connect(mapStateToProps, { getContacts, deleteContact })(
-  ContactList
-);
+export default connect(mapStateToProps, {
+  getContacts,
+  deleteContact,
+  toggleFavorite,
+})(ContactList);
