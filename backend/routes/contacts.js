@@ -73,8 +73,6 @@ router.route("/:id").delete((req, res) => {
 
 //Edit contact
 router.route("/update/:id").post((req, res) => {
-  console.log(req.query);
-  console.log(req.query.subID);
   User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) {
       contact = user.contacts.filter((contact) => contact._id == req.params.id);
