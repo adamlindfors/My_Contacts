@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { withAuth } from "@okta/okta-react";
 import { setAuth, userLogin } from "../actions/authActions";
 
-class error404 extends Component {
+class Error404 extends Component {
   checkAuthentication = async () => {
     const authenticated = await this.props.auth.isAuthenticated();
     if (authenticated !== this.props.authReducer.Authenticated) {
@@ -33,7 +33,7 @@ class error404 extends Component {
   }
 }
 
-error404.propTypes = {
+Error404.propTypes = {
   contactReducer: PropTypes.object.isRequired,
   authReducer: PropTypes.object.isRequired,
   logoutContacts: PropTypes.func.isRequired,
@@ -49,4 +49,4 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   setAuth,
   userLogin,
-})(withAuth(error404));
+})(withAuth(Error404));
