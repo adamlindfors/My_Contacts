@@ -36,7 +36,6 @@ class Error404 extends Component {
 Error404.propTypes = {
   contactReducer: PropTypes.object.isRequired,
   authReducer: PropTypes.object.isRequired,
-  logoutContacts: PropTypes.func.isRequired,
   setAuth: PropTypes.func.isRequired,
 };
 

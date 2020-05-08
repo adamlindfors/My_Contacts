@@ -5,11 +5,13 @@ import {
   CONTACTS_LOADING,
   LOGOUT_CONTACTS,
   FAVORITE_CONTACT,
+  SEARCH_CONTACT,
 } from "../actions/types";
 
 const initialState = {
   contacts: [],
   loading: false,
+  search: "",
 };
 
 export default function (state = initialState, action) {
@@ -33,6 +35,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         //Change state of favorite
+      };
+
+    case SEARCH_CONTACT:
+      return {
+        ...state,
+        search: action.payload,
       };
 
     case ADD_CONTACT:

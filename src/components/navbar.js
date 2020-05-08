@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "@okta/okta-react";
 import { connect } from "react-redux";
-import { logoutContacts } from "../actions/contactActions";
+import { logoutContacts, searchContact } from "../actions/contactActions";
 import { userLogin, userLogout } from "../actions/authActions";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,6 +18,10 @@ class Navbar extends Component {
     await this.props.auth.logout("/");
     this.props.userLogout();
     this.props.logoutContacts();
+  };
+
+  onChangeSearch = (e) => {
+    this.props.searchContact(e.target.value);
   };
 
   render() {
@@ -48,6 +52,8 @@ class Navbar extends Component {
                 className="form-control mr-sm-2"
                 type="text"
                 placeholder="Search"
+                value={this.props.contactReducer.search}
+                onChange={this.onChangeSearch}
               />
               <button className="btn btn-success" type="submit">
                 Search
@@ -102,4 +108,5 @@ export default connect(mapStateToProps, {
   userLogin,
   userLogout,
   logoutContacts,
+  searchContact,
 })(withAuth(Navbar));

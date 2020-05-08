@@ -22,7 +22,6 @@ import {
   faUser,
   faMapMarkedAlt,
   faPhoneAlt,
-  faEdit,
   faTrashAlt,
   faHeart as fasFaHeart,
 } from "@fortawesome/free-solid-svg-icons";
@@ -98,8 +97,8 @@ class ContactList extends Component {
     this.props.toggleFavorite(id, this.props.authReducer.subID);
   };
 
-  contactList = () => {
-    return this.props.contactReducer.contacts.map((currentContact) => {
+  contactList = (filteredContacts) => {
+    return filteredContacts.map((currentContact) => {
       return (
         <Contact
           contact={currentContact}
@@ -111,8 +110,8 @@ class ContactList extends Component {
     });
   };
 
-  favorites = () => {
-    return this.props.contactReducer.contacts.map((currentContact) => {
+  favorites = (filteredContacts) => {
+    return filteredContacts.map((currentContact) => {
       if (currentContact.favorite)
         return (
           <Contact
@@ -127,18 +126,35 @@ class ContactList extends Component {
 
   isFavorite = (contact) => contact.favorite === true;
 
+  filter = () => {
+    return this.props.contactReducer.contacts.filter((contact) => {
+      return (
+        contact.name
+          .toLowerCase()
+          .includes(this.props.contactReducer.search.toLowerCase()) ||
+        contact.phoneNumber
+          .toString()
+          .includes(this.props.contactReducer.search) ||
+        contact.address
+          .toLowerCase()
+          .includes(this.props.contactReducer.search.toLowerCase())
+      );
+    });
+  };
+
   render() {
+    let filteredContacts = this.filter();
     return (
       <div>
         <div className="container">
-          {this.props.contactReducer.contacts.some(this.isFavorite) ? (
+          {filteredContacts.some(this.isFavorite) ? (
             <h3 className="text-center">Favorites</h3>
           ) : (
             ""
           )}
-          <Row>{this.favorites()}</Row>
+          <Row>{this.favorites(filteredContacts)}</Row>
           <h3 className="text-center">Contacts</h3>
-          <Row>{this.contactList()}</Row>
+          <Row>{this.contactList(filteredContacts)}</Row>
         </div>
       </div>
     );

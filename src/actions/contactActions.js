@@ -6,6 +6,7 @@ import {
   CONTACTS_LOADING,
   LOGOUT_CONTACTS,
   FAVORITE_CONTACT,
+  SEARCH_CONTACT,
 } from "./types";
 
 export const getContacts = (subID) => (dispatch) => {
@@ -70,5 +71,12 @@ export const setContactsLoading = () => {
 export const logoutContacts = () => (dispatch) => {
   dispatch({
     type: LOGOUT_CONTACTS,
+  });
+};
+
+export const searchContact = (search) => (dispatch) => {
+  dispatch({
+    type: SEARCH_CONTACT,
+    payload: search,
   });
 };
