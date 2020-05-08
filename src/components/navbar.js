@@ -41,16 +41,20 @@ class Navbar extends Component {
               )}
             </li>
           </ul>
-          <form className="form-inline" action="/action_page.php">
-            <input
-              className="form-control mr-sm-2"
-              type="text"
-              placeholder="Search"
-            />
-            <button className="btn btn-success" type="submit">
-              Search
-            </button>
-          </form>
+          {this.props.authReducer.subID ? (
+            <form className="form-inline" action="/action_page.php">
+              <input
+                className="form-control mr-sm-2"
+                type="text"
+                placeholder="Search"
+              />
+              <button className="btn btn-success" type="submit">
+                Search
+              </button>
+            </form>
+          ) : (
+            ""
+          )}
           {this.props.authReducer.subID ? (
             <button className="btn btn-dark my-2 my-sm-0" onClick={this.logout}>
               Logout {"  "}
