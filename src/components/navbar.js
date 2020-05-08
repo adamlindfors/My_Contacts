@@ -7,6 +7,7 @@ import { userLogin, userLogout } from "../actions/authActions";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import ContactsLogo from "../assets/Contacts.png";
 
 class Navbar extends Component {
   login = async () => {
@@ -23,9 +24,9 @@ class Navbar extends Component {
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
         {/* Försvinner när man loggar in */}
-        {/* <a className="navbar-brand" href="">
-          <img src="Contacts.png" alt="logo" style={{ width: "35px" }} />
-        </a> */}
+        <a className="navbar-brand" href="">
+          <img src={ContactsLogo} alt="logo" style={{ width: "35px" }} />
+        </a>
         <Link to="/" className="navbar-brand">
           My Contacts
         </Link>
