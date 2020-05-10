@@ -9,6 +9,7 @@ const userSchema = new Schema({
       address: { type: String },
       phoneNumber: { type: Number },
       favorite: { type: Boolean },
+      image: { type: String },
     },
   ],
 });

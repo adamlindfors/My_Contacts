@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Col } from "reactstrap";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
