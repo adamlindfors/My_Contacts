@@ -144,27 +144,34 @@ class ContactList extends Component {
 
   render() {
     let filteredContacts = this.filter();
-    if (filteredContacts.length !== this.props.contactReducer.contacts.length) {
+    if (this.props.contactReducer.search !== "") {
+      if (this.contactList(filteredContacts).length === 0)
+        return (
+          <div>
+            <p className="lead">No results matched your search</p>
+          </div>
+        );
+      else
+        return (
+          <div>
+            <Row>{this.contactList(filteredContacts)}</Row>
+          </div>
+        );
+    } else
       return (
         <div>
-          <Row>{this.contactList(filteredContacts)}</Row>
+          <div className="container">
+            {filteredContacts.some(this.isFavorite) ? (
+              <h3 className="text-center">Favorites</h3>
+            ) : (
+              ""
+            )}
+            <Row>{this.favorites(filteredContacts)}</Row>
+            <h3 className="text-center">Contacts</h3>
+            <Row>{this.contactList(filteredContacts)}</Row>
+          </div>
         </div>
       );
-    }
-    return (
-      <div>
-        <div className="container">
-          {filteredContacts.some(this.isFavorite) ? (
-            <h3 className="text-center">Favorites</h3>
-          ) : (
-            ""
-          )}
-          <Row>{this.favorites(filteredContacts)}</Row>
-          <h3 className="text-center">Contacts</h3>
-          <Row>{this.contactList(filteredContacts)}</Row>
-        </div>
-      </div>
-    );
   }
 }
 

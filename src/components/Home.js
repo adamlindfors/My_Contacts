@@ -38,12 +38,15 @@ class Home extends Component {
 
   render() {
     if (this.props.authReducer.authenticated === null) return null;
-
     const mainContent = this.props.authReducer.subID ? (
       <div>
-        <h1>
-          <User />
-        </h1>
+        {this.props.contactReducer.search === "" ? (
+          <h1>
+            <User />
+          </h1>
+        ) : (
+          ""
+        )}
         <Contactlist />
       </div>
     ) : (

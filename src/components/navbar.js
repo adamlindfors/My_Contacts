@@ -47,7 +47,7 @@ class Navbar extends Component {
             </li>
           </ul>
           {this.props.authReducer.subID ? (
-            <form className="form-inline" action="/action_page.php">
+            <div>
               <input
                 className="form-control mr-sm-2"
                 type="text"
@@ -55,10 +55,7 @@ class Navbar extends Component {
                 value={this.props.contactReducer.search}
                 onChange={this.onChangeSearch}
               />
-              <button className="btn btn-success" type="submit">
-                Search
-              </button>
-            </form>
+            </div>
           ) : (
             ""
           )}
