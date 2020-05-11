@@ -144,6 +144,13 @@ class ContactList extends Component {
 
   render() {
     let filteredContacts = this.filter();
+    if (filteredContacts.length !== this.props.contactReducer.contacts.length) {
+      return (
+        <div>
+          <Row>{this.contactList(filteredContacts)}</Row>
+        </div>
+      );
+    }
     return (
       <div>
         <div className="container">
