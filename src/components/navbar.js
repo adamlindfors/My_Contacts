@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import ContactsLogo from "../assets/Contacts.png";
+import Dropdown from "react-bootstrap/Dropdown";
 
 class Navbar extends Component {
   login = async () => {
@@ -48,13 +49,38 @@ class Navbar extends Component {
           </ul>
           {this.props.authReducer.subID ? (
             <div>
-              <input
-                className="form-control mr-sm-2"
-                type="text"
-                placeholder="Search"
-                value={this.props.contactReducer.search}
-                onChange={this.onChangeSearch}
-              />
+              <ul className="navbar-nav mr-auto">
+                <Dropdown>
+                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    Groups
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {this.props.contactReducer.contacts.map((contact) => {
+                      return (
+                        <Dropdown.Item
+                          key={contact._id}
+                          onClick={() => this.props.searchContact(contact.name)}
+                        >
+                          {contact.name}
+                        </Dropdown.Item>
+                      );
+                    })}
+                    <Dropdown.Divider />
+                    <Dropdown.Item onClick={() => console.log("New Group?")}>
+                      Create New
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+                <li className="navbar-item">
+                  <input
+                    className="form-control mr-sm-2"
+                    type="text"
+                    placeholder="Search"
+                    value={this.props.contactReducer.search}
+                    onChange={this.onChangeSearch}
+                  />
+                </li>
+              </ul>
             </div>
           ) : (
             ""
