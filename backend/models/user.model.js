@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   tokenID: { type: String, required: true },
+  image: { type: String },
   contacts: [
     {
       name: { type: String },

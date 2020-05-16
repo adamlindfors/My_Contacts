@@ -11,7 +11,7 @@ import {
 export const getContacts = (subID) => (dispatch) => {
   dispatch(setContactsLoading());
   axios
-    .get("/contacts/", { params: { subID } })
+    .get("/contacts/allContacts/", { params: { subID } })
     .then((res) =>
       dispatch({
         type: GET_CONTACTS,

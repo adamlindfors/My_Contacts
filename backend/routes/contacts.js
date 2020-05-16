@@ -3,7 +3,7 @@ let Contact = require("../models/contacts.model");
 let User = require("../models/user.model");
 
 //Get the contacts of the logged in user
-router.route("/").get((req, res) => {
+router.route("/allContacts/").get((req, res) => {
   User.findOne({ tokenID: req.query.subID })
     .then((userData) => {
       if (userData) res.json(userData.contacts);
@@ -43,7 +43,7 @@ router.route("/add").post((req, res) => {
 });
 
 //GET contact by ID
-router.route("/:id").get((req, res) => {
+router.route("/contact/:id").get((req, res) => {
   User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) {
       contact = user.contacts.filter((contact) => contact._id == req.params.id);
@@ -103,6 +103,30 @@ router.route("/togglefavorite/:id").post((req, res) => {
         .catch((err) => res.status(400).json("Error: " + err));
     }
   });
+});
+
+//addUserImage
+router.route("/addUserImage").post((req, res) => {
+  console.log(req.query.subID);
+  console.log(req.body);
+
+  User.findOne({ tokenID: req.query.subID }).then((user) => {
+    if (user) user.image = req.body.image;
+    user
+      .save()
+      .then(() => res.json("Contact updated!"))
+      .catch((err) => res.status(400).json("Error: " + err));
+  });
+});
+
+//getUserImage
+router.route("/getUserImage/").get((req, res) => {
+  console.log(req.query.subID);
+  User.findOne({ tokenID: req.query.subID })
+    .then((userData) => {
+      if (userData.image) res.json(userData.image);
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
 //Export the router

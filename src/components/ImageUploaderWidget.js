@@ -23,13 +23,9 @@ class ImageUploaderWidget extends Component {
 
   render() {
     return (
-      <button
-        id="upload_widget"
-        className="cloudinary-button"
-        onClick={this.onClick}
-      >
-        Upload Image
-      </button>
+      <a id="upload_widget" onClick={this.onClick}>
+        {this.props.passBody()}
+      </a>
     );
   }
 }

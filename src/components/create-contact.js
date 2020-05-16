@@ -52,6 +52,10 @@ class CreateContact extends Component {
     window.location = "/";
   };
 
+  passBody = () => {
+    return <button>Upload Image</button>;
+  };
+
   render() {
     return (
       <div>
@@ -95,7 +99,10 @@ class CreateContact extends Component {
             />
           </div>
         </form>
-        <ImageUploaderWidget onImageSuccess={this.onImageSuccess} />
+        <ImageUploaderWidget
+          onImageSuccess={this.onImageSuccess}
+          passBody={this.passBody}
+        />
       </div>
     );
   }

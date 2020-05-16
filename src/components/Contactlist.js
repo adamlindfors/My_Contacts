@@ -36,7 +36,7 @@ const Contact = (props) => (
             top
             width="100%"
             src={
-              "https://res.cloudinary.com/myContacts/image/fetch/w_400,h_400/" +
+              "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_thumb,w_300,h_350/" +
               props.contact.image
             }
             alt="Card image cap"
