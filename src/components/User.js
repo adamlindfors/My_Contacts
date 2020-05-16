@@ -8,6 +8,12 @@ class User extends Component {
   componentDidMount() {
     this.props.getUserImage(this.props.authReducer.subID);
   }
+  componentDidUpdate(prevProps) {
+    if (prevProps.authReducer !== this.props.authReducer) {
+      this.props.getUserImage(this.props.authReducer.subID);
+    }
+  }
+
   onImageSuccess = async (res) => {
     await res;
     this.props.addUserImage(res, this.props.authReducer.subID);
