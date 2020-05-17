@@ -24,7 +24,8 @@ export default withAuth(
       this.checkAuthentication();
     }
 
-    onSuccess = (res) => {
+    onSuccess = async (res) => {
+      await res;
       return this.props.auth.redirect({
         sessionToken: res.session.token,
       });

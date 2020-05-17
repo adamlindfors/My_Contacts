@@ -1,19 +1,51 @@
 import React, { Component } from "react";
-import { Col } from "reactstrap";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import ImageUploaderWidget from "./ImageUploaderWidget";
+import { addUserImage, getUserImage } from "../actions/authActions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
 
 class User extends Component {
+  componentDidMount() {
+    this.props.getUserImage(this.props.authReducer.subID);
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.authReducer.image !== this.props.authReducer.image) {
+      this.props.getUserImage(this.props.authReducer.subID);
+    }
+  }
+
+  onImageSuccess = async (res) => {
+    await res;
+    this.props.addUserImage(res, this.props.authReducer.subID);
+  };
+  passBody = () => {
+    return (
+      <a style={{ color: "black", textDecoration: "none" }} href="">
+        <FontAwesomeIcon
+          icon={faCamera}
+          className="fas fa-camera fa-sm"
+        ></FontAwesomeIcon>
+      </a>
+    );
+  };
   render() {
     return (
-      <div className="text-center">
-        <img
-          className="rounded-circle"
-          alt="100x100"
-          src="https://media-exp1.licdn.com/dms/image/C4E03AQH45Z9JaBvQoA/profile-displayphoto-shrink_200_200/0?e=1594252800&v=beta&t=e7iaZhxscfwieL_vu0TR4JTfAdgFmPvBLsiALt5AwxI"
-          data-holder-rendered="true"
-        />
-        <h1>Welcome {this.props.authReducer.user}</h1>
+      <div>
+        <div className="text-center">
+          <div>
+            <img
+              src={this.props.authReducer.image}
+              data-holder-rendered="true"
+            />
+          </div>
+          <ImageUploaderWidget
+            onImageSuccess={this.onImageSuccess}
+            passBody={this.passBody}
+          />
+          <h1>Welcome {this.props.authReducer.user}</h1>
+        </div>
       </div>
     );
   }
@@ -27,4 +59,4 @@ const mapStateToProps = (state) => ({
   authReducer: state.authReducer,
 });
 
-export default connect(mapStateToProps, {})(User);
+export default connect(mapStateToProps, { addUserImage, getUserImage })(User);

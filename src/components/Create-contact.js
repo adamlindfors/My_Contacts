@@ -4,12 +4,14 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withAuth } from "@okta/okta-react";
 import { setAuth, userLogin } from "../actions/authActions";
+import ImageUploaderWidget from "./ImageUploaderWidget";
 
 class CreateContact extends Component {
   state = {
     name: "",
     address: "",
     phoneNumber: 0,
+    image: "",
   };
 
   checkAuthentication = async () => {
@@ -48,6 +50,13 @@ class CreateContact extends Component {
     });
   };
 
+  onImageSuccess = async (res) => {
+    await res;
+    this.setState({
+      image: res,
+    });
+  };
+
   onSubmit = (e) => {
     e.preventDefault();
 
@@ -55,11 +64,16 @@ class CreateContact extends Component {
       name: this.state.name,
       address: this.state.address,
       phoneNumber: this.state.phoneNumber,
+      image: this.state.image,
     };
 
     this.props.addContact(newContact, this.props.authReducer.subID);
 
     window.location = "/";
+  };
+
+  passBody = () => {
+    return <button>Upload Image</button>;
   };
 
   render() {
@@ -96,6 +110,7 @@ class CreateContact extends Component {
               onChange={this.onChangePhoneNumber}
             />
           </div>
+
           <div className="form-group">
             <input
               type="submit"
@@ -104,6 +119,10 @@ class CreateContact extends Component {
             />
           </div>
         </form>
+        <ImageUploaderWidget
+          onImageSuccess={this.onImageSuccess}
+          passBody={this.passBody}
+        />
       </div>
     );
   }

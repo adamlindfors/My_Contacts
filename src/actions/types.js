@@ -12,3 +12,6 @@ export const ADD_LABEL = "ADD_LABEL";
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const SET_AUTH = "SET_AUTH";
+export const ADD_USER_IMAGE = "ADD_USER_IMAGE";
+export const GET_USER_IMAGE = "GET_USER_IMAGE";
+export const USER_IMAGE_LOADING = "USER_IMAGE_LOADING";
