@@ -7,6 +7,7 @@ const contactSchema = new Schema({
   address: { type: String, required: true },
   phoneNumber: { type: Number, required: true },
   favorite: { type: Boolean },
+  image: { type: String },
 });
 
 //Create the model contact

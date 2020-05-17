@@ -22,7 +22,6 @@ import {
   faUser,
   faMapMarkedAlt,
   faPhoneAlt,
-  faEdit,
   faTrashAlt,
   faHeart as fasFaHeart,
 } from "@fortawesome/free-solid-svg-icons";
@@ -36,7 +35,12 @@ const Contact = (props) => (
           <CardImg
             top
             width="100%"
-            src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"
+            src={
+              props.contact.image
+                ? "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_thumb,w_300,h_350/" +
+                  props.contact.image
+                : "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_thumb,w_300,h_350/https://res.cloudinary.com/mycontacts/image/upload/v1589640571/myContacts/g1gk0riburccmbjzxgzr.png"
+            }
             alt="Card image cap"
           />
         </Link>
