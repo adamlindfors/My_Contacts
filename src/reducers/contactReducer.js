@@ -6,12 +6,14 @@ import {
   LOGOUT_CONTACTS,
   FAVORITE_CONTACT,
   SEARCH_CONTACT,
+  ADD_LABEL,
 } from "../actions/types";
 
 const initialState = {
   contacts: [],
   loading: false,
   search: "",
+  labels: [],
 };
 
 export default function (state = initialState, action) {
@@ -47,6 +49,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         contacts: [action.payload, ...state.contacts],
+      };
+
+    case ADD_LABEL:
+      return {
+        ...state,
+        labels: [action.payload, ...state.labels],
       };
 
     case CONTACTS_LOADING:

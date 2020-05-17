@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "@okta/okta-react";
 import { connect } from "react-redux";
-import { logoutContacts, searchContact } from "../actions/contactActions";
+import {
+  logoutContacts,
+  searchContact,
+  addLabel,
+} from "../actions/contactActions";
 import { userLogin, userLogout } from "../actions/authActions";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -55,18 +59,18 @@ class Navbar extends Component {
                     Groups
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {this.props.contactReducer.contacts.map((contact) => {
+                    {this.props.contactReducer.labels.map((label) => {
                       return (
                         <Dropdown.Item
-                          key={contact._id}
-                          onClick={() => this.props.searchContact(contact.name)}
+                          key={label}
+                          onClick={() => this.props.searchContact(label)}
                         >
-                          {contact.name}
+                          {label}
                         </Dropdown.Item>
                       );
                     })}
                     <Dropdown.Divider />
-                    <Dropdown.Item onClick={() => console.log("New Group?")}>
+                    <Dropdown.Item onClick={() => this.props.addLabel("Test2")}>
                       Create New
                     </Dropdown.Item>
                   </Dropdown.Menu>
@@ -132,4 +136,5 @@ export default connect(mapStateToProps, {
   userLogout,
   logoutContacts,
   searchContact,
+  addLabel,
 })(withAuth(Navbar));

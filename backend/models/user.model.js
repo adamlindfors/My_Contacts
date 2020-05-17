@@ -11,6 +11,7 @@ const userSchema = new Schema({
       favorite: { type: Boolean },
     },
   ],
+  labels: [],
 });
 
 //Create the model contact

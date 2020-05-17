@@ -1,5 +1,4 @@
 const router = require("express").Router();
-let Contact = require("../models/contacts.model");
 let User = require("../models/user.model");
 
 //Get the contacts of the logged in user
