@@ -1,6 +1,28 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { withAuth } from "@okta/okta-react";
+import { setAuth, userLogin } from "../actions/authActions";
 
-class Staff extends Component {
+class Error404 extends Component {
+  checkAuthentication = async () => {
+    const authenticated = await this.props.auth.isAuthenticated();
+    if (authenticated !== this.props.authReducer.Authenticated) {
+      this.props.setAuth(authenticated);
+    }
+  };
+
+  async componentDidMount() {
+    await this.checkAuthentication();
+    if (this.props.authReducer.Authenticated) {
+      this.props.userLogin();
+    }
+  }
+
+  async componentDidUpdate() {
+    this.checkAuthentication();
+  }
+
   render() {
     return (
       <div className="jumbotron">
@@ -11,4 +33,19 @@ class Staff extends Component {
   }
 }
 
-export default Staff;
+Error404.propTypes = {
+  contactReducer: PropTypes.object.isRequired,
+  authReducer: PropTypes.object.isRequired,
+  setAuth: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  contactReducer: state.contactReducer,
+  authReducer: state.authReducer,
+});
+
+//Connect component to the store
+export default connect(mapStateToProps, {
+  setAuth,
+  userLogin,
+})(withAuth(Error404));

@@ -2,11 +2,17 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "@okta/okta-react";
 import { connect } from "react-redux";
-import { logoutContacts } from "../actions/contactActions";
+import {
+  logoutContacts,
+  searchContact,
+  addLabel,
+} from "../actions/contactActions";
 import { userLogin, userLogout } from "../actions/authActions";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import ContactsLogo from "../assets/Contacts.png";
+import Dropdown from "react-bootstrap/Dropdown";
 
 class Navbar extends Component {
   login = async () => {
@@ -19,13 +25,17 @@ class Navbar extends Component {
     this.props.logoutContacts();
   };
 
+  onChangeSearch = (e) => {
+    this.props.searchContact(e.target.value);
+  };
+
   render() {
     return (
-      <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
+      <nav className="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
         {/* Försvinner när man loggar in */}
-        {/* <a className="navbar-brand" href="">
-          <img src="Contacts.png" alt="logo" style={{ width: "35px" }} />
-        </a> */}
+        <a className="navbar-brand" href="">
+          <img src={ContactsLogo} alt="logo" style={{ width: "35px" }} />
+        </a>
         <Link to="/" className="navbar-brand">
           My Contacts
         </Link>
@@ -41,6 +51,44 @@ class Navbar extends Component {
               )}
             </li>
           </ul>
+          {this.props.authReducer.subID ? (
+            <div>
+              <ul className="navbar-nav mr-auto">
+                <Dropdown>
+                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    Groups
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {this.props.contactReducer.labels.map((label) => {
+                      return (
+                        <Dropdown.Item
+                          key={label}
+                          onClick={() => this.props.searchContact(label)}
+                        >
+                          {label}
+                        </Dropdown.Item>
+                      );
+                    })}
+                    <Dropdown.Divider />
+                    <Dropdown.Item onClick={() => this.props.addLabel("Test2")}>
+                      Create New
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+                <li className="navbar-item">
+                  <input
+                    className="form-control mr-sm-2"
+                    type="text"
+                    placeholder="Search"
+                    value={this.props.contactReducer.search}
+                    onChange={this.onChangeSearch}
+                  />
+                </li>
+              </ul>
+            </div>
+          ) : (
+            ""
+          )}
           {this.props.authReducer.subID ? (
             <button className="btn btn-dark my-2 my-sm-0" onClick={this.logout}>
               Logout {"  "}
@@ -87,4 +135,6 @@ export default connect(mapStateToProps, {
   userLogin,
   userLogout,
   logoutContacts,
+  searchContact,
+  addLabel,
 })(withAuth(Navbar));
