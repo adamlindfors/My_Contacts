@@ -3,13 +3,15 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import ImageUploaderWidget from "./ImageUploaderWidget";
 import { addUserImage, getUserImage } from "../actions/authActions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
 
 class User extends Component {
   componentDidMount() {
     this.props.getUserImage(this.props.authReducer.subID);
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.authReducer !== this.props.authReducer) {
+    if (prevProps.authReducer.image !== this.props.authReducer.image) {
       this.props.getUserImage(this.props.authReducer.subID);
     }
   }
@@ -20,24 +22,30 @@ class User extends Component {
   };
   passBody = () => {
     return (
-      <img
-        alt="100x100"
-        src={
-          "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_fill,r_max,w_250,h_250/" +
-          this.props.authReducer.image
-        }
-        data-holder-rendered="true"
-      />
+      <a style={{ color: "black", textDecoration: "none" }} href="">
+        <FontAwesomeIcon
+          icon={faCamera}
+          className="fas fa-camera fa-sm"
+        ></FontAwesomeIcon>
+      </a>
     );
   };
   render() {
     return (
-      <div className="text-center">
-        <ImageUploaderWidget
-          onImageSuccess={this.onImageSuccess}
-          passBody={this.passBody}
-        />
-        <h1>Welcome {this.props.authReducer.user}</h1>
+      <div>
+        <div className="text-center">
+          <div>
+            <img
+              src={this.props.authReducer.image}
+              data-holder-rendered="true"
+            />
+          </div>
+          <ImageUploaderWidget
+            onImageSuccess={this.onImageSuccess}
+            passBody={this.passBody}
+          />
+          <h1>Welcome {this.props.authReducer.user}</h1>
+        </div>
       </div>
     );
   }

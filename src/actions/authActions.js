@@ -4,6 +4,7 @@ import {
   SET_AUTH,
   ADD_USER_IMAGE,
   GET_USER_IMAGE,
+  USER_IMAGE_LOADING,
 } from "./types";
 import axios from "axios";
 
@@ -51,4 +52,10 @@ export const getUserImage = (subID) => (dispatch) => {
       })
     )
     .catch((err) => console.log(err));
+};
+
+export const setUserImageLoading = () => {
+  return {
+    type: USER_IMAGE_LOADING,
+  };
 };

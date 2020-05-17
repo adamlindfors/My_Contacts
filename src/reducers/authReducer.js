@@ -4,6 +4,7 @@ import {
   SET_AUTH,
   ADD_USER_IMAGE,
   GET_USER_IMAGE,
+  USER_IMAGE_LOADING,
 } from "../actions/types";
 
 const initialState = {
@@ -12,7 +13,9 @@ const initialState = {
   user: null,
   email: null,
   subID: null,
-  image: "",
+  image:
+    "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_fill,r_max,w_250,h_250/https://res.cloudinary.com/mycontacts/image/upload/v1589640571/myContacts/g1gk0riburccmbjzxgzr.png",
+  loading: false,
 };
 
 export default function (state = initialState, action) {
@@ -41,12 +44,21 @@ export default function (state = initialState, action) {
     case ADD_USER_IMAGE:
       return {
         ...state,
-        image: action.payload,
+        image:
+          "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_fill,r_max,w_250,h_250/" +
+          action.payload,
       };
     case GET_USER_IMAGE:
       return {
         ...state,
-        image: action.payload,
+        image:
+          "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_fill,r_max,w_250,h_250/" +
+          action.payload,
+      };
+    case USER_IMAGE_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;
