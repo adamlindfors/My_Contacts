@@ -2,22 +2,17 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "@okta/okta-react";
 import { connect } from "react-redux";
-import {
-  logoutContacts,
-  searchContact,
-  addLabel,
-} from "../actions/contactActions";
+import { logoutContacts, searchContact } from "../actions/contactActions";
 import { userLogin, userLogout } from "../actions/authActions";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import ContactsLogo from "../assets/Contacts.png";
 import Dropdown from "react-bootstrap/Dropdown";
-import { Button, ButtonToolbar } from "react-bootstrap";
-import AddLabelModal from "./AddLabelModal";
+import AddLabelModal from "../modals/AddLabelModal";
 
 class Navbar extends Component {
-  state = { modalShow: false };
+  state = { labelModalShow: false };
 
   login = async () => {
     this.props.auth.login("/");
@@ -74,13 +69,13 @@ class Navbar extends Component {
                     })}
                     <Dropdown.Divider />
                     <Dropdown.Item
-                      onClick={() => this.setState({ modalShow: true })}
+                      onClick={() => this.setState({ labelModalShow: true })}
                     >
                       Create New
                     </Dropdown.Item>
                     <AddLabelModal
-                      show={this.state.modalShow}
-                      onHide={() => this.setState({ modalShow: false })}
+                      show={this.state.labelModalShow}
+                      onHide={() => this.setState({ labelModalShow: false })}
                     ></AddLabelModal>
                   </Dropdown.Menu>
                 </Dropdown>
@@ -145,5 +140,4 @@ export default connect(mapStateToProps, {
   userLogout,
   logoutContacts,
   searchContact,
-  addLabel,
 })(withAuth(Navbar));
