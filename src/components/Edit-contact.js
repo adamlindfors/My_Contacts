@@ -6,13 +6,18 @@ import { withAuth } from "@okta/okta-react";
 import { setAuth, userLogin } from "../actions/authActions";
 import { getContacts, setContactsLoading } from "../actions/contactActions";
 import Error404 from "./404";
+import ImageUploaderWidget from "./ImageUploaderWidget";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 class EditContact extends Component {
   state = {
     name: "",
     address: "",
     phoneNumber: 0,
+    image: "",
     contactExists: false,
+    disabledFields: true,
   };
 
   checkAuthentication = async () => {
@@ -43,6 +48,7 @@ class EditContact extends Component {
           name: contact[0].name,
           address: contact[0].address,
           phoneNumber: contact[0].phoneNumber,
+          image: contact[0].image,
         });
       }
     }
@@ -79,49 +85,101 @@ class EditContact extends Component {
     window.location = "/";
   };
 
+  passBody = () => {
+    return (
+      <a style={{ color: "black", textDecoration: "none" }} href="">
+        <FontAwesomeIcon
+          icon={faCamera}
+          className="fas fa-camera fa-2x"
+        ></FontAwesomeIcon>
+      </a>
+    );
+  };
+
+  onImageSuccess = async (res) => {
+    await res;
+    this.setState({
+      image: res,
+    });
+  };
+
+  onEditClick = () => {
+    this.setState({
+      disabledFields: !this.state.disabledFields,
+    });
+  };
+
   render() {
     if (this.props.contactReducer.loading) return "";
     else if (this.state.contactExists)
       return (
         <div>
-          <h3>Edit contact</h3>
+          <div className="text-center">
+            <div>
+              <img
+                src={
+                  this.state.image
+                    ? "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_fill,r_max,w_250,h_250/" +
+                      this.state.image
+                    : "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_fill,r_max,w_250,h_250/https://res.cloudinary.com/mycontacts/image/upload/v1589640571/myContacts/g1gk0riburccmbjzxgzr.png"
+                }
+                data-holder-rendered="true"
+              />
+            </div>
+            <ImageUploaderWidget
+              onImageSuccess={this.onImageSuccess}
+              passBody={this.passBody}
+            />
+            <h3>{this.state.name}</h3>
+          </div>
           <form onSubmit={this.onSubmit}>
-            <div className="form-group">
-              <label>Name: </label>
-              <input
-                ref="userInput"
-                required
-                className="form-control"
-                value={this.state.name}
-                onChange={this.onChangeName}
-              ></input>
-            </div>
-            <div className="form-group">
-              <label>Address: </label>
-              <input
-                type="text"
-                required
-                className="form-control"
-                value={this.state.address}
-                onChange={this.onChangeAddress}
-              />
-            </div>
-            <div className="form-group">
-              <label>Telephone Number: </label>
-              <input
-                type="text"
-                className="form-control"
-                value={this.state.phoneNumber}
-                onChange={this.onChangePhoneNumber}
-              />
-            </div>
-            <div className="form-group">
-              <input
-                type="submit"
-                value="Save changes"
-                className="btn btn-primary"
-              />
-            </div>
+            <fieldset disabled={this.state.disabledFields}>
+              <div className="form-group">
+                <label>Name: </label>
+                <input
+                  ref="userInput"
+                  required
+                  className="form-control"
+                  value={this.state.name}
+                  onChange={this.onChangeName}
+                ></input>
+              </div>
+              <div className="form-group">
+                <label>Address: </label>
+                <input
+                  type="text"
+                  required
+                  className="form-control"
+                  value={this.state.address}
+                  onChange={this.onChangeAddress}
+                />
+              </div>
+              <div className="form-group">
+                <label>Telephone Number: </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={this.state.phoneNumber}
+                  onChange={this.onChangePhoneNumber}
+                />
+              </div>
+              <div className="form-group"></div>
+            </fieldset>
+            <input
+              style={{ padding: "1%" }}
+              type="submit"
+              value="Save changes"
+              className="btn btn-primary"
+            />
+            <a
+              style={{ color: "black", textDecoration: "none" }}
+              onClick={this.onEditClick}
+            >
+              <FontAwesomeIcon
+                icon={faEdit}
+                className="fas fa-camera fa-2x"
+              ></FontAwesomeIcon>
+            </a>
           </form>
         </div>
       );

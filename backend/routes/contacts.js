@@ -80,6 +80,7 @@ router.route("/update/:id").post((req, res) => {
       contact[0].name = req.body.name;
       contact[0].address = req.body.address;
       contact[0].phoneNumber = req.body.phoneNumber;
+      contact[0].image = req.body.image;
 
       user
         .save()
