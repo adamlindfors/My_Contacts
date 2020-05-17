@@ -128,5 +128,17 @@ router.route("/getUserImage/").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
+router.route("/addLabel").post((req, res) => {
+  console.log(req.query.subID);
+  console.log(req.body.label);
+  User.findOne({ tokenID: req.query.subID }).then((user) => {
+    if (user) user.labels.push(req.body.label);
+    user
+      .save()
+      .then(() => res.json("Contact updated!"))
+      .catch((err) => res.status(400).json("Error: " + err));
+  });
+});
+
 //Export the router
 module.exports = router;

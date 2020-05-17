@@ -82,9 +82,15 @@ export const searchContact = (search) => (dispatch) => {
   });
 };
 
-export const addLabel = (label) => (dispatch) => {
-  dispatch({
-    type: ADD_LABEL,
-    payload: label,
-  });
+export const addLabel = (label, subID) => (dispatch) => {
+  console.log(label);
+  axios
+    .post("/contacts/addLabel", { label }, { params: { subID } })
+    .then((res) =>
+      dispatch({
+        type: ADD_LABEL,
+        payload: label,
+      })
+    )
+    .catch((err) => console.log(err));
 };

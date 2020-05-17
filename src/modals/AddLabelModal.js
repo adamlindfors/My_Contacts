@@ -11,7 +11,7 @@ class AddLabelModal extends Component {
 
   addLabel = () => {
     if (this.state.labelName !== "") {
-      this.props.addLabel(this.state.labelName);
+      this.props.addLabel(this.state.labelName, this.props.authReducer.subID);
       this.setState({ labelName: "" });
       this.props.onHide();
     }
@@ -57,6 +57,7 @@ AddLabelModal.propTypes = {
 
 const mapStateToProps = (state) => ({
   contactReducer: state.contactReducer,
+  authReducer: state.authReducer,
 });
 
 export default connect(mapStateToProps, { addLabel })(AddLabelModal);

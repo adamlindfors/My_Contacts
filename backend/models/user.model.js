@@ -13,7 +13,7 @@ const userSchema = new Schema({
       image: { type: String },
     },
   ],
-  labels: [],
+  labels: [String],
 });
 
 //Create the model contact
