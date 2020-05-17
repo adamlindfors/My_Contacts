@@ -13,8 +13,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import ContactsLogo from "../assets/Contacts.png";
 import Dropdown from "react-bootstrap/Dropdown";
+import { Button, ButtonToolbar } from "react-bootstrap";
+import AddLabelModal from "./AddLabelModal";
 
 class Navbar extends Component {
+  state = { modalShow: false };
+
   login = async () => {
     this.props.auth.login("/");
   };
@@ -32,7 +36,6 @@ class Navbar extends Component {
   render() {
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
-        {/* Försvinner när man loggar in */}
         <a className="navbar-brand" href="">
           <img src={ContactsLogo} alt="logo" style={{ width: "35px" }} />
         </a>
@@ -70,9 +73,15 @@ class Navbar extends Component {
                       );
                     })}
                     <Dropdown.Divider />
-                    <Dropdown.Item onClick={() => this.props.addLabel("Test2")}>
+                    <Dropdown.Item
+                      onClick={() => this.setState({ modalShow: true })}
+                    >
                       Create New
                     </Dropdown.Item>
+                    <AddLabelModal
+                      show={this.state.modalShow}
+                      onHide={() => this.setState({ modalShow: false })}
+                    ></AddLabelModal>
                   </Dropdown.Menu>
                 </Dropdown>
                 <li className="navbar-item">
