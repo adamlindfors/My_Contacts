@@ -21,8 +21,7 @@ router.route("/add").post((req, res) => {
   const phoneNumber = Number(req.body.phoneNumber);
   const favorite = false;
   const image = req.body.image;
-
-  console.log(req.query.subID);
+  const label = req.body.label;
 
   const newContact = {
     name,
@@ -30,6 +29,7 @@ router.route("/add").post((req, res) => {
     phoneNumber,
     favorite,
     image,
+    label,
   };
 
   User.findOne({ tokenID: req.query.subID }).then((user) => {

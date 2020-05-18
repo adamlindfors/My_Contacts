@@ -149,6 +149,8 @@ class ContactList extends Component {
 
   render() {
     let filteredContacts = this.filter();
+
+    //If we search for contacts
     if (this.props.contactReducer.search !== "") {
       if (this.contactList(filteredContacts).length === 0)
         return (
@@ -162,7 +164,10 @@ class ContactList extends Component {
             <Row>{this.contactList(filteredContacts)}</Row>
           </div>
         );
-    } else
+    }
+
+    //Normal view - No search
+    else
       return (
         <div>
           <div className="container">
