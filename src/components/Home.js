@@ -40,7 +40,8 @@ class Home extends Component {
     if (this.props.authReducer.authenticated === null) return null;
     const mainContent = this.props.authReducer.subID ? (
       <div>
-        {this.props.contactReducer.search === "" ? (
+        {this.props.contactReducer.search === "" &&
+        this.props.contactReducer.label === "" ? (
           <h1>
             <User />
           </h1>

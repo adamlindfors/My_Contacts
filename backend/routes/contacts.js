@@ -46,7 +46,6 @@ router.route("/contact/:id").get((req, res) => {
   User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) {
       contact = user.contacts.filter((contact) => contact._id == req.params.id);
-      //console.log(contact[0]);
       res.json(contact[0]);
     }
   });
@@ -54,10 +53,6 @@ router.route("/contact/:id").get((req, res) => {
 
 //Delete contact by ID
 router.route("/:id").delete((req, res) => {
-  console.log(req.query);
-
-  console.log(req.query.subID);
-
   User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) {
       user.contacts = user.contacts.filter(
@@ -106,9 +101,6 @@ router.route("/togglefavorite/:id").post((req, res) => {
 
 //addUserImage
 router.route("/addUserImage").post((req, res) => {
-  console.log(req.query.subID);
-  console.log(req.body);
-
   User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) user.image = req.body.image;
     user
@@ -120,7 +112,6 @@ router.route("/addUserImage").post((req, res) => {
 
 //getUserImage
 router.route("/getUserImage/").get((req, res) => {
-  console.log(req.query.subID);
   User.findOne({ tokenID: req.query.subID })
     .then((userData) => {
       if (userData.image) res.json(userData.image);
@@ -129,8 +120,6 @@ router.route("/getUserImage/").get((req, res) => {
 });
 
 router.route("/addLabel").post((req, res) => {
-  console.log(req.query.subID);
-  console.log(req.body.label);
   User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) user.labels.push(req.body.label);
     user
@@ -141,8 +130,6 @@ router.route("/addLabel").post((req, res) => {
 });
 
 router.route("/getLabels").get((req, res) => {
-  console.log("LABELS");
-  console.log(req.query.subID);
   User.findOne({ tokenID: req.query.subID })
     .then((userData) => {
       if (userData) res.json(userData.labels);

@@ -6,6 +6,7 @@ import {
   logoutContacts,
   searchContact,
   getLabels,
+  setLabel,
 } from "../actions/contactActions";
 import { userLogin, userLogout } from "../actions/authActions";
 import PropTypes from "prop-types";
@@ -71,13 +72,16 @@ class Navbar extends Component {
                       return (
                         <Dropdown.Item
                           key={label}
-                          onClick={() => this.props.searchContact(label)}
+                          onClick={() => this.props.setLabel(label)}
                         >
                           {label}
                         </Dropdown.Item>
                       );
                     })}
                     <Dropdown.Divider />
+                    <Dropdown.Item onClick={() => this.props.setLabel("")}>
+                      Show All
+                    </Dropdown.Item>
                     <Dropdown.Item
                       onClick={() => this.setState({ labelModalShow: true })}
                     >
@@ -151,4 +155,5 @@ export default connect(mapStateToProps, {
   logoutContacts,
   searchContact,
   getLabels,
+  setLabel,
 })(withAuth(Navbar));

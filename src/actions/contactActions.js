@@ -9,6 +9,7 @@ import {
   SEARCH_CONTACT,
   ADD_LABEL,
   GET_LABELS,
+  SET_LABEL,
 } from "./types";
 
 export const getContacts = (subID) => (dispatch) => {
@@ -76,6 +77,13 @@ export const searchContact = (search) => (dispatch) => {
   dispatch({
     type: SEARCH_CONTACT,
     payload: search,
+  });
+};
+
+export const setLabel = (label) => (dispatch) => {
+  dispatch({
+    type: SET_LABEL,
+    payload: label,
   });
 };
 

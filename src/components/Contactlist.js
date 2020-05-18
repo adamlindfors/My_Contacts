@@ -129,6 +129,20 @@ class ContactList extends Component {
     });
   };
 
+  group = (filteredContacts) => {
+    return filteredContacts.map((currentContact) => {
+      if (currentContact.label === this.props.contactReducer.label)
+        return (
+          <Contact
+            contact={currentContact}
+            deleteContact={this.onDeleteContact}
+            toggleFavorite={this.onToggleFavorite}
+            key={currentContact._id}
+          />
+        );
+    });
+  };
+
   isFavorite = (contact) => contact.favorite === true;
 
   filter = () => {
@@ -164,6 +178,20 @@ class ContactList extends Component {
             <Row>{this.contactList(filteredContacts)}</Row>
           </div>
         );
+    }
+
+    //If we sort by label
+    else if (this.props.contactReducer.label !== "") {
+      return (
+        <div>
+          <div className="container">
+            <div className="text-center">
+              <h1>{this.props.contactReducer.label}</h1>
+              <Row>{this.group(filteredContacts)}</Row>
+            </div>
+          </div>
+        </div>
+      );
     }
 
     //Normal view - No search
