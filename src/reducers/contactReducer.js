@@ -7,6 +7,7 @@ import {
   FAVORITE_CONTACT,
   SEARCH_CONTACT,
   ADD_LABEL,
+  GET_LABELS,
 } from "../actions/types";
 
 const initialState = {
@@ -55,6 +56,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         labels: [action.payload, ...state.labels],
+      };
+
+    case GET_LABELS:
+      return {
+        ...state,
+        labels: action.payload,
       };
 
     case CONTACTS_LOADING:

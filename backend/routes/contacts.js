@@ -140,5 +140,15 @@ router.route("/addLabel").post((req, res) => {
   });
 });
 
+router.route("/getLabels").get((req, res) => {
+  console.log("LABELS");
+  console.log(req.query.subID);
+  User.findOne({ tokenID: req.query.subID })
+    .then((userData) => {
+      if (userData) res.json(userData.labels);
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
 //Export the router
 module.exports = router;

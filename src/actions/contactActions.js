@@ -8,6 +8,7 @@ import {
   FAVORITE_CONTACT,
   SEARCH_CONTACT,
   ADD_LABEL,
+  GET_LABELS,
 } from "./types";
 
 export const getContacts = (subID) => (dispatch) => {
@@ -36,9 +37,6 @@ export const deleteContact = (id, subID) => (dispatch) => {
 };
 
 export const toggleFavorite = (id, subID) => (dispatch) => {
-  console.log("Before axios");
-  console.log(id);
-  console.log(subID);
   axios
     .post("/contacts/togglefavorite/" + id, { subID })
     .then((res) =>
@@ -51,7 +49,6 @@ export const toggleFavorite = (id, subID) => (dispatch) => {
 };
 
 export const addContact = (contact, subID) => (dispatch) => {
-  console.log(subID);
   axios
     .post("/contacts/add", contact, { params: { subID } })
     .then((res) =>
@@ -83,7 +80,6 @@ export const searchContact = (search) => (dispatch) => {
 };
 
 export const addLabel = (label, subID) => (dispatch) => {
-  console.log(label);
   axios
     .post("/contacts/addLabel", { label }, { params: { subID } })
     .then((res) =>
@@ -92,5 +88,21 @@ export const addLabel = (label, subID) => (dispatch) => {
         payload: label,
       })
     )
+    .catch((err) => console.log(err));
+};
+
+export const getLabels = (subID) => (dispatch) => {
+  console.log("BEFORE AXIOS GETLABELS");
+  console.log(subID);
+  //dispatch(setContactsLoading());
+  axios
+    .get("/contacts/getLabels", { params: { subID } })
+    .then((res) => {
+      console.log(res);
+      dispatch({
+        type: GET_LABELS,
+        payload: res.data,
+      });
+    })
     .catch((err) => console.log(err));
 };

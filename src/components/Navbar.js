@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "@okta/okta-react";
 import { connect } from "react-redux";
-import { logoutContacts, searchContact } from "../actions/contactActions";
+import {
+  logoutContacts,
+  searchContact,
+  getLabels,
+} from "../actions/contactActions";
 import { userLogin, userLogout } from "../actions/authActions";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,6 +31,12 @@ class Navbar extends Component {
   onChangeSearch = (e) => {
     this.props.searchContact(e.target.value);
   };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.authReducer.subID !== this.props.authReducer.subID) {
+      this.props.getLabels(this.props.authReducer.subID);
+    }
+  }
 
   render() {
     return (
@@ -140,4 +150,5 @@ export default connect(mapStateToProps, {
   userLogout,
   logoutContacts,
   searchContact,
+  getLabels,
 })(withAuth(Navbar));
