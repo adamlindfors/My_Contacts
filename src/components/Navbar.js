@@ -15,9 +15,10 @@ import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import ContactsLogo from "../assets/Contacts.png";
 import Dropdown from "react-bootstrap/Dropdown";
 import AddLabelModal from "../modals/AddLabelModal";
+import DeleteLabelModal from "../modals/DeleteLabelModal";
 
 class Navbar extends Component {
-  state = { labelModalShow: false };
+  state = { labelModalShow: false, deleteLabelModalShow: false };
 
   login = async () => {
     this.props.auth.login("/");
@@ -83,9 +84,22 @@ class Navbar extends Component {
                       Show All
                     </Dropdown.Item>
                     <Dropdown.Item
+                      onClick={() =>
+                        this.setState({ deleteLabelModalShow: true })
+                      }
+                    >
+                      Delete a Group
+                    </Dropdown.Item>
+                    <DeleteLabelModal
+                      show={this.state.deleteLabelModalShow}
+                      onHide={() =>
+                        this.setState({ deleteLabelModalShow: false })
+                      }
+                    ></DeleteLabelModal>
+                    <Dropdown.Item
                       onClick={() => this.setState({ labelModalShow: true })}
                     >
-                      Create New
+                      Create New Group
                     </Dropdown.Item>
                     <AddLabelModal
                       show={this.state.labelModalShow}

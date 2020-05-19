@@ -28,7 +28,7 @@ class AddLabelModal extends Component {
       <div>
         <Modal show={this.props.show} onHide={this.props.onHide} centered>
           <Modal.Header closeButton>
-            <Modal.Title>Add new label</Modal.Title>
+            <Modal.Title>Add new group</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="form-group">

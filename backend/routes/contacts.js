@@ -52,7 +52,7 @@ router.route("/contact/:id").get((req, res) => {
 });
 
 //Delete contact by ID
-router.route("/:id").delete((req, res) => {
+router.route("/deleteContact/:id").delete((req, res) => {
   User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) {
       user.contacts = user.contacts.filter(
@@ -120,12 +120,28 @@ router.route("/getUserImage/").get((req, res) => {
 });
 
 router.route("/addLabel").post((req, res) => {
+  console.log("Hello");
   User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) user.labels.push(req.body.label);
     user
       .save()
       .then(() => res.json("Contact updated!"))
       .catch((err) => res.status(400).json("Error: " + err));
+  });
+});
+
+//Delete Label
+router.route("/deletelabel").delete((req, res) => {
+  console.log("Delete label");
+  User.findOne({ tokenID: req.query.subID }).then((user) => {
+    if (user) {
+      user.labels = user.labels.filter((label) => label !== req.query.label);
+
+      user
+        .save()
+        .then(() => res.json("Label deleted!"))
+        .catch((err) => res.status(400).json("Error: " + err));
+    }
   });
 });
 

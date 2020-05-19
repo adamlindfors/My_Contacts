@@ -9,6 +9,7 @@ import {
   ADD_LABEL,
   GET_LABELS,
   SET_LABEL,
+  DELETE_LABEL,
 } from "../actions/types";
 
 const initialState = {
@@ -70,6 +71,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         labels: action.payload,
+      };
+
+    case DELETE_LABEL:
+      return {
+        ...state,
+        labels: state.labels.filter((label) => label !== action.payload),
       };
 
     case CONTACTS_LOADING:

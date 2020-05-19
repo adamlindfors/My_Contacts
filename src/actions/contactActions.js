@@ -10,6 +10,7 @@ import {
   ADD_LABEL,
   GET_LABELS,
   SET_LABEL,
+  DELETE_LABEL,
 } from "./types";
 
 export const getContacts = (subID) => (dispatch) => {
@@ -27,7 +28,7 @@ export const getContacts = (subID) => (dispatch) => {
 
 export const deleteContact = (id, subID) => (dispatch) => {
   axios
-    .delete("/contacts/" + id, { params: { subID } })
+    .delete("/contacts/deleteContact/" + id, { params: { subID } })
     .then((res) =>
       dispatch({
         type: DELETE_CONTACT,
@@ -85,6 +86,18 @@ export const setLabel = (label) => (dispatch) => {
     type: SET_LABEL,
     payload: label,
   });
+};
+
+export const deleteLabel = (label, subID) => (dispatch) => {
+  console.log("Before delete axios");
+  axios
+    .delete("/contacts/deletelabel", { params: { label, subID } })
+    .then((res) =>
+      dispatch({
+        type: DELETE_LABEL,
+        payload: label,
+      })
+    );
 };
 
 export const addLabel = (label, subID) => (dispatch) => {
