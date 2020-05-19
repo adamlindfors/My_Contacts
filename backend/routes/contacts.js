@@ -137,6 +137,15 @@ router.route("/deletelabel").delete((req, res) => {
     if (user) {
       user.labels = user.labels.filter((label) => label !== req.query.label);
 
+      user.contacts.forEach((contact) => {
+        if (contact.label) {
+          console.log(contact.label);
+          if (contact.label === req.query.label) {
+            contact.label = "";
+          }
+        }
+      });
+
       user
         .save()
         .then(() => res.json("Label deleted!"))
