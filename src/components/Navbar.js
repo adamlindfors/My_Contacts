@@ -72,6 +72,11 @@ class Navbar extends Component {
                     {this.props.contactReducer.labels.map((label) => {
                       return (
                         <Dropdown.Item
+                          active={
+                            label === this.props.contactReducer.label
+                              ? true
+                              : false
+                          }
                           key={label}
                           onClick={() => this.props.setLabel(label)}
                         >
