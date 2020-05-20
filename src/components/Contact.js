@@ -18,8 +18,10 @@ import {
 } from "reactstrap";
 import { faHeart as farFaHeart } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
+import DeleteContactModal from "../modals/DeleteContactModal";
 
 class Contact extends Component {
+  state = { deleteContactModalShow: false };
   render() {
     return (
       <Col xs="3" style={{ padding: "1%" }}>
@@ -66,14 +68,23 @@ class Contact extends Component {
                 )}{" "}
               </a>
               <a
-                style={{ color: "black", textDecoration: "none" }}
-                href=""
-                onClick={() => {
-                  this.props.deleteContact(this.props.contact._id);
+                style={{
+                  color: "black",
+                  textDecoration: "none",
+                  cursor: "pointer",
                 }}
+                onClick={() => this.setState({ deleteContactModalShow: true })}
               >
                 <FontAwesomeIcon icon={faTrashAlt} /> {"  "}
               </a>
+              <DeleteContactModal
+                show={this.state.deleteContactModalShow}
+                onHide={() => this.setState({ deleteContactModalShow: false })}
+                name={this.props.contact.name}
+                onDelete={() =>
+                  this.props.deleteContact(this.props.contact._id)
+                }
+              ></DeleteContactModal>
             </CardFooter>
           </Card>
         </div>

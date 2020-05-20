@@ -26,40 +26,20 @@ class DeleteLabelModal extends Component {
       <div>
         <Modal show={this.props.show} onHide={this.props.onHide} centered>
           <Modal.Header closeButton>
-            <Modal.Title>Delete a Group</Modal.Title>
+            <Modal.Title>Delete contact</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="form-group">
-              <label>Group</label>
-              <select
-                ref="userInput"
-                className="form-control"
-                value={this.state.label}
-                onChange={this.onChangeLabel}
-              >
-                {this.props.contactReducer.labels.map((label) => {
-                  return (
-                    <option key={label} value={label}>
-                      {label}
-                    </option>
-                  );
-                })}
-              </select>
+              <label>
+                Do you want to delete {this.props.name} from your contacts?
+              </label>
             </div>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.props.onHide}>
               Cancel
             </Button>
-            <Button
-              variant="danger"
-              onClick={() =>
-                this.props.deleteLabel(
-                  this.state.label,
-                  this.props.authReducer.subID
-                )
-              }
-            >
+            <Button variant="danger" onClick={this.props.onDelete}>
               Delete
             </Button>
           </Modal.Footer>

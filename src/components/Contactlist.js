@@ -15,9 +15,7 @@ class ContactList extends Component {
   }
 
   onDeleteContact = (id) => {
-    if (window.confirm("Do you want to delete this contact?")) {
-      this.props.deleteContact(id, this.props.authReducer.subID);
-    }
+    this.props.deleteContact(id, this.props.authReducer.subID);
   };
 
   onToggleFavorite = (id) => {
@@ -108,10 +106,8 @@ class ContactList extends Component {
       return (
         <div>
           <div className="container">
-            <div className="text-center">
-              <h1>{this.props.contactReducer.label}</h1>
-              <Row>{this.group(filteredContacts)}</Row>
-            </div>
+            <h1>{this.props.contactReducer.label}</h1>
+            <Row>{this.group(filteredContacts)}</Row>
           </div>
         </div>
       );
@@ -123,12 +119,16 @@ class ContactList extends Component {
         <div>
           <div className="container">
             {filteredContacts.some(this.isFavorite) ? (
-              <h3 className="text-center">Favorites</h3>
+              <h3>
+                Favorites <hr />
+              </h3>
             ) : (
               ""
             )}
             <Row>{this.favorites(filteredContacts)}</Row>
-            <h3 className="text-center">Contacts</h3>
+            <h3>
+              Contacts <hr />
+            </h3>
             <Row>{this.contactList(filteredContacts)}</Row>
           </div>
         </div>
