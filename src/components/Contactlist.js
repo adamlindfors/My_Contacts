@@ -1,90 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import {
   getContacts,
   deleteContact,
   toggleFavorite,
 } from "../actions/contactActions";
 import PropTypes from "prop-types";
-import {
-  Card,
-  CardImg,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  CardText,
-  CardFooter,
-} from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUser,
-  faMapMarkedAlt,
-  faPhoneAlt,
-  faTrashAlt,
-  faHeart as fasFaHeart,
-} from "@fortawesome/free-solid-svg-icons";
-import { faHeart as farFaHeart } from "@fortawesome/free-regular-svg-icons";
-
-const Contact = (props) => (
-  <Col xs="3" style={{ padding: "1%" }}>
-    <div>
-      <Card>
-        <Link to={"/edit/" + props.contact._id}>
-          <CardImg
-            top
-            width="100%"
-            src={
-              props.contact.image
-                ? "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_thumb,w_300,h_350/" +
-                  props.contact.image
-                : "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_thumb,w_300,h_350/https://res.cloudinary.com/mycontacts/image/upload/v1589640571/myContacts/g1gk0riburccmbjzxgzr.png"
-            }
-            alt="Card image cap"
-          />
-        </Link>
-        <CardBody>
-          <CardTitle>
-            <FontAwesomeIcon icon={faUser} /> {props.contact.name}
-          </CardTitle>
-          <CardText>
-            <FontAwesomeIcon icon={faPhoneAlt} />
-            {props.contact.phoneNumber}
-          </CardText>
-          <CardText>
-            <FontAwesomeIcon icon={faMapMarkedAlt} />
-            {props.contact.address}
-          </CardText>
-        </CardBody>
-        <CardFooter className="text-muted text-right">
-          <a
-            style={{ color: "black", textDecoration: "none" }}
-            href=""
-            onClick={() => {
-              props.toggleFavorite(props.contact._id);
-            }}
-          >
-            {props.contact.favorite ? (
-              <FontAwesomeIcon icon={fasFaHeart} />
-            ) : (
-              <FontAwesomeIcon icon={farFaHeart} />
-            )}{" "}
-          </a>
-          <a
-            style={{ color: "black", textDecoration: "none" }}
-            href=""
-            onClick={() => {
-              props.deleteContact(props.contact._id);
-            }}
-          >
-            <FontAwesomeIcon icon={faTrashAlt} /> {"  "}
-          </a>
-        </CardFooter>
-      </Card>
-    </div>
-  </Col>
-);
+import { Row } from "reactstrap";
+import Contact from "./Contact";
 
 class ContactList extends Component {
   componentDidMount() {
