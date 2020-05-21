@@ -36,3 +36,42 @@
     transform: rotate(360deg);
   }
 }
+input[type="text-form"],
+select.form-control {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #000000;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+input[type="text-form"]:focus,
+select.form-control:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+input[type="text-form"]:disabled {
+  background: rgba(255, 255, 255, 1);
+  border-bottom: 0px solid #000000;
+}
+
+input[type="text-name"],
+.form-control-lg {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #000000;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 0;
+  font-size: 4rem !important;
+}
+input[type="text-name"]:disabled {
+  background: rgba(255, 255, 255, 1);
+  border-bottom: 0px solid #000000;
+}
+input[type="text-name"]:focus,
+select.form-control:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}

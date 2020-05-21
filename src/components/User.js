@@ -22,12 +22,10 @@ class User extends Component {
   };
   passBody = () => {
     return (
-      <a style={{ color: "black", textDecoration: "none" }} href="">
-        <FontAwesomeIcon
-          icon={faCamera}
-          className="fas fa-camera fa-sm"
-        ></FontAwesomeIcon>
-      </a>
+      <FontAwesomeIcon
+        icon={faCamera}
+        className="fas fa-camera fa-sm"
+      ></FontAwesomeIcon>
     );
   };
   render() {

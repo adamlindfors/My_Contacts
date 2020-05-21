@@ -23,7 +23,12 @@ class ImageUploaderWidget extends Component {
 
   render() {
     return (
-      <a id="upload_widget" onClick={this.onClick}>
+      <a
+        href=""
+        id="upload_widget"
+        onClick={this.onClick}
+        style={{ color: "black", textDecoration: "none" }}
+      >
         {this.props.passBody()}
       </a>
     );
