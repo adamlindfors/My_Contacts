@@ -11,9 +11,10 @@ const userSchema = new Schema({
       phoneNumber: { type: Number },
       favorite: { type: Boolean },
       image: { type: String },
+      label: { type: String },
     },
   ],
-  labels: [],
+  labels: [String],
 });
 
 //Create the model contact

@@ -12,6 +12,7 @@ class CreateContact extends Component {
     address: "",
     phoneNumber: 0,
     image: "",
+    label: "No Label",
   };
 
   checkAuthentication = async () => {
@@ -30,6 +31,7 @@ class CreateContact extends Component {
 
   async componentDidUpdate() {
     this.checkAuthentication();
+    console.log(this.state.label);
   }
 
   onChangeName = (e) => {
@@ -50,6 +52,12 @@ class CreateContact extends Component {
     });
   };
 
+  onChangeLabel = (e) => {
+    this.setState({
+      label: e.target.value,
+    });
+  };
+
   onImageSuccess = async (res) => {
     await res;
     this.setState({
@@ -59,16 +67,14 @@ class CreateContact extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-
     const newContact = {
       name: this.state.name,
       address: this.state.address,
       phoneNumber: this.state.phoneNumber,
       image: this.state.image,
+      label: this.state.label,
     };
-
     this.props.addContact(newContact, this.props.authReducer.subID);
-
     window.location = "/";
   };
 
@@ -110,7 +116,24 @@ class CreateContact extends Component {
               onChange={this.onChangePhoneNumber}
             />
           </div>
-
+          <div className="form-group">
+            <label>Group</label>
+            <select
+              ref="userInput"
+              className="form-control"
+              value={this.state.label}
+              onChange={this.onChangeLabel}
+            >
+              <option>No label</option>
+              {this.props.contactReducer.labels.map((label) => {
+                return (
+                  <option key={label} value={label}>
+                    {label}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
           <div className="form-group">
             <input
               type="submit"
