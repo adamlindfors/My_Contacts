@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import {
   logoutContacts,
   searchContact,
-  addLabel,
+  getLabels,
+  setLabel,
 } from "../actions/contactActions";
 import { userLogin, userLogout } from "../actions/authActions";
 import PropTypes from "prop-types";
@@ -13,8 +14,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import ContactsLogo from "../assets/Contacts.png";
 import Dropdown from "react-bootstrap/Dropdown";
+import AddLabelModal from "../modals/AddLabelModal";
+import DeleteLabelModal from "../modals/DeleteLabelModal";
 
 class Navbar extends Component {
+  state = { labelModalShow: false, deleteLabelModalShow: false };
+
   login = async () => {
     this.props.auth.login("/");
   };
@@ -29,10 +34,15 @@ class Navbar extends Component {
     this.props.searchContact(e.target.value);
   };
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.authReducer.subID !== this.props.authReducer.subID) {
+      this.props.getLabels(this.props.authReducer.subID);
+    }
+  }
+
   render() {
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
-        {/* Försvinner när man loggar in */}
         <a className="navbar-brand" href="">
           <img src={ContactsLogo} alt="logo" style={{ width: "35px" }} />
         </a>
@@ -62,17 +72,44 @@ class Navbar extends Component {
                     {this.props.contactReducer.labels.map((label) => {
                       return (
                         <Dropdown.Item
+                          active={
+                            label === this.props.contactReducer.label
+                              ? true
+                              : false
+                          }
                           key={label}
-                          onClick={() => this.props.searchContact(label)}
+                          onClick={() => this.props.setLabel(label)}
                         >
                           {label}
                         </Dropdown.Item>
                       );
                     })}
                     <Dropdown.Divider />
-                    <Dropdown.Item onClick={() => this.props.addLabel("Test2")}>
-                      Create New
+                    <Dropdown.Item onClick={() => this.props.setLabel("")}>
+                      Show All
                     </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() =>
+                        this.setState({ deleteLabelModalShow: true })
+                      }
+                    >
+                      Delete a Group
+                    </Dropdown.Item>
+                    <DeleteLabelModal
+                      show={this.state.deleteLabelModalShow}
+                      onHide={() =>
+                        this.setState({ deleteLabelModalShow: false })
+                      }
+                    ></DeleteLabelModal>
+                    <Dropdown.Item
+                      onClick={() => this.setState({ labelModalShow: true })}
+                    >
+                      Add New Group
+                    </Dropdown.Item>
+                    <AddLabelModal
+                      show={this.state.labelModalShow}
+                      onHide={() => this.setState({ labelModalShow: false })}
+                    ></AddLabelModal>
                   </Dropdown.Menu>
                 </Dropdown>
                 <li className="navbar-item">
@@ -136,5 +173,6 @@ export default connect(mapStateToProps, {
   userLogout,
   logoutContacts,
   searchContact,
-  addLabel,
+  getLabels,
+  setLabel,
 })(withAuth(Navbar));

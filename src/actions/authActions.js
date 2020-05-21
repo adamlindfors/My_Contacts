@@ -28,8 +28,6 @@ export const setAuth = (auth) => (dispatch) => {
 };
 
 export const addUserImage = (image, subID) => (dispatch) => {
-  console.log(image);
-  //console.log(subID);
   axios
     .post("/contacts/addUserImage", { image }, { params: { subID } })
     .then((res) =>
@@ -42,7 +40,6 @@ export const addUserImage = (image, subID) => (dispatch) => {
 };
 
 export const getUserImage = (subID) => (dispatch) => {
-  console.log("Innan axioss");
   axios
     .get("/contacts/getUserImage/", { params: { subID } })
     .then((res) =>

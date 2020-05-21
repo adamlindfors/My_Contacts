@@ -7,6 +7,9 @@ import {
   FAVORITE_CONTACT,
   SEARCH_CONTACT,
   ADD_LABEL,
+  GET_LABELS,
+  SET_LABEL,
+  DELETE_LABEL,
 } from "../actions/types";
 
 const initialState = {
@@ -14,6 +17,7 @@ const initialState = {
   loading: false,
   search: "",
   labels: [],
+  label: "",
 };
 
 export default function (state = initialState, action) {
@@ -55,6 +59,24 @@ export default function (state = initialState, action) {
       return {
         ...state,
         labels: [action.payload, ...state.labels],
+      };
+
+    case SET_LABEL:
+      return {
+        ...state,
+        label: action.payload,
+      };
+
+    case GET_LABELS:
+      return {
+        ...state,
+        labels: action.payload,
+      };
+
+    case DELETE_LABEL:
+      return {
+        ...state,
+        labels: state.labels.filter((label) => label !== action.payload),
       };
 
     case CONTACTS_LOADING:

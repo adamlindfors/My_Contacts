@@ -1,90 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import {
   getContacts,
   deleteContact,
   toggleFavorite,
 } from "../actions/contactActions";
 import PropTypes from "prop-types";
-import {
-  Card,
-  CardImg,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  CardText,
-  CardFooter,
-} from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUser,
-  faMapMarkedAlt,
-  faPhoneAlt,
-  faTrashAlt,
-  faHeart as fasFaHeart,
-} from "@fortawesome/free-solid-svg-icons";
-import { faHeart as farFaHeart } from "@fortawesome/free-regular-svg-icons";
-
-const Contact = (props) => (
-  <Col xs="3" style={{ padding: "1%" }}>
-    <div>
-      <Card>
-        <Link to={"/edit/" + props.contact._id}>
-          <CardImg
-            top
-            width="100%"
-            src={
-              props.contact.image
-                ? "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_thumb,w_300,h_350/" +
-                  props.contact.image
-                : "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_thumb,w_300,h_350/https://res.cloudinary.com/mycontacts/image/upload/v1589640571/myContacts/g1gk0riburccmbjzxgzr.png"
-            }
-            alt="Card image cap"
-          />
-        </Link>
-        <CardBody>
-          <CardTitle>
-            <FontAwesomeIcon icon={faUser} /> {props.contact.name}
-          </CardTitle>
-          <CardText>
-            <FontAwesomeIcon icon={faPhoneAlt} />
-            {props.contact.phoneNumber}
-          </CardText>
-          <CardText>
-            <FontAwesomeIcon icon={faMapMarkedAlt} />
-            {props.contact.address}
-          </CardText>
-        </CardBody>
-        <CardFooter className="text-muted text-right">
-          <a
-            style={{ color: "black", textDecoration: "none" }}
-            href=""
-            onClick={() => {
-              props.toggleFavorite(props.contact._id);
-            }}
-          >
-            {props.contact.favorite ? (
-              <FontAwesomeIcon icon={fasFaHeart} />
-            ) : (
-              <FontAwesomeIcon icon={farFaHeart} />
-            )}{" "}
-          </a>
-          <a
-            style={{ color: "black", textDecoration: "none" }}
-            href=""
-            onClick={() => {
-              props.deleteContact(props.contact._id);
-            }}
-          >
-            <FontAwesomeIcon icon={faTrashAlt} /> {"  "}
-          </a>
-        </CardFooter>
-      </Card>
-    </div>
-  </Col>
-);
+import { Row } from "reactstrap";
+import Contact from "./Contact";
 
 class ContactList extends Component {
   componentDidMount() {
@@ -92,9 +15,7 @@ class ContactList extends Component {
   }
 
   onDeleteContact = (id) => {
-    if (window.confirm("Do you want to delete this contact?")) {
-      this.props.deleteContact(id, this.props.authReducer.subID);
-    }
+    this.props.deleteContact(id, this.props.authReducer.subID);
   };
 
   onToggleFavorite = (id) => {
@@ -129,6 +50,20 @@ class ContactList extends Component {
     });
   };
 
+  group = (filteredContacts) => {
+    return filteredContacts.map((currentContact) => {
+      if (currentContact.label === this.props.contactReducer.label)
+        return (
+          <Contact
+            contact={currentContact}
+            deleteContact={this.onDeleteContact}
+            toggleFavorite={this.onToggleFavorite}
+            key={currentContact._id}
+          />
+        );
+    });
+  };
+
   isFavorite = (contact) => contact.favorite === true;
 
   filter = () => {
@@ -149,6 +84,8 @@ class ContactList extends Component {
 
   render() {
     let filteredContacts = this.filter();
+
+    //If we search for contacts
     if (this.props.contactReducer.search !== "") {
       if (this.contactList(filteredContacts).length === 0)
         return (
@@ -162,17 +99,36 @@ class ContactList extends Component {
             <Row>{this.contactList(filteredContacts)}</Row>
           </div>
         );
-    } else
+    }
+
+    //If we sort by label
+    else if (this.props.contactReducer.label !== "") {
+      return (
+        <div>
+          <div className="container">
+            <h1>{this.props.contactReducer.label}</h1>
+            <Row>{this.group(filteredContacts)}</Row>
+          </div>
+        </div>
+      );
+    }
+
+    //Normal view - No search
+    else
       return (
         <div>
           <div className="container">
             {filteredContacts.some(this.isFavorite) ? (
-              <h3 className="text-center">Favorites</h3>
+              <h3>
+                Favorites <hr />
+              </h3>
             ) : (
               ""
             )}
             <Row>{this.favorites(filteredContacts)}</Row>
-            <h3 className="text-center">Contacts</h3>
+            <h3>
+              Contacts <hr />
+            </h3>
             <Row>{this.contactList(filteredContacts)}</Row>
           </div>
         </div>

@@ -10,6 +10,7 @@ class User extends Component {
   componentDidMount() {
     this.props.getUserImage(this.props.authReducer.subID);
   }
+
   componentDidUpdate(prevProps) {
     if (prevProps.authReducer.image !== this.props.authReducer.image) {
       this.props.getUserImage(this.props.authReducer.subID);
