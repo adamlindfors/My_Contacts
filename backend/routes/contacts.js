@@ -120,7 +120,6 @@ router.route("/getUserImage/").get((req, res) => {
 });
 
 router.route("/addLabel").post((req, res) => {
-  console.log("Hello");
   User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) user.labels.push(req.body.label);
     user
@@ -132,14 +131,12 @@ router.route("/addLabel").post((req, res) => {
 
 //Delete Label
 router.route("/deletelabel").delete((req, res) => {
-  console.log("Delete label");
   User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) {
       user.labels = user.labels.filter((label) => label !== req.query.label);
 
       user.contacts.forEach((contact) => {
         if (contact.label) {
-          console.log(contact.label);
           if (contact.label === req.query.label) {
             contact.label = "";
           }

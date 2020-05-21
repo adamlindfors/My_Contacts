@@ -104,7 +104,7 @@ class Navbar extends Component {
                     <Dropdown.Item
                       onClick={() => this.setState({ labelModalShow: true })}
                     >
-                      Create New Group
+                      Add New Group
                     </Dropdown.Item>
                     <AddLabelModal
                       show={this.state.labelModalShow}

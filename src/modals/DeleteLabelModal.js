@@ -53,12 +53,13 @@ class DeleteLabelModal extends Component {
             </Button>
             <Button
               variant="danger"
-              onClick={() =>
+              onClick={() => {
                 this.props.deleteLabel(
                   this.state.label,
                   this.props.authReducer.subID
-                )
-              }
+                );
+                this.props.onHide();
+              }}
             >
               Delete
             </Button>
