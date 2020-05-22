@@ -286,6 +286,12 @@ class EditContact extends Component {
                   title={"Number"}
                 />
                 <InfoCard
+                  info={this.state.email}
+                  icon={faEnvelope}
+                  onChange={this.onChangeEmail}
+                  title={"Email"}
+                />
+                <InfoCard
                   info={this.state.birthday}
                   icon={faBirthdayCake}
                   onChange={this.onChangeBirthday}
@@ -296,12 +302,6 @@ class EditContact extends Component {
                   icon={faBriefcase}
                   onChange={this.onChangeWork}
                   title={"Work"}
-                />
-                <InfoCard
-                  info={this.state.email}
-                  icon={faEnvelope}
-                  onChange={this.onChangeEmail}
-                  title={"Email"}
                 />
               </div>
               <div className="text-center">
