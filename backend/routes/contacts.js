@@ -21,6 +21,9 @@ router.route("/add").post((req, res) => {
   const phoneNumber = Number(req.body.phoneNumber);
   const favorite = false;
   const image = req.body.image;
+  const work = req.body.work;
+  const email = req.body.email;
+  const birthday = req.body.birthday;
   const label = req.body.label;
 
   const newContact = {
@@ -29,6 +32,9 @@ router.route("/add").post((req, res) => {
     phoneNumber,
     favorite,
     image,
+    work,
+    email,
+    birthday,
     label,
   };
 
@@ -76,6 +82,9 @@ router.route("/update/:id").post((req, res) => {
       contact[0].address = req.body.address;
       contact[0].phoneNumber = req.body.phoneNumber;
       contact[0].image = req.body.image;
+      contact[0].work = req.body.work;
+      contact[0].email = req.body.email;
+      contact[0].birthday = req.body.birthday;
 
       user
         .save()

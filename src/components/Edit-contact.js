@@ -33,6 +33,7 @@ const InfoCard = (props) => (
           <div className="text-center">
             <h2>
               <FontAwesomeIcon icon={props.icon}></FontAwesomeIcon>
+              {"  " + props.title}
             </h2>
           </div>
         </CardTitle>
@@ -40,10 +41,9 @@ const InfoCard = (props) => (
       <CardBody>
         <input
           type="text-form"
-          required
           className="form-control"
           value={props.info}
-          onChange={props.onChangeAddress}
+          onChange={props.onChange}
         />
       </CardBody>
     </Card>
@@ -56,6 +56,9 @@ class EditContact extends Component {
     address: "",
     phoneNumber: 0,
     image: "",
+    work: "",
+    email: "",
+    birthday: "",
     contactExists: false,
     disabledEdit: true,
   };
@@ -89,6 +92,9 @@ class EditContact extends Component {
           address: contact[0].address,
           phoneNumber: contact[0].phoneNumber,
           image: contact[0].image,
+          work: contact[0].work,
+          email: contact[0].email,
+          birthday: contact[0].birthday,
         });
       }
     }
@@ -103,6 +109,24 @@ class EditContact extends Component {
   onChangeAddress = (e) => {
     this.setState({
       address: e.target.value,
+    });
+  };
+
+  onChangeWork = (e) => {
+    this.setState({
+      work: e.target.value,
+    });
+  };
+
+  onChangeEmail = (e) => {
+    this.setState({
+      email: e.target.value,
+    });
+  };
+
+  onChangeBirthday = (e) => {
+    this.setState({
+      birthday: e.target.value,
     });
   };
 
@@ -252,35 +276,42 @@ class EditContact extends Component {
                 <InfoCard
                   info={this.state.address}
                   icon={faMapMarkedAlt}
-                  onChangeAddress={this.onChangeAddress}
+                  onChange={this.onChangeAddress}
+                  title={"Address"}
                 />
                 <InfoCard
                   info={this.state.phoneNumber}
                   icon={faPhoneAlt}
-                  onChangeAddress={this.onChangeAddress}
+                  onChange={this.onChangePhoneNumber}
+                  title={"Number"}
                 />
                 <InfoCard
-                  info={this.state.phoneNumber}
+                  info={this.state.birthday}
                   icon={faBirthdayCake}
-                  onChangeAddress={this.onChangeAddress}
+                  onChange={this.onChangeBirthday}
+                  title={"Birthday"}
                 />
                 <InfoCard
-                  info={this.state.phoneNumber}
+                  info={this.state.work}
                   icon={faBriefcase}
-                  onChangeAddress={this.onChangeAddress}
+                  onChange={this.onChangeWork}
+                  title={"Work"}
                 />
                 <InfoCard
-                  info={this.state.phoneNumber}
+                  info={this.state.email}
                   icon={faEnvelope}
-                  onChangeAddress={this.onChangeAddress}
+                  onChange={this.onChangeEmail}
+                  title={"Email"}
                 />
               </div>
-              <input
-                style={{ padding: "1%" }}
-                type="submit"
-                value="Save changes"
-                className="btn btn-primary"
-              />
+              <div className="text-center">
+                <input
+                  style={{ padding: "1%" }}
+                  type="submit"
+                  value="Save changes"
+                  className="btn btn-primary"
+                />
+              </div>
             </fieldset>
           </form>
         </div>

@@ -12,6 +12,9 @@ class CreateContact extends Component {
     address: "",
     phoneNumber: 0,
     image: "",
+    work: "Volvo",
+    email: "ja@gmail.com",
+    birthday: "idag",
     label: "No Label",
   };
 
@@ -73,7 +76,11 @@ class CreateContact extends Component {
       phoneNumber: this.state.phoneNumber,
       image: this.state.image,
       label: this.state.label,
+      work: this.state.work,
+      email: this.state.email,
+      birthday: this.state.birthday,
     };
+
     this.props.addContact(newContact, this.props.authReducer.subID);
     window.location = "/";
   };
