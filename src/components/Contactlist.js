@@ -6,7 +6,7 @@ import {
   toggleFavorite,
 } from "../actions/contactActions";
 import PropTypes from "prop-types";
-import { Row, Col, Container, CardDeck, Card, CardGroup } from "reactstrap";
+import { Row } from "reactstrap";
 import Contact from "./Contact";
 
 class ContactList extends Component {

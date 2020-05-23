@@ -10,6 +10,7 @@ import store from "./store";
 import Home from "./components/Home";
 import Login from "./auth/Login";
 import error404 from "./components/404";
+import "./App.css"; // Tell webpack that Button.js uses these styles
 
 function onAuthRequired({ history }) {
   history.push("/login");
@@ -20,7 +21,6 @@ function App() {
     <Provider store={store}>
       <Router>
         <Security
-          // Fixa en bättre lösning av detta
           issuer="https://dev-180699.okta.com/oauth2/default"
           client_id="0oaadg34wgFvicdmZ4x6"
           redirect_uri={window.location.origin + "/implicit/callback"}
