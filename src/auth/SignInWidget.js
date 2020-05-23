@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import OktaSignIn from "@okta/okta-signin-widget";
+//import OktaSignIn from "@okta/okta-signin-widget";
+import OktaSignIn from "@okta/okta-signin-widget/dist/js/okta-sign-in-no-jquery";
+
 import "@okta/okta-signin-widget/dist/css/okta-sign-in.min.css";
 import "@okta/okta-signin-widget/dist/css/okta-theme.css";
 
