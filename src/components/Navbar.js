@@ -68,98 +68,117 @@ class Navbar extends Component {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <Link
-                to="/"
-                className="nav-link"
-                onClick={() => this.props.setLabel("")}
-              >
-                Home
-              </Link>
-            </li>
-            {this.props.authReducer.subID ? (
+        {this.props.authReducer.subID ? (
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav mr-auto">
+              <li className="nav-item active">
+                <Link
+                  to="/"
+                  className="nav-link"
+                  onClick={() => this.props.setLabel("")}
+                >
+                  Home
+                </Link>
+              </li>
               <li className="nav-item">
                 <Link to="/create" className="nav-link">
                   Create New
                 </Link>
               </li>
-            ) : (
-              ""
-            )}
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Groups
-              </a>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                {this.props.contactReducer.labels.map((label) => {
-                  return (
-                    <button
-                      className={
-                        label === this.props.contactReducer.label
-                          ? "dropdown-item active"
-                          : "dropdown-item"
-                      }
-                      onClick={() => this.props.setLabel(label)}
-                    >
-                      {label}
-                    </button>
-                  );
-                })}
-                <div className="dropdown-divider"></div>
-                <button
-                  className="dropdown-item"
-                  onClick={() => this.props.setLabel("")}
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
                 >
-                  Show All
+                  Groups
+                </a>
+                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  {this.props.contactReducer.labels.map((label) => {
+                    return (
+                      <button
+                        className={
+                          label === this.props.contactReducer.label
+                            ? "dropdown-item active"
+                            : "dropdown-item"
+                        }
+                        onClick={() => this.props.setLabel(label)}
+                      >
+                        {label}
+                      </button>
+                    );
+                  })}
+                  <div className="dropdown-divider"></div>
+                  <button
+                    className="dropdown-item"
+                    onClick={() => this.props.setLabel("")}
+                  >
+                    Show All
+                  </button>
+                  <button
+                    className="dropdown-item"
+                    onClick={() =>
+                      this.setState({ deleteLabelModalShow: true })
+                    }
+                  >
+                    Delete a Group
+                  </button>
+                  <DeleteLabelModal
+                    show={this.state.deleteLabelModalShow}
+                    onHide={() =>
+                      this.setState({ deleteLabelModalShow: false })
+                    }
+                  ></DeleteLabelModal>
+                  <button
+                    className="dropdown-item"
+                    onClick={() => this.setState({ labelModalShow: true })}
+                  >
+                    Create New
+                  </button>
+                  <AddLabelModal
+                    show={this.state.labelModalShow}
+                    onHide={() => this.setState({ labelModalShow: false })}
+                  ></AddLabelModal>
+                </div>
+              </li>
+            </ul>
+            <form className="form-inline my-2 my-lg-0">
+              <input
+                className="form-control mr-sm-2"
+                type="text"
+                placeholder="Search"
+                aria-label="Search"
+                value={this.props.contactReducer.search}
+                onChange={this.onChangeSearch}
+                size="30"
+              />
+            </form>
+            <button className="btn my-2 my-sm-0" onClick={this.logout}>
+              Log out {"  "}
+              <FontAwesomeIcon icon={faSignOutAlt} />
+            </button>
+          </div>
+        ) : (
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <button className="btn btn my-2 my-sm-0" onClick={this.login}>
+                  Register
                 </button>
-                <button
-                  className="dropdown-item"
-                  onClick={() => this.setState({ deleteLabelModalShow: true })}
-                >
-                  Delete a Group
+              </li>
+              <li class="nav-item">
+                <button className="btn btn my-2 my-sm-0" onClick={this.login}>
+                  Sign In {"  "}
+                  <FontAwesomeIcon icon={faSignInAlt} />
                 </button>
-                <DeleteLabelModal
-                  show={this.state.deleteLabelModalShow}
-                  onHide={() => this.setState({ deleteLabelModalShow: false })}
-                ></DeleteLabelModal>
-                <button
-                  className="dropdown-item"
-                  onClick={() => this.setState({ labelModalShow: true })}
-                >
-                  Create New
-                </button>
-                <AddLabelModal
-                  show={this.state.labelModalShow}
-                  onHide={() => this.setState({ labelModalShow: false })}
-                ></AddLabelModal>
-              </div>
-            </li>
-          </ul>
-          <form className="form-inline my-2 my-lg-0">
-            <input
-              className="form-control mr-sm-2"
-              type="text"
-              placeholder="Search"
-              aria-label="Search"
-              value={this.props.contactReducer.search}
-              onChange={this.onChangeSearch}
-            />
-          </form>
-          <button className="btn my-2 my-sm-0" onClick={this.logout}>
-            Logout {"  "}
-            <FontAwesomeIcon icon={faSignOutAlt} />
-          </button>
-        </div>
+              </li>
+            </ul>
+          </div>
+        )}
       </nav>
       // <nav className="navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
       //   <div className="container">
