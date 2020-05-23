@@ -70,7 +70,7 @@ class Home extends Component {
       </div>
     );
 
-    return <div className="container-fluid">{mainContent}</div>;
+    return <div>{mainContent}</div>;
   }
 }
 
