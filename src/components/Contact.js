@@ -12,7 +12,6 @@ import {
   CardImg,
   CardBody,
   CardTitle,
-  Col,
   CardText,
   CardFooter,
 } from "reactstrap";
@@ -58,7 +57,7 @@ class Contact extends Component {
         <CardFooter className="text-muted text-right">
           <a
             style={{ color: "black", textDecoration: "none" }}
-            href=""
+            href="http://localhost:3000/"
             onClick={() => {
               this.props.toggleFavorite(this.props.contact._id);
             }}
@@ -75,6 +74,7 @@ class Contact extends Component {
               textDecoration: "none",
               cursor: "pointer",
             }}
+            href="http://localhost:3000/"
             onClick={() => this.setState({ deleteContactModalShow: true })}
           >
             <FontAwesomeIcon icon={faTrashAlt} /> {"  "}

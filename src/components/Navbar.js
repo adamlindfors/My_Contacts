@@ -13,7 +13,6 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import ContactsLogo from "../assets/Contacts.png";
-import Dropdown from "react-bootstrap/Dropdown";
 import AddLabelModal from "../modals/AddLabelModal";
 import DeleteLabelModal from "../modals/DeleteLabelModal";
 
@@ -87,7 +86,7 @@ class Navbar extends Component {
               </li>
               <li className="nav-item dropdown">
                 <a
-                  className="nav-link dropdown-toggle"
+                  className="btn nav-link dropdown-toggle"
                   href="#"
                   id="navbarDropdown"
                   role="button"
