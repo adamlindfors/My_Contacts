@@ -180,15 +180,10 @@ class CreateContact extends Component {
 
             {/* Camera Button */}
             <div className="d-flex" style={{ paddingLeft: "12%" }}>
-              <a
-                style={{ color: "black", textDecoration: "none" }}
-                onClick={this.onEditClick}
-              >
-                <ImageUploaderWidget
-                  onImageSuccess={this.onImageSuccess}
-                  passBody={this.passBody}
-                />
-              </a>
+              <ImageUploaderWidget
+                onImageSuccess={this.onImageSuccess}
+                passBody={this.passBody}
+              />
             </div>
 
             <hr />
@@ -227,7 +222,7 @@ class CreateContact extends Component {
               <input
                 style={{ padding: "1%" }}
                 type="submit"
-                value="Save changes"
+                value="Save Contact"
                 className="btn btn-primary"
               />
             </div>

@@ -247,15 +247,11 @@ class EditContact extends Component {
                     }}
                   >
                     {/* Camera Button */}
-                    <a
-                      style={{ color: "black", textDecoration: "none" }}
-                      onClick={this.onEditClick}
-                    >
-                      <ImageUploaderWidget
-                        onImageSuccess={this.onImageSuccess}
-                        passBody={this.passBody}
-                      />
-                    </a>
+
+                    <ImageUploaderWidget
+                      onImageSuccess={this.onImageSuccess}
+                      passBody={this.passBody}
+                    />
                   </div>
                   <div style={{ paddingLeft: "15px", cursor: "pointer" }}>
                     {/* Delete Button */}
