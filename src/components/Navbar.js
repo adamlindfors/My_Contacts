@@ -87,7 +87,6 @@ class Navbar extends Component {
               <li className="nav-item dropdown">
                 <a
                   className="btn nav-link dropdown-toggle"
-                  href="#"
                   id="navbarDropdown"
                   role="button"
                   data-toggle="dropdown"
