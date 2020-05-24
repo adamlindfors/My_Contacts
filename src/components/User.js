@@ -26,6 +26,7 @@ class User extends Component {
       <FontAwesomeIcon
         icon={faCamera}
         className="fas fa-camera fa-sm"
+        style={{ cursor: "pointer" }}
       ></FontAwesomeIcon>
     );
   };
@@ -37,6 +38,7 @@ class User extends Component {
             <img
               src={this.props.authReducer.image}
               data-holder-rendered="true"
+              alt="User"
             />
           </div>
           <ImageUploaderWidget
