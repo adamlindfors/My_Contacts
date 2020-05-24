@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 import { logoutContacts } from "../actions/contactActions";
 import { setAuth, userLogin, userLogout } from "../actions/authActions";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import ContactsLogo from "../assets/Contacts.png";
 
 class Home extends Component {
   checkAuthentication = async () => {
@@ -51,26 +53,30 @@ class Home extends Component {
         <Contactlist />
       </div>
     ) : (
-      <div>
-        <div>
-          <h1 className="display-4">My Contacts</h1>
-          <p className="lead">
-            My Contacts helps you store important info about your family and
-            friends.
-          </p>
-        </div>
-        <div className="">
-          <button className="btn btn-dark btn-lg mr-2" onClick={this.login}>
-            Login
-          </button>
-          <button className="btn btn-dark btn-lg" onClick={this.login}>
-            Sign up
-          </button>
+      <div className="bg jumbotron">
+        <div className="container h-100">
+          <div className="row h-100 align-items-center">
+            <div className="col-12 text-center">
+              <Link
+                to="/"
+                className="navbar-brand"
+                onClick={() => this.props.setLabel("")}
+              >
+                <img src={ContactsLogo} alt="logo" style={{ width: "5vh" }} />
+              </Link>
+              <h1 className="font-weight-light">Welcome to My Contacts</h1>
+              <p className="lead">
+                A great way to store info about your family and friends.
+              </p>
+              <button className="btn btn-dark btn-lg mr-2" onClick={this.login}>
+                Register
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
-
-    return <div className="container-fluid">{mainContent}</div>;
+    return <div>{mainContent}</div>;
   }
 }
 

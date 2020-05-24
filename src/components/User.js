@@ -23,12 +23,11 @@ class User extends Component {
   };
   passBody = () => {
     return (
-      <a style={{ color: "black", textDecoration: "none" }} href="">
-        <FontAwesomeIcon
-          icon={faCamera}
-          className="fas fa-camera fa-sm"
-        ></FontAwesomeIcon>
-      </a>
+      <FontAwesomeIcon
+        icon={faCamera}
+        className="fas fa-camera fa-sm"
+        style={{ cursor: "pointer" }}
+      ></FontAwesomeIcon>
     );
   };
   render() {
@@ -39,6 +38,7 @@ class User extends Component {
             <img
               src={this.props.authReducer.image}
               data-holder-rendered="true"
+              alt="User"
             />
           </div>
           <ImageUploaderWidget

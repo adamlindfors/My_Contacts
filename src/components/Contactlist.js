@@ -96,7 +96,9 @@ class ContactList extends Component {
       else
         return (
           <div>
-            <Row>{this.contactList(filteredContacts)}</Row>
+            <Row lg="4" sm="2" xs="2">
+              {this.contactList(filteredContacts)}
+            </Row>
           </div>
         );
     }
@@ -107,7 +109,9 @@ class ContactList extends Component {
         <div>
           <div className="container">
             <h1>{this.props.contactReducer.label}</h1>
-            <Row>{this.group(filteredContacts)}</Row>
+            <Row lg="4" sm="2" xs="2">
+              {this.group(filteredContacts)}
+            </Row>
           </div>
         </div>
       );
@@ -117,20 +121,23 @@ class ContactList extends Component {
     else
       return (
         <div>
-          <div className="container">
-            {filteredContacts.some(this.isFavorite) ? (
-              <h3>
-                Favorites <hr />
-              </h3>
-            ) : (
-              ""
-            )}
-            <Row>{this.favorites(filteredContacts)}</Row>
+          {filteredContacts.some(this.isFavorite) ? (
             <h3>
-              Contacts <hr />
+              Favorites <hr />
             </h3>
-            <Row>{this.contactList(filteredContacts)}</Row>
-          </div>
+          ) : (
+            ""
+          )}
+          <Row lg="4" md="3" sm="2" xs="2">
+            {this.favorites(filteredContacts)}
+          </Row>
+
+          <h3>
+            Contacts <hr />
+          </h3>
+          <Row lg="4" md="3" sm="2" xs="2">
+            {this.contactList(filteredContacts)}
+          </Row>
         </div>
       );
   }
