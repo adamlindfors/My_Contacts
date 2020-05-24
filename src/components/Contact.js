@@ -74,7 +74,6 @@ class Contact extends Component {
               textDecoration: "none",
               cursor: "pointer",
             }}
-            href="http://localhost:3000/"
             onClick={() => this.setState({ deleteContactModalShow: true })}
           >
             <FontAwesomeIcon icon={faTrashAlt} /> {"  "}
