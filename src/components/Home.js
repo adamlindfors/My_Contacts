@@ -66,7 +66,7 @@ class Home extends Component {
               </Link>
               <h1 className="font-weight-light">Welcome to My Contacts</h1>
               <p className="lead">
-                A great way to store info about your family and friends.
+                A great way to store information about your family and friends.
               </p>
               <button className="btn btn-dark btn-lg mr-2" onClick={this.login}>
                 Register

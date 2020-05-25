@@ -34,6 +34,7 @@ class DeleteLabelModal extends Component {
               <select
                 ref="userInput"
                 className="form-control"
+                style={{ cursor: "pointer" }}
                 value={this.state.label}
                 onChange={this.onChangeLabel}
               >

@@ -39,7 +39,13 @@ class DeleteLabelModal extends Component {
             <Button variant="secondary" onClick={this.props.onHide}>
               Cancel
             </Button>
-            <Button variant="danger" onClick={this.props.onDelete}>
+            <Button
+              variant="danger"
+              onClick={() => {
+                this.props.onDelete();
+                window.location = "/";
+              }}
+            >
               Delete
             </Button>
           </Modal.Footer>

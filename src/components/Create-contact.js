@@ -168,7 +168,7 @@ class CreateContact extends Component {
               </div>
               <div className="col ">
                 <input
-                  className="form-control form-control-lg"
+                  className="form-control form-control-lg text-center"
                   ref="userInput"
                   required
                   value={this.state.name}

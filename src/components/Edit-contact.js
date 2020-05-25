@@ -24,6 +24,7 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { Card, CardBody, CardTitle, CardHeader, Row, Col } from "reactstrap";
+import DeleteContactModal from "../modals/DeleteContactModal";
 
 const InfoCard = (props) => (
   <div style={{ padding: "1vh" }}>
@@ -62,6 +63,8 @@ class EditContact extends Component {
     contactExists: false,
     disabledEdit: true,
     label: "",
+    id: "",
+    deleteContactModalShow: false,
   };
 
   checkAuthentication = async () => {
@@ -97,6 +100,7 @@ class EditContact extends Component {
           email: contact[0].email,
           birthday: contact[0].birthday,
           label: contact[0].label,
+          id: contact[0]._id,
         });
       }
     }
@@ -144,13 +148,9 @@ class EditContact extends Component {
     });
   };
 
-  onDeleteContact = () => {
-    if (window.confirm("Do you want to delete this contact?")) {
-      this.props.deleteContact(
-        this.props.match.params.id,
-        this.props.authReducer.subID
-      );
-    }
+  onDeleteContact = (id) => {
+    this.props.deleteContact(id, this.props.authReducer.subID);
+
     window.location = "/";
   };
 
@@ -265,12 +265,27 @@ class EditContact extends Component {
                     {/* Delete Button */}
                     <a
                       style={{ color: "black", textDecoration: "none" }}
-                      onClick={this.onDeleteContact}
+                      onClick={() =>
+                        this.setState({ deleteContactModalShow: true })
+                      }
                     >
                       <FontAwesomeIcon
                         icon={faTrashAlt}
                         className="fas fa-camera fa-2x"
                       ></FontAwesomeIcon>
+                      <DeleteContactModal
+                        show={this.state.deleteContactModalShow}
+                        onHide={() =>
+                          this.setState({ deleteContactModalShow: false })
+                        }
+                        name={this.state.name}
+                        onDelete={() =>
+                          this.props.deleteContact(
+                            this.state.id,
+                            this.props.authReducer.subID
+                          )
+                        }
+                      ></DeleteContactModal>
                     </a>
                   </div>
                 </div>
