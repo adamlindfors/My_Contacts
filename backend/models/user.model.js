@@ -12,6 +12,10 @@ const userSchema = new Schema({
       favorite: { type: Boolean },
       image: { type: String },
       label: { type: String },
+      work: {type: String},
+      birthday: {type: String},
+      email: {type: String},
+      
     },
   ],
   labels: [String],

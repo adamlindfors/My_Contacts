@@ -4,15 +4,62 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withAuth } from "@okta/okta-react";
 import { setAuth, userLogin } from "../actions/authActions";
-import { getContacts, setContactsLoading } from "../actions/contactActions";
+import {
+  getContacts,
+  setContactsLoading,
+  deleteContact,
+} from "../actions/contactActions";
 import Error404 from "./404";
+import ImageUploaderWidget from "./ImageUploaderWidget";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCamera,
+  faEdit,
+  faTrashAlt,
+  faMapMarkedAlt,
+  faPhoneAlt,
+  faBirthdayCake,
+  faBriefcase,
+  faEnvelope,
+} from "@fortawesome/free-solid-svg-icons";
+import { Card, CardBody, CardTitle, CardHeader, Row, Col } from "reactstrap";
+
+const InfoCard = (props) => (
+  <div style={{ padding: "1vh" }}>
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          <div className="text-center">
+            <h2>
+              <FontAwesomeIcon icon={props.icon}></FontAwesomeIcon>
+              {"  " + props.title}
+            </h2>
+          </div>
+        </CardTitle>
+      </CardHeader>
+      <CardBody>
+        <input
+          type="text-form"
+          className="form-control"
+          value={props.info}
+          onChange={props.onChange}
+        />
+      </CardBody>
+    </Card>
+  </div>
+);
 
 class EditContact extends Component {
   state = {
     name: "",
     address: "",
     phoneNumber: 0,
+    image: "",
+    work: "",
+    email: "",
+    birthday: "",
     contactExists: false,
+    disabledEdit: true,
   };
 
   checkAuthentication = async () => {
@@ -43,6 +90,10 @@ class EditContact extends Component {
           name: contact[0].name,
           address: contact[0].address,
           phoneNumber: contact[0].phoneNumber,
+          image: contact[0].image,
+          work: contact[0].work,
+          email: contact[0].email,
+          birthday: contact[0].birthday,
         });
       }
     }
@@ -60,10 +111,38 @@ class EditContact extends Component {
     });
   };
 
+  onChangeWork = (e) => {
+    this.setState({
+      work: e.target.value,
+    });
+  };
+
+  onChangeEmail = (e) => {
+    this.setState({
+      email: e.target.value,
+    });
+  };
+
+  onChangeBirthday = (e) => {
+    this.setState({
+      birthday: e.target.value,
+    });
+  };
+
   onChangePhoneNumber = (e) => {
     this.setState({
       phoneNumber: e.target.value,
     });
+  };
+
+  onDeleteContact = () => {
+    if (window.confirm("Do you want to delete this contact?")) {
+      this.props.deleteContact(
+        this.props.match.params.id,
+        this.props.authReducer.subID
+      );
+    }
+    window.location = "/";
   };
 
   onSubmit = (e) => {
@@ -79,49 +158,156 @@ class EditContact extends Component {
     window.location = "/";
   };
 
+  passBody = () => {
+    return (
+      <FontAwesomeIcon
+        icon={faCamera}
+        className="fas fa-camera fa-2x"
+      ></FontAwesomeIcon>
+    );
+  };
+
+  onImageSuccess = async (res) => {
+    await res;
+    this.setState({
+      image: res,
+    });
+  };
+
+  onEditClick = () => {
+    if (this.state.disabledEdit) {
+      this.setState({
+        disabledEdit: !this.state.disabledEdit,
+      });
+    } else {
+      this.setState({
+        disabledEdit: !this.state.disabledEdit,
+      });
+    }
+  };
+
   render() {
     if (this.props.contactReducer.loading) return "";
     else if (this.state.contactExists)
       return (
         <div>
-          <h3>Edit contact</h3>
           <form onSubmit={this.onSubmit}>
-            <div className="form-group">
-              <label>Name: </label>
-              <input
-                ref="userInput"
-                required
-                className="form-control"
-                value={this.state.name}
-                onChange={this.onChangeName}
-              ></input>
-            </div>
-            <div className="form-group">
-              <label>Address: </label>
-              <input
-                type="text"
-                required
-                className="form-control"
-                value={this.state.address}
-                onChange={this.onChangeAddress}
-              />
-            </div>
-            <div className="form-group">
-              <label>Telephone Number: </label>
-              <input
-                type="text"
-                className="form-control"
-                value={this.state.phoneNumber}
-                onChange={this.onChangePhoneNumber}
-              />
-            </div>
-            <div className="form-group">
-              <input
-                type="submit"
-                value="Save changes"
-                className="btn btn-primary"
-              />
-            </div>
+            <fieldset disabled={this.state.disabledEdit}>
+              <Row className="mobile">
+                <Col md="6" sm="12" lg="4">
+                  <img
+                    src={
+                      this.state.image
+                        ? "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_fill,r_max,w_300,h_300/" +
+                          this.state.image
+                        : "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_fill,r_max,w_300,h_300/https://res.cloudinary.com/mycontacts/image/upload/v1589640571/myContacts/g1gk0riburccmbjzxgzr.png"
+                    }
+                    data-holder-rendered="true"
+                  />
+                </Col>
+                <Col md="6" sm="12" lg="8">
+                  <input
+                    className="form-control form-control-lg form-control-sm"
+                    ref="userInput"
+                    required
+                    value={this.state.name}
+                    onChange={this.onChangeName}
+                    type="text-name"
+                  ></input>
+                </Col>
+              </Row>
+
+              <div className="text-center">
+                <div className="d-flex justify-content-center">
+                  <div
+                    style={{
+                      borderRight: "1px solid #D3D3D3",
+                      paddingRight: "15px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <a
+                      style={{ color: "black", textDecoration: "none" }}
+                      onClick={this.onEditClick}
+                    >
+                      {/* Edit Button */}
+                      <FontAwesomeIcon
+                        icon={faEdit}
+                        className="fas fa-edit fa-2x"
+                      ></FontAwesomeIcon>
+                    </a>
+                  </div>
+
+                  <div
+                    style={{
+                      borderRight: "1px solid #D3D3D3",
+                      paddingLeft: "30px",
+                      paddingRight: "30px",
+                    }}
+                  >
+                    {/* Camera Button */}
+
+                    <ImageUploaderWidget
+                      onImageSuccess={this.onImageSuccess}
+                      passBody={this.passBody}
+                    />
+                  </div>
+                  <div style={{ paddingLeft: "15px", cursor: "pointer" }}>
+                    {/* Delete Button */}
+                    <a
+                      style={{ color: "black", textDecoration: "none" }}
+                      onClick={this.onDeleteContact}
+                    >
+                      <FontAwesomeIcon
+                        icon={faTrashAlt}
+                        className="fas fa-camera fa-2x"
+                      ></FontAwesomeIcon>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <Row lg="4" sm="2" md="3" xs="1">
+                <InfoCard
+                  info={this.state.address}
+                  icon={faMapMarkedAlt}
+                  onChange={this.onChangeAddress}
+                  title={"Address"}
+                />
+                <InfoCard
+                  info={this.state.phoneNumber}
+                  icon={faPhoneAlt}
+                  onChange={this.onChangePhoneNumber}
+                  title={"Number"}
+                />
+                <InfoCard
+                  info={this.state.email}
+                  icon={faEnvelope}
+                  onChange={this.onChangeEmail}
+                  title={"Email"}
+                />
+                <InfoCard
+                  info={this.state.birthday}
+                  icon={faBirthdayCake}
+                  onChange={this.onChangeBirthday}
+                  title={"Birthday"}
+                />
+                <InfoCard
+                  info={this.state.work}
+                  icon={faBriefcase}
+                  onChange={this.onChangeWork}
+                  title={"Work"}
+                />
+              </Row>
+              <div className="text-center">
+                <input
+                  style={{ padding: "1%" }}
+                  type="submit"
+                  value="Save changes"
+                  className="btn btn-primary"
+                />
+              </div>
+            </fieldset>
           </form>
         </div>
       );
@@ -152,4 +338,5 @@ export default connect(mapStateToProps, {
   userLogin,
   getContacts,
   setContactsLoading,
+  deleteContact,
 })(withAuth(EditContact));

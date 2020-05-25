@@ -5,6 +5,42 @@ import PropTypes from "prop-types";
 import { withAuth } from "@okta/okta-react";
 import { setAuth, userLogin } from "../actions/authActions";
 import ImageUploaderWidget from "./ImageUploaderWidget";
+import {
+  faCamera,
+  faMapMarkedAlt,
+  faPhoneAlt,
+  faBirthdayCake,
+  faBriefcase,
+  faEnvelope,
+} from "@fortawesome/free-solid-svg-icons";
+import { Card, CardBody, CardTitle, CardHeader, Row } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "../App.css";
+
+const InfoCard = (props) => (
+  <div style={{ padding: "1vh" }}>
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          <div className="text-center">
+            <h2>
+              <FontAwesomeIcon icon={props.icon}></FontAwesomeIcon>
+              {"  " + props.title}
+            </h2>
+          </div>
+        </CardTitle>
+      </CardHeader>
+      <CardBody>
+        <input
+          type="text-form"
+          className="form-control"
+          onChange={props.onChange}
+          placeholder={props.title}
+        />
+      </CardBody>
+    </Card>
+  </div>
+);
 
 class CreateContact extends Component {
   state = {
@@ -12,7 +48,10 @@ class CreateContact extends Component {
     address: "",
     phoneNumber: 0,
     image: "",
-    label: "No Label",
+    work: "",
+    email: "",
+    birthday: "",
+    label: "",
   };
 
   checkAuthentication = async () => {
@@ -46,6 +85,24 @@ class CreateContact extends Component {
     });
   };
 
+  onChangeWork = (e) => {
+    this.setState({
+      work: e.target.value,
+    });
+  };
+
+  onChangeEmail = (e) => {
+    this.setState({
+      email: e.target.value,
+    });
+  };
+
+  onChangeBirthday = (e) => {
+    this.setState({
+      birthday: e.target.value,
+    });
+  };
+
   onChangePhoneNumber = (e) => {
     this.setState({
       phoneNumber: e.target.value,
@@ -65,6 +122,15 @@ class CreateContact extends Component {
     });
   };
 
+  passBody = () => {
+    return (
+      <FontAwesomeIcon
+        icon={faCamera}
+        className="fas fa-camera fa-2x"
+      ></FontAwesomeIcon>
+    );
+  };
+
   onSubmit = (e) => {
     e.preventDefault();
     const newContact = {
@@ -73,79 +139,95 @@ class CreateContact extends Component {
       phoneNumber: this.state.phoneNumber,
       image: this.state.image,
       label: this.state.label,
+      work: this.state.work,
+      email: this.state.email,
+      birthday: this.state.birthday,
     };
+
     this.props.addContact(newContact, this.props.authReducer.subID);
     window.location = "/";
-  };
-
-  passBody = () => {
-    return <button>Upload Image</button>;
   };
 
   render() {
     return (
       <div>
-        <h3>Add a new contact</h3>
         <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <label>Name: </label>
-            <input
-              ref="userInput"
-              required
-              className="form-control"
-              value={this.state.name}
-              onChange={this.onChangeName}
-            ></input>
-          </div>
-          <div className="form-group">
-            <label>Address: </label>
-            <input
-              type="text"
-              required
-              className="form-control"
-              value={this.state.address}
-              onChange={this.onChangeAddress}
-            />
-          </div>
-          <div className="form-group">
-            <label>Telephone Number: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.phoneNumber}
-              onChange={this.onChangePhoneNumber}
-            />
-          </div>
-          <div className="form-group">
-            <label>Group</label>
-            <select
-              ref="userInput"
-              className="form-control"
-              value={this.state.label}
-              onChange={this.onChangeLabel}
-            >
-              <option>No label</option>
-              {this.props.contactReducer.labels.map((label) => {
-                return (
-                  <option key={label} value={label}>
-                    {label}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div className="form-group">
-            <input
-              type="submit"
-              value="Save new contact"
-              className="btn btn-primary"
-            />
-          </div>
+          <fieldset disabled={this.state.disabledEdit}>
+            <div className="row mobile">
+              <div className="col-md-4 mb-3">
+                <img
+                  src={
+                    this.state.image
+                      ? "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_fill,r_max,w_300,h_300/" +
+                        this.state.image
+                      : "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_fill,r_max,w_300,h_300/https://res.cloudinary.com/mycontacts/image/upload/v1589640571/myContacts/g1gk0riburccmbjzxgzr.png"
+                  }
+                  data-holder-rendered="true"
+                />
+              </div>
+              <div className="col ">
+                <input
+                  className="form-control form-control-lg"
+                  ref="userInput"
+                  required
+                  value={this.state.name}
+                  onChange={this.onChangeName}
+                  type="text-name"
+                  placeholder="Name"
+                ></input>
+              </div>
+            </div>
+
+            {/* Camera Button */}
+            <div className="d-flex" style={{ paddingLeft: "12%" }}>
+              <ImageUploaderWidget
+                onImageSuccess={this.onImageSuccess}
+                passBody={this.passBody}
+              />
+            </div>
+
+            <hr />
+            <Row lg="4" sm="2" md="3" xs="1">
+              <InfoCard
+                icon={faMapMarkedAlt}
+                onChange={this.onChangeAddress}
+                title={"Address"}
+              />
+              <InfoCard
+                info={this.state.phoneNumber}
+                icon={faPhoneAlt}
+                onChange={this.onChangePhoneNumber}
+                title={"Number"}
+              />
+              <InfoCard
+                info={this.state.email}
+                icon={faEnvelope}
+                onChange={this.onChangeEmail}
+                title={"Email"}
+              />
+              <InfoCard
+                info={this.state.birthday}
+                icon={faBirthdayCake}
+                onChange={this.onChangeBirthday}
+                title={"Birthday"}
+              />
+              <InfoCard
+                info={this.state.work}
+                icon={faBriefcase}
+                onChange={this.onChangeWork}
+                title={"Work"}
+              />
+            </Row>
+            <div className="text-center">
+              <input
+                style={{ padding: "1%" }}
+                type="submit"
+                value="Save Contact"
+                className="btn btn-primary"
+              />
+            </div>
+          </fieldset>
         </form>
-        <ImageUploaderWidget
-          onImageSuccess={this.onImageSuccess}
-          passBody={this.passBody}
-        />
       </div>
     );
   }
