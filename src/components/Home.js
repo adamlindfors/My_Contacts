@@ -57,11 +57,7 @@ class Home extends Component {
         <div className="container h-100">
           <div className="row h-100 align-items-center">
             <div className="col-12 text-center">
-              <Link
-                to="/"
-                className="navbar-brand"
-                onClick={() => this.props.setLabel("")}
-              >
+              <Link to="/" className="navbar-brand">
                 <img src={ContactsLogo} alt="logo" style={{ width: "5vh" }} />
               </Link>
               <h1 className="font-weight-light">Welcome to My Contacts</h1>
