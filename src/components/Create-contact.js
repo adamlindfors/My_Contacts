@@ -13,13 +13,13 @@ import {
   faBriefcase,
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
-import { Card, CardBody, CardTitle, CardHeader } from "reactstrap";
+import { Card, CardBody, CardTitle, CardHeader, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../App.css";
 
 const InfoCard = (props) => (
-  <div style={{ padding: "23px" }}>
-    <Card style={{ width: "110%" }}>
+  <div style={{ padding: "1vh" }}>
+    <Card>
       <CardHeader>
         <CardTitle>
           <div className="text-center">
@@ -153,7 +153,7 @@ class CreateContact extends Component {
       <div>
         <form onSubmit={this.onSubmit}>
           <fieldset disabled={this.state.disabledEdit}>
-            <div className="row">
+            <div className="row mobile">
               <div className="col-md-4 mb-3">
                 <img
                   src={
@@ -187,7 +187,7 @@ class CreateContact extends Component {
             </div>
 
             <hr />
-            <div className="row">
+            <Row lg="4" sm="2" md="3" xs="1">
               <InfoCard
                 icon={faMapMarkedAlt}
                 onChange={this.onChangeAddress}
@@ -217,7 +217,7 @@ class CreateContact extends Component {
                 onChange={this.onChangeWork}
                 title={"Work"}
               />
-            </div>
+            </Row>
             <div className="text-center">
               <input
                 style={{ padding: "1%" }}

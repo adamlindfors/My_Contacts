@@ -22,12 +22,11 @@ import {
   faBriefcase,
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
-import "../App.css";
-import { Card, CardBody, CardTitle, CardHeader } from "reactstrap";
+import { Card, CardBody, CardTitle, CardHeader, Row, Col } from "reactstrap";
 
 const InfoCard = (props) => (
-  <div style={{ padding: "23px" }}>
-    <Card style={{ width: "110%" }}>
+  <div style={{ padding: "1vh" }}>
+    <Card>
       <CardHeader>
         <CardTitle>
           <div className="text-center">
@@ -194,8 +193,8 @@ class EditContact extends Component {
         <div>
           <form onSubmit={this.onSubmit}>
             <fieldset disabled={this.state.disabledEdit}>
-              <div className="row">
-                <div className="col-md-4 mb-3">
+              <Row className="mobile">
+                <Col md="6" sm="12" lg="4">
                   <img
                     src={
                       this.state.image
@@ -205,18 +204,18 @@ class EditContact extends Component {
                     }
                     data-holder-rendered="true"
                   />
-                </div>
-                <div className="col ">
+                </Col>
+                <Col md="6" sm="12" lg="8">
                   <input
-                    className="form-control form-control-lg"
+                    className="form-control form-control-lg form-control-sm"
                     ref="userInput"
                     required
                     value={this.state.name}
                     onChange={this.onChangeName}
                     type="text-name"
                   ></input>
-                </div>
-              </div>
+                </Col>
+              </Row>
 
               <div className="text-center">
                 <div className="d-flex justify-content-center">
@@ -268,7 +267,7 @@ class EditContact extends Component {
                 </div>
               </div>
               <hr />
-              <div className="row">
+              <Row lg="4" sm="2" md="3" xs="1">
                 <InfoCard
                   info={this.state.address}
                   icon={faMapMarkedAlt}
@@ -299,7 +298,7 @@ class EditContact extends Component {
                   onChange={this.onChangeWork}
                   title={"Work"}
                 />
-              </div>
+              </Row>
               <div className="text-center">
                 <input
                   style={{ padding: "1%" }}

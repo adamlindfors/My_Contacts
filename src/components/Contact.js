@@ -24,7 +24,7 @@ class Contact extends Component {
   render() {
     return (
       <Card style={{ marginBottom: "2vh" }}>
-        <Link to={"/edit/" + this.props.contact._id}>
+        <Link to={"/contact/" + this.props.contact._id}>
           <CardImg
             top
             width="100%"
