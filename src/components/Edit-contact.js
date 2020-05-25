@@ -21,6 +21,7 @@ import {
   faBirthdayCake,
   faBriefcase,
   faEnvelope,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { Card, CardBody, CardTitle, CardHeader, Row, Col } from "reactstrap";
 
@@ -40,7 +41,7 @@ const InfoCard = (props) => (
       <CardBody>
         <input
           type="text-form"
-          className="form-control"
+          className="form-control text-center"
           value={props.info}
           onChange={props.onChange}
         />
@@ -60,6 +61,7 @@ class EditContact extends Component {
     birthday: "",
     contactExists: false,
     disabledEdit: true,
+    label: "",
   };
 
   checkAuthentication = async () => {
@@ -94,6 +96,7 @@ class EditContact extends Component {
           work: contact[0].work,
           email: contact[0].email,
           birthday: contact[0].birthday,
+          label: contact[0].label,
         });
       }
     }
@@ -132,6 +135,12 @@ class EditContact extends Component {
   onChangePhoneNumber = (e) => {
     this.setState({
       phoneNumber: e.target.value,
+    });
+  };
+
+  onChangeLabel = (e) => {
+    this.setState({
+      label: e.target.value,
     });
   };
 
@@ -298,13 +307,51 @@ class EditContact extends Component {
                   onChange={this.onChangeWork}
                   title={"Work"}
                 />
+                <div style={{ padding: "1vh" }}>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>
+                        <div className="text-center">
+                          <h2>
+                            Group{" "}
+                            <FontAwesomeIcon icon={faUsers}></FontAwesomeIcon>
+                          </h2>
+                        </div>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                      {this.state.disabledEdit ? (
+                        <input
+                          type="text-form"
+                          className="form-control text-center"
+                          value={this.state.label}
+                        />
+                      ) : (
+                        <select
+                          style={{ cursor: "pointer" }}
+                          ref="userInput"
+                          className="form-control"
+                          value={this.state.label}
+                          onChange={this.onChangeLabel}
+                        >
+                          {this.props.contactReducer.labels.map((label) => {
+                            return (
+                              <option key={label} value={label}>
+                                {label}     
+                              </option>
+                            );
+                          })}
+                        </select>
+                      )}
+                    </CardBody>
+                  </Card>
+                </div>
               </Row>
-              <div className="text-center">
+              <div className="text-center" style={{ margin: "5vh" }}>
                 <input
-                  style={{ padding: "1%" }}
                   type="submit"
                   value="Save changes"
-                  className="btn btn-primary"
+                  className="btn btn-primary btn-lg"
                 />
               </div>
             </fieldset>

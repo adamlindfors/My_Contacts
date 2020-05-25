@@ -85,6 +85,7 @@ router.route("/update/:id").post((req, res) => {
       contact[0].work = req.body.work;
       contact[0].email = req.body.email;
       contact[0].birthday = req.body.birthday;
+      contact[0].label = req.body.label;
 
       user
         .save()

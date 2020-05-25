@@ -12,6 +12,7 @@ import {
   faBirthdayCake,
   faBriefcase,
   faEnvelope,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { Card, CardBody, CardTitle, CardHeader, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -33,7 +34,7 @@ const InfoCard = (props) => (
       <CardBody>
         <input
           type="text-form"
-          className="form-control"
+          className="form-control text-center"
           onChange={props.onChange}
           placeholder={props.title}
         />
@@ -217,13 +218,44 @@ class CreateContact extends Component {
                 onChange={this.onChangeWork}
                 title={"Work"}
               />
+              <div style={{ padding: "1vh" }}>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>
+                      <div className="text-center">
+                        <h2>
+                          Group{" "}
+                          <FontAwesomeIcon icon={faUsers}></FontAwesomeIcon>
+                        </h2>
+                      </div>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardBody>
+                    <select
+                      style={{ cursor: "pointer" }}
+                      ref="userInput"
+                      className="form-control"
+                      value={this.state.label}
+                      onChange={this.onChangeLabel}
+                    >
+                      <option>No label</option>
+                      {this.props.contactReducer.labels.map((label) => {
+                        return (
+                          <option key={label} value={label}>
+                            {label}     
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </CardBody>
+                </Card>
+              </div>
             </Row>
-            <div className="text-center">
+            <div className="text-center" style={{ margin: "5vh" }}>
               <input
-                style={{ padding: "1%" }}
                 type="submit"
                 value="Save Contact"
-                className="btn btn-primary"
+                className="btn btn-primary btn-lg"
               />
             </div>
           </fieldset>

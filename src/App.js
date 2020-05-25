@@ -29,7 +29,7 @@ function App() {
           <div>
             <Navbar />
             <br />
-            <div className="container" style={{ paddingTop: "5%" }}>
+            <div className="container">
               <Switch>
                 <Route exact path="/" component={Home} />
                 <SecureRoute path="/contact/:id" component={EditContact} />
