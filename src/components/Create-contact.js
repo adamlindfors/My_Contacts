@@ -75,7 +75,6 @@ class CreateContact extends Component {
 
   async componentDidUpdate() {
     this.checkAuthentication();
-    console.log(this.state.label);
   }
 
   onChangeName = (e) => {
@@ -270,7 +269,7 @@ class CreateContact extends Component {
                       onChange={this.onChangeLabel}
                     >
                       <option>No label</option>
-                      {this.props.contactReducer.labels.map((label) => {
+                      {this.props.labelReducer.labels.map((label) => {
                         return (
                           <option key={label} value={label}>
                             {label}     
@@ -307,6 +306,7 @@ CreateContact.propTypes = {
 const mapStateToProps = (state) => ({
   contactReducer: state.contactReducer,
   authReducer: state.authReducer,
+  labelReducer: state.labelReducer,
 });
 
 export default connect(mapStateToProps, { addContact, setAuth, userLogin })(

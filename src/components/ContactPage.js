@@ -274,7 +274,6 @@ class ContactPage extends Component {
                     }}
                   >
                     {/* Camera Button */}
-
                     <ImageUploaderWidget
                       onImageSuccess={this.onImageSuccess}
                       passBody={this.passBody}
@@ -381,7 +380,7 @@ class ContactPage extends Component {
                           value={this.state.label}
                           onChange={this.onChangeLabel}
                         >
-                          {this.props.contactReducer.labels.map((label) => {
+                          {this.props.labelReducer.labels.map((label) => {
                             return (
                               <option key={label} value={label}>
                                 {label}     
@@ -425,6 +424,7 @@ ContactPage.propTypes = {
 const mapStateToProps = (state) => ({
   contactReducer: state.contactReducer,
   authReducer: state.authReducer,
+  labelReducer: state.labelReducer,
 });
 
 export default connect(mapStateToProps, {

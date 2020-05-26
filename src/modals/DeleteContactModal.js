@@ -16,8 +16,8 @@ class DeleteLabelModal extends Component {
   };
 
   componentDidMount() {
-    if (this.props.contactReducer.labels[0]) {
-      this.setState({ label: this.props.contactReducer.labels[0] });
+    if (this.props.labelReducer.labels[0]) {
+      this.setState({ label: this.props.labelReducer.labels[0] });
     }
   }
 
@@ -62,6 +62,7 @@ DeleteLabelModal.propTypes = {
 const mapStateToProps = (state) => ({
   contactReducer: state.contactReducer,
   authReducer: state.authReducer,
+  labelReducer: state.labelReducer,
 });
 
 export default connect(mapStateToProps, { deleteLabel })(DeleteLabelModal);

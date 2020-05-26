@@ -50,7 +50,7 @@ class ContactList extends Component {
 
   group = (filteredContacts) => {
     return filteredContacts
-      .filter((contact) => contact.label === this.props.contactReducer.label)
+      .filter((contact) => contact.label === this.props.labelReducer.label)
       .map((groupContact) => {
         return (
           <ContactCard
@@ -104,11 +104,11 @@ class ContactList extends Component {
     }
 
     //If we sort by label
-    else if (this.props.contactReducer.label !== "") {
+    else if (this.props.labelReducer.label !== "") {
       return (
         <div>
           <div className="container">
-            <h1>{this.props.contactReducer.label}</h1>
+            <h1>{this.props.labelReducer.label}</h1>
             <Row lg="4" sm="2" xs="2">
               {this.group(filteredContacts)}
             </Row>
@@ -154,6 +154,7 @@ ContactList.propTypes = {
 const mapStateToProps = (state) => ({
   contactReducer: state.contactReducer,
   authReducer: state.authReducer,
+  labelReducer: state.labelReducer,
 });
 
 //Connect component to the store

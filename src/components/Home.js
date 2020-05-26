@@ -43,7 +43,7 @@ class Home extends Component {
     const mainContent = this.props.authReducer.subID ? (
       <div>
         {this.props.contactReducer.search === "" &&
-        this.props.contactReducer.label === "" ? (
+        this.props.labelReducer.label === "" ? (
           <h1>
             <User />
           </h1>
@@ -86,6 +86,7 @@ Home.propTypes = {
 const mapStateToProps = (state) => ({
   contactReducer: state.contactReducer,
   authReducer: state.authReducer,
+  labelReducer: state.labelReducer,
 });
 
 //Connect component to the store

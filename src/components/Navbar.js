@@ -96,11 +96,11 @@ class Navbar extends Component {
                   Groups
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  {this.props.contactReducer.labels.map((label) => {
+                  {this.props.labelReducer.labels.map((label) => {
                     return (
                       <button
                         className={
-                          label === this.props.contactReducer.label
+                          label === this.props.labelReducer.label
                             ? "dropdown-item active"
                             : "dropdown-item"
                         }
@@ -194,6 +194,7 @@ Navbar.propTypes = {
 const mapStateToProps = (state) => ({
   authReducer: state.authReducer,
   contactReducer: state.contactReducer,
+  labelReducer: state.labelReducer,
 });
 
 //Connect component to the store
