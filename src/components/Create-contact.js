@@ -13,6 +13,8 @@ import {
   faBriefcase,
   faEnvelope,
   faUsers,
+  faKey,
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import { Card, CardBody, CardTitle, CardHeader, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -51,7 +53,9 @@ class CreateContact extends Component {
     image: "",
     work: "",
     email: "",
+    doorCode: 0,
     birthday: "",
+    relationship: "",
     label: "",
   };
 
@@ -116,6 +120,12 @@ class CreateContact extends Component {
     });
   };
 
+  onChangeRelationship = (e) => {
+    this.setState({
+      relationship: e.target.value,
+    });
+  };
+
   onImageSuccess = async (res) => {
     await res;
     this.setState({
@@ -143,6 +153,7 @@ class CreateContact extends Component {
       work: this.state.work,
       email: this.state.email,
       birthday: this.state.birthday,
+      relationship: this.state.relationship,
     };
 
     this.props.addContact(newContact, this.props.authReducer.subID);
@@ -164,6 +175,7 @@ class CreateContact extends Component {
                       : "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_fill,r_max,w_300,h_300/https://res.cloudinary.com/mycontacts/image/upload/v1589640571/myContacts/g1gk0riburccmbjzxgzr.png"
                   }
                   data-holder-rendered="true"
+                  alt=""
                 />
               </div>
               <div className="col ">
@@ -218,14 +230,26 @@ class CreateContact extends Component {
                 onChange={this.onChangeWork}
                 title={"Work"}
               />
+              <InfoCard
+                info={this.state.doorCode}
+                icon={faKey}
+                onChange={this.onChangeDoorCode}
+                title={"Door Code"}
+              />
+              <InfoCard
+                info={this.state.relationship}
+                icon={faHeart}
+                onChange={this.onChangeRelationship}
+                title={"Relationship"}
+              />
               <div style={{ padding: "1vh" }}>
                 <Card>
                   <CardHeader>
                     <CardTitle>
                       <div className="text-center">
                         <h2>
-                          Group{" "}
-                          <FontAwesomeIcon icon={faUsers}></FontAwesomeIcon>
+                          <FontAwesomeIcon icon={faUsers}></FontAwesomeIcon>{" "}
+                          Group
                         </h2>
                       </div>
                     </CardTitle>

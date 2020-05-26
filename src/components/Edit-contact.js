@@ -22,6 +22,8 @@ import {
   faBriefcase,
   faEnvelope,
   faUsers,
+  faKey,
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import { Card, CardBody, CardTitle, CardHeader, Row, Col } from "reactstrap";
 import DeleteContactModal from "../modals/DeleteContactModal";
@@ -55,13 +57,15 @@ class EditContact extends Component {
   state = {
     name: "",
     address: "",
-    phoneNumber: 0,
+    phoneNumber: Number,
     image: "",
     work: "",
     email: "",
     birthday: "",
+    doorCode: Number,
     contactExists: false,
     disabledEdit: true,
+    relationship: "",
     label: "",
     id: "",
     deleteContactModalShow: false,
@@ -99,6 +103,8 @@ class EditContact extends Component {
           work: contact[0].work,
           email: contact[0].email,
           birthday: contact[0].birthday,
+          doorCode: contact[0].doorCode,
+          relationship: contact[0].relationship,
           label: contact[0].label,
           id: contact[0]._id,
         });
@@ -139,6 +145,18 @@ class EditContact extends Component {
   onChangePhoneNumber = (e) => {
     this.setState({
       phoneNumber: e.target.value,
+    });
+  };
+
+  onChangeDoorCode = (e) => {
+    this.setState({
+      doorCode: e.target.value,
+    });
+  };
+
+  onChangeRelationship = (e) => {
+    this.setState({
+      relationship: e.target.value,
     });
   };
 
@@ -212,6 +230,7 @@ class EditContact extends Component {
                         : "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_fill,r_max,w_300,h_300/https://res.cloudinary.com/mycontacts/image/upload/v1589640571/myContacts/g1gk0riburccmbjzxgzr.png"
                     }
                     data-holder-rendered="true"
+                    alt=""
                   />
                 </Col>
                 <Col md="6" sm="12" lg="8">
@@ -322,14 +341,26 @@ class EditContact extends Component {
                   onChange={this.onChangeWork}
                   title={"Work"}
                 />
+                <InfoCard
+                  info={this.state.doorCode}
+                  icon={faKey}
+                  onChange={this.onChangeDoorCode}
+                  title={"Door Code"}
+                />
+                <InfoCard
+                  info={this.state.relationship}
+                  icon={faHeart}
+                  onChange={this.onChangeRelationship}
+                  title={"Relationship"}
+                />
                 <div style={{ padding: "1vh" }}>
                   <Card>
                     <CardHeader>
                       <CardTitle>
                         <div className="text-center">
                           <h2>
-                            Group{" "}
-                            <FontAwesomeIcon icon={faUsers}></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faUsers}></FontAwesomeIcon>{" "}
+                            Group
                           </h2>
                         </div>
                       </CardTitle>
@@ -337,7 +368,7 @@ class EditContact extends Component {
                     <CardBody>
                       {this.state.disabledEdit ? (
                         <input
-                          type="text-form"
+                          type="text-form-group"
                           className="form-control text-center"
                           value={this.state.label}
                         />

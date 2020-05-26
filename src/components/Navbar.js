@@ -163,12 +163,12 @@ class Navbar extends Component {
         ) : (
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
+              <li className="nav-item">
                 <button className="btn btn my-2 my-sm-0" onClick={this.login}>
                   Register
                 </button>
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <button className="btn btn my-2 my-sm-0" onClick={this.login}>
                   Sign In {"  "}
                   <FontAwesomeIcon icon={faSignInAlt} />

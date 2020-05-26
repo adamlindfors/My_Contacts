@@ -24,6 +24,8 @@ router.route("/add").post((req, res) => {
   const work = req.body.work;
   const email = req.body.email;
   const birthday = req.body.birthday;
+  const doorCode = req.body.doorCode;
+  const relationship = req.body.relationship;
   const label = req.body.label;
 
   const newContact = {
@@ -35,7 +37,9 @@ router.route("/add").post((req, res) => {
     work,
     email,
     birthday,
+    doorCode,
     label,
+    relationship,
   };
 
   User.findOne({ tokenID: req.query.subID }).then((user) => {
@@ -85,6 +89,8 @@ router.route("/update/:id").post((req, res) => {
       contact[0].work = req.body.work;
       contact[0].email = req.body.email;
       contact[0].birthday = req.body.birthday;
+      contact[0].doorCode = req.body.doorCode;
+      contact[0].relationship = req.body.relationship;
       contact[0].label = req.body.label;
 
       user
