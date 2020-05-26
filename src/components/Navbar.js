@@ -105,6 +105,7 @@ class Navbar extends Component {
                             : "dropdown-item"
                         }
                         onClick={() => this.props.setLabel(label)}
+                        key={label}
                       >
                         {label}
                       </button>

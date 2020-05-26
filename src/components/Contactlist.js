@@ -7,7 +7,7 @@ import {
 } from "../actions/contactActions";
 import PropTypes from "prop-types";
 import { Row } from "reactstrap";
-import Contact from "./Contact";
+import ContactCard from "./ContactCard";
 
 class ContactList extends Component {
   componentDidMount() {
@@ -19,14 +19,13 @@ class ContactList extends Component {
   };
 
   onToggleFavorite = (id) => {
-    console.log("From onToggleFavorite");
     this.props.toggleFavorite(id, this.props.authReducer.subID);
   };
 
   contactList = (filteredContacts) => {
     return filteredContacts.map((currentContact) => {
       return (
-        <Contact
+        <ContactCard
           contact={currentContact}
           deleteContact={this.onDeleteContact}
           toggleFavorite={this.onToggleFavorite}
@@ -37,35 +36,36 @@ class ContactList extends Component {
   };
 
   favorites = (filteredContacts) => {
-    return filteredContacts.map((currentContact) => {
-      if (currentContact.favorite)
-        return (
-          <Contact
-            contact={currentContact}
-            deleteContact={this.onDeleteContact}
-            toggleFavorite={this.onToggleFavorite}
-            key={currentContact._id}
-          />
-        );
-    });
+    return filteredContacts
+      .filter((contact) => contact.favorite === true)
+      .map((favoriteContact) => (
+        <ContactCard
+          contact={favoriteContact}
+          deleteContact={this.onDeleteContact}
+          toggleFavorite={this.onToggleFavorite}
+          key={favoriteContact._id}
+        />
+      ));
   };
 
   group = (filteredContacts) => {
-    return filteredContacts.map((currentContact) => {
-      if (currentContact.label === this.props.contactReducer.label)
+    return filteredContacts
+      .filter((contact) => contact.label === this.props.contactReducer.label)
+      .map((groupContact) => {
         return (
-          <Contact
-            contact={currentContact}
+          <ContactCard
+            contact={groupContact}
             deleteContact={this.onDeleteContact}
             toggleFavorite={this.onToggleFavorite}
-            key={currentContact._id}
+            key={groupContact._id}
           />
         );
-    });
+      });
   };
 
   isFavorite = (contact) => contact.favorite === true;
 
+  //Search Filter
   filter = () => {
     return this.props.contactReducer.contacts.filter((contact) => {
       return (
@@ -117,7 +117,7 @@ class ContactList extends Component {
       );
     }
 
-    //Normal view - No search
+    //Normal view
     else
       return (
         <div>

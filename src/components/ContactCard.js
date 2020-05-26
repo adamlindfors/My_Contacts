@@ -19,7 +19,7 @@ import { faHeart as farFaHeart } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 import DeleteContactModal from "../modals/DeleteContactModal";
 
-class Contact extends Component {
+class ContactCard extends Component {
   state = { deleteContactModalShow: false };
   render() {
     return (
@@ -90,4 +90,4 @@ class Contact extends Component {
   }
 }
 
-export default Contact;
+export default ContactCard;

@@ -45,7 +45,7 @@ const InfoCard = (props) => (
         <input
           type="text-form"
           className="form-control text-center"
-          value={props.info}
+          defaultValue={props.info}
           onChange={props.onChange}
         />
       </CardBody>
@@ -53,7 +53,7 @@ const InfoCard = (props) => (
   </div>
 );
 
-class EditContact extends Component {
+class ContactPage extends Component {
   state = {
     name: "",
     address: "",
@@ -238,7 +238,7 @@ class EditContact extends Component {
                     className="form-control form-control-lg form-control-sm"
                     ref="userInput"
                     required
-                    value={this.state.name}
+                    defaultValue={this.state.name}
                     onChange={this.onChangeName}
                     type="text-name"
                   ></input>
@@ -368,9 +368,10 @@ class EditContact extends Component {
                     <CardBody>
                       {this.state.disabledEdit ? (
                         <input
-                          type="text-form-group"
+                          type="text-form"
                           className="form-control text-center"
                           value={this.state.label}
+                          readOnly
                         />
                       ) : (
                         <select
@@ -413,7 +414,7 @@ class EditContact extends Component {
   }
 }
 
-EditContact.propTypes = {
+ContactPage.propTypes = {
   contactReducer: PropTypes.object.isRequired,
   authReducer: PropTypes.object.isRequired,
   userLogin: PropTypes.func.isRequired,
@@ -432,4 +433,4 @@ export default connect(mapStateToProps, {
   getContacts,
   setContactsLoading,
   deleteContact,
-})(withAuth(EditContact));
+})(withAuth(ContactPage));

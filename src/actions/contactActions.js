@@ -89,7 +89,6 @@ export const setLabel = (label) => (dispatch) => {
 };
 
 export const deleteLabel = (label, subID) => (dispatch) => {
-  console.log("Before delete axios");
   axios
     .delete("/contacts/deletelabel", { params: { label, subID } })
     .then((res) =>
@@ -113,13 +112,9 @@ export const addLabel = (label, subID) => (dispatch) => {
 };
 
 export const getLabels = (subID) => (dispatch) => {
-  console.log("BEFORE AXIOS GETLABELS");
-  console.log(subID);
-  //dispatch(setContactsLoading());
   axios
     .get("/contacts/getLabels", { params: { subID } })
     .then((res) => {
-      console.log(res);
       dispatch({
         type: GET_LABELS,
         payload: res.data,
