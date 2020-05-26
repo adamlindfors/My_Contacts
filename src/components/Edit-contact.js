@@ -57,12 +57,12 @@ class EditContact extends Component {
   state = {
     name: "",
     address: "",
-    phoneNumber: Number,
+    phoneNumber: 0,
     image: "",
     work: "",
     email: "",
     birthday: "",
-    doorCode: Number,
+    doorCode: 0,
     contactExists: false,
     disabledEdit: true,
     relationship: "",
@@ -345,13 +345,13 @@ class EditContact extends Component {
                   info={this.state.doorCode}
                   icon={faKey}
                   onChange={this.onChangeDoorCode}
-                  title={"Door Code"}
+                  title={"Code"}
                 />
                 <InfoCard
                   info={this.state.relationship}
                   icon={faHeart}
                   onChange={this.onChangeRelationship}
-                  title={"Relationship"}
+                  title={"Status"}
                 />
                 <div style={{ padding: "1vh" }}>
                   <Card>

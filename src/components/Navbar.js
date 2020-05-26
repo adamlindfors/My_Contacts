@@ -162,7 +162,7 @@ class Navbar extends Component {
           </div>
         ) : (
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
+            <ul className="navbar-nav ml-auto">
               <li className="nav-item">
                 <button className="btn btn my-2 my-sm-0" onClick={this.login}>
                   Register

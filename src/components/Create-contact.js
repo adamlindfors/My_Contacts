@@ -49,11 +49,11 @@ class CreateContact extends Component {
   state = {
     name: "",
     address: "",
-    phoneNumber: 0,
+    phoneNumber: "",
     image: "",
     work: "",
     email: "",
-    doorCode: 0,
+    doorCode: "",
     birthday: "",
     relationship: "",
     label: "",
@@ -126,6 +126,12 @@ class CreateContact extends Component {
     });
   };
 
+  onChangeDoorCode = (e) => {
+    this.setState({
+      doorCode: e.target.value,
+    });
+  };
+
   onImageSuccess = async (res) => {
     await res;
     this.setState({
@@ -152,6 +158,7 @@ class CreateContact extends Component {
       label: this.state.label,
       work: this.state.work,
       email: this.state.email,
+      doorCode: this.state.doorCode,
       birthday: this.state.birthday,
       relationship: this.state.relationship,
     };
@@ -234,13 +241,13 @@ class CreateContact extends Component {
                 info={this.state.doorCode}
                 icon={faKey}
                 onChange={this.onChangeDoorCode}
-                title={"Door Code"}
+                title={"Code"}
               />
               <InfoCard
                 info={this.state.relationship}
                 icon={faHeart}
                 onChange={this.onChangeRelationship}
-                title={"Relationship"}
+                title={"Status"}
               />
               <div style={{ padding: "1vh" }}>
                 <Card>
