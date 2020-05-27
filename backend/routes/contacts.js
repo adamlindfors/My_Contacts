@@ -1,7 +1,7 @@
 const router = require("express").Router();
 let User = require("../models/user.model");
 
-//Get the contacts of the logged in user
+//Get Contacts
 router.route("/allContacts/").get((req, res) => {
   User.findOne({ tokenID: req.query.subID })
     .then((userData) => {
@@ -14,7 +14,7 @@ router.route("/allContacts/").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-//Add a new contact
+//Add contact
 router.route("/add").post((req, res) => {
   const name = req.body.name;
   const address = req.body.address;
@@ -77,7 +77,7 @@ router.route("/deleteContact/:id").delete((req, res) => {
   });
 });
 
-//Edit contact
+//Edit contact by ID
 router.route("/update/:id").post((req, res) => {
   User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) {
@@ -101,7 +101,7 @@ router.route("/update/:id").post((req, res) => {
   });
 });
 
-//toggleFavorite
+//Toggle favorite contact
 router.route("/togglefavorite/:id").post((req, res) => {
   User.findOne({ tokenID: req.body.subID }).then((user) => {
     if (user) {
@@ -116,7 +116,7 @@ router.route("/togglefavorite/:id").post((req, res) => {
   });
 });
 
-//addUserImage
+//add User Image
 router.route("/addUserImage").post((req, res) => {
   User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) user.image = req.body.image;
@@ -127,7 +127,7 @@ router.route("/addUserImage").post((req, res) => {
   });
 });
 
-//getUserImage
+//get User Image
 router.route("/getUserImage/").get((req, res) => {
   User.findOne({ tokenID: req.query.subID })
     .then((userData) => {
@@ -136,6 +136,7 @@ router.route("/getUserImage/").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
+//Add label
 router.route("/addLabel").post((req, res) => {
   User.findOne({ tokenID: req.query.subID }).then((user) => {
     if (user) user.labels.push(req.body.label);
@@ -168,6 +169,7 @@ router.route("/deletelabel").delete((req, res) => {
   });
 });
 
+//Get all labels
 router.route("/getLabels").get((req, res) => {
   User.findOne({ tokenID: req.query.subID })
     .then((userData) => {

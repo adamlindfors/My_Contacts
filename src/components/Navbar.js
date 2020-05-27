@@ -2,12 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "@okta/okta-react";
 import { connect } from "react-redux";
-import {
-  logoutContacts,
-  searchContact,
-  getLabels,
-  setLabel,
-} from "../actions/contactActions";
+import { logoutContacts, searchContact } from "../actions/contactActions";
+import { getLabels, setLabel } from "../actions/labelActions";
 import { userLogin, userLogout } from "../actions/authActions";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

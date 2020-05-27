@@ -19,31 +19,7 @@ import {
 import { Card, CardBody, CardTitle, CardHeader, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../App.css";
-
-const InfoCard = (props) => (
-  <div style={{ padding: "1vh" }}>
-    <Card>
-      <CardHeader>
-        <CardTitle>
-          <div className="text-center">
-            <h2>
-              <FontAwesomeIcon icon={props.icon}></FontAwesomeIcon>
-              {"  " + props.title}
-            </h2>
-          </div>
-        </CardTitle>
-      </CardHeader>
-      <CardBody>
-        <input
-          type="text-form"
-          className="form-control text-center"
-          onChange={props.onChange}
-          placeholder={props.title}
-        />
-      </CardBody>
-    </Card>
-  </div>
-);
+import InfoCard from "./InfoCard";
 
 class CreateContact extends Component {
   state = {
@@ -140,10 +116,7 @@ class CreateContact extends Component {
 
   passBody = () => {
     return (
-      <FontAwesomeIcon
-        icon={faCamera}
-        className="fas fa-camera fa-2x"
-      ></FontAwesomeIcon>
+      <FontAwesomeIcon icon={faCamera} className="fa-2x"></FontAwesomeIcon>
     );
   };
 
@@ -204,7 +177,6 @@ class CreateContact extends Component {
                 passBody={this.passBody}
               />
             </div>
-
             <hr />
             <Row lg="4" sm="2" md="3" xs="1">
               <InfoCard

@@ -27,31 +27,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Card, CardBody, CardTitle, CardHeader, Row, Col } from "reactstrap";
 import DeleteContactModal from "../modals/DeleteContactModal";
-
-const InfoCard = (props) => (
-  <div style={{ padding: "1vh" }}>
-    <Card>
-      <CardHeader>
-        <CardTitle>
-          <div className="text-center">
-            <h2>
-              <FontAwesomeIcon icon={props.icon}></FontAwesomeIcon>
-              {"  " + props.title}
-            </h2>
-          </div>
-        </CardTitle>
-      </CardHeader>
-      <CardBody>
-        <input
-          type="text-form"
-          className="form-control text-center"
-          defaultValue={props.info}
-          onChange={props.onChange}
-        />
-      </CardBody>
-    </Card>
-  </div>
-);
+import InfoCard from "./InfoCard";
 
 class ContactPage extends Component {
   state = {
@@ -168,7 +144,6 @@ class ContactPage extends Component {
 
   onDeleteContact = (id) => {
     this.props.deleteContact(id, this.props.authReducer.subID);
-
     window.location = "/";
   };
 
@@ -181,7 +156,6 @@ class ContactPage extends Component {
         },
       })
       .then((res) => console.log(res.data));
-
     window.location = "/";
   };
 
@@ -202,15 +176,9 @@ class ContactPage extends Component {
   };
 
   onEditClick = () => {
-    if (this.state.disabledEdit) {
-      this.setState({
-        disabledEdit: !this.state.disabledEdit,
-      });
-    } else {
-      this.setState({
-        disabledEdit: !this.state.disabledEdit,
-      });
-    }
+    this.setState({
+      disabledEdit: !this.state.disabledEdit,
+    });
   };
 
   render() {
@@ -265,7 +233,6 @@ class ContactPage extends Component {
                       ></FontAwesomeIcon>
                     </a>
                   </div>
-
                   <div
                     style={{
                       borderRight: "1px solid #D3D3D3",
@@ -289,7 +256,7 @@ class ContactPage extends Component {
                     >
                       <FontAwesomeIcon
                         icon={faTrashAlt}
-                        className="fas fa-camera fa-2x"
+                        className="fa-2x"
                       ></FontAwesomeIcon>
                       <DeleteContactModal
                         show={this.state.deleteContactModalShow}
