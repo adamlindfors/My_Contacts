@@ -108,6 +108,23 @@ select.form-control:focus {
   box-shadow: none;
 }
 
+select[type="text-form-group"],
+select.form-control {
+  background: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: none;
+  border-bottom: 1px solid #000000;
+}
+
+select[type="text-form-group"]:focus,
+select.form-control:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: none;
+  border-bottom: 1px solid #000000;
+}
+
 @media screen and (max-width: 900px) {
   .mobile {
     text-align: center;

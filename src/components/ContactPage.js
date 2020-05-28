@@ -33,12 +33,12 @@ class ContactPage extends Component {
   state = {
     name: "",
     address: "",
-    phoneNumber: 0,
+    phoneNumber: "",
     image: "",
     work: "",
     email: "",
     birthday: "",
-    doorCode: 0,
+    doorCode: "",
     contactExists: false,
     disabledEdit: true,
     relationship: "",
@@ -342,6 +342,7 @@ class ContactPage extends Component {
                       ) : (
                         <select
                           style={{ cursor: "pointer" }}
+                          type="text-form-group"
                           ref="userInput"
                           className="form-control"
                           value={this.state.label}
