@@ -6,10 +6,6 @@ import {
   LOGOUT_CONTACTS,
   FAVORITE_CONTACT,
   SEARCH_CONTACT,
-  ADD_LABEL,
-  GET_LABELS,
-  SET_LABEL,
-  DELETE_LABEL,
 } from "../actions/types";
 
 const initialState = {
@@ -40,7 +36,6 @@ export default function (state = initialState, action) {
     case FAVORITE_CONTACT:
       return {
         ...state,
-        //Change state of favorite
       };
 
     case SEARCH_CONTACT:
@@ -53,30 +48,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         contacts: [action.payload, ...state.contacts],
-      };
-
-    case ADD_LABEL:
-      return {
-        ...state,
-        labels: [action.payload, ...state.labels],
-      };
-
-    case SET_LABEL:
-      return {
-        ...state,
-        label: action.payload,
-      };
-
-    case GET_LABELS:
-      return {
-        ...state,
-        labels: action.payload,
-      };
-
-    case DELETE_LABEL:
-      return {
-        ...state,
-        labels: state.labels.filter((label) => label !== action.payload),
       };
 
     case CONTACTS_LOADING:

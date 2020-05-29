@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { deleteLabel } from "../actions/contactActions";
+import { deleteLabel } from "../actions/labelActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -16,8 +16,8 @@ class DeleteLabelModal extends Component {
   };
 
   componentDidMount() {
-    if (this.props.contactReducer.labels[0]) {
-      this.setState({ label: this.props.contactReducer.labels[0] });
+    if (this.props.labelReducer.labels[0]) {
+      this.setState({ label: this.props.labelReducer.labels[0] });
     }
   }
 
@@ -34,10 +34,11 @@ class DeleteLabelModal extends Component {
               <select
                 ref="userInput"
                 className="form-control"
+                style={{ cursor: "pointer" }}
                 value={this.state.label}
                 onChange={this.onChangeLabel}
               >
-                {this.props.contactReducer.labels.map((label) => {
+                {this.props.labelReducer.labels.map((label) => {
                   return (
                     <option key={label} value={label}>
                       {label}
@@ -77,6 +78,7 @@ DeleteLabelModal.propTypes = {
 const mapStateToProps = (state) => ({
   contactReducer: state.contactReducer,
   authReducer: state.authReducer,
+  labelReducer: state.labelReducer,
 });
 
 export default connect(mapStateToProps, { deleteLabel })(DeleteLabelModal);

@@ -21,45 +21,30 @@ import {
   faBirthdayCake,
   faBriefcase,
   faEnvelope,
+  faUsers,
+  faKey,
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import { Card, CardBody, CardTitle, CardHeader, Row, Col } from "reactstrap";
+import DeleteContactModal from "../modals/DeleteContactModal";
+import InfoCard from "./InfoCard";
 
-const InfoCard = (props) => (
-  <div style={{ padding: "1vh" }}>
-    <Card>
-      <CardHeader>
-        <CardTitle>
-          <div className="text-center">
-            <h2>
-              <FontAwesomeIcon icon={props.icon}></FontAwesomeIcon>
-              {"  " + props.title}
-            </h2>
-          </div>
-        </CardTitle>
-      </CardHeader>
-      <CardBody>
-        <input
-          type="text-form"
-          className="form-control"
-          value={props.info}
-          onChange={props.onChange}
-        />
-      </CardBody>
-    </Card>
-  </div>
-);
-
-class EditContact extends Component {
+class ContactPage extends Component {
   state = {
     name: "",
     address: "",
-    phoneNumber: 0,
+    phoneNumber: "",
     image: "",
     work: "",
     email: "",
     birthday: "",
+    doorCode: "",
     contactExists: false,
     disabledEdit: true,
+    relationship: "",
+    label: "",
+    id: "",
+    deleteContactModalShow: false,
   };
 
   checkAuthentication = async () => {
@@ -94,6 +79,10 @@ class EditContact extends Component {
           work: contact[0].work,
           email: contact[0].email,
           birthday: contact[0].birthday,
+          doorCode: contact[0].doorCode,
+          relationship: contact[0].relationship,
+          label: contact[0].label,
+          id: contact[0]._id,
         });
       }
     }
@@ -135,13 +124,26 @@ class EditContact extends Component {
     });
   };
 
-  onDeleteContact = () => {
-    if (window.confirm("Do you want to delete this contact?")) {
-      this.props.deleteContact(
-        this.props.match.params.id,
-        this.props.authReducer.subID
-      );
-    }
+  onChangeDoorCode = (e) => {
+    this.setState({
+      doorCode: e.target.value,
+    });
+  };
+
+  onChangeRelationship = (e) => {
+    this.setState({
+      relationship: e.target.value,
+    });
+  };
+
+  onChangeLabel = (e) => {
+    this.setState({
+      label: e.target.value,
+    });
+  };
+
+  onDeleteContact = (id) => {
+    this.props.deleteContact(id, this.props.authReducer.subID);
     window.location = "/";
   };
 
@@ -154,7 +156,6 @@ class EditContact extends Component {
         },
       })
       .then((res) => console.log(res.data));
-
     window.location = "/";
   };
 
@@ -175,15 +176,9 @@ class EditContact extends Component {
   };
 
   onEditClick = () => {
-    if (this.state.disabledEdit) {
-      this.setState({
-        disabledEdit: !this.state.disabledEdit,
-      });
-    } else {
-      this.setState({
-        disabledEdit: !this.state.disabledEdit,
-      });
-    }
+    this.setState({
+      disabledEdit: !this.state.disabledEdit,
+    });
   };
 
   render() {
@@ -203,6 +198,7 @@ class EditContact extends Component {
                         : "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_fill,r_max,w_300,h_300/https://res.cloudinary.com/mycontacts/image/upload/v1589640571/myContacts/g1gk0riburccmbjzxgzr.png"
                     }
                     data-holder-rendered="true"
+                    alt=""
                   />
                 </Col>
                 <Col md="6" sm="12" lg="8">
@@ -210,7 +206,7 @@ class EditContact extends Component {
                     className="form-control form-control-lg form-control-sm"
                     ref="userInput"
                     required
-                    value={this.state.name}
+                    defaultValue={this.state.name}
                     onChange={this.onChangeName}
                     type="text-name"
                   ></input>
@@ -237,7 +233,6 @@ class EditContact extends Component {
                       ></FontAwesomeIcon>
                     </a>
                   </div>
-
                   <div
                     style={{
                       borderRight: "1px solid #D3D3D3",
@@ -246,7 +241,6 @@ class EditContact extends Component {
                     }}
                   >
                     {/* Camera Button */}
-
                     <ImageUploaderWidget
                       onImageSuccess={this.onImageSuccess}
                       passBody={this.passBody}
@@ -256,12 +250,27 @@ class EditContact extends Component {
                     {/* Delete Button */}
                     <a
                       style={{ color: "black", textDecoration: "none" }}
-                      onClick={this.onDeleteContact}
+                      onClick={() =>
+                        this.setState({ deleteContactModalShow: true })
+                      }
                     >
                       <FontAwesomeIcon
                         icon={faTrashAlt}
-                        className="fas fa-camera fa-2x"
+                        className="fa-2x"
                       ></FontAwesomeIcon>
+                      <DeleteContactModal
+                        show={this.state.deleteContactModalShow}
+                        onHide={() =>
+                          this.setState({ deleteContactModalShow: false })
+                        }
+                        name={this.state.name}
+                        onDelete={() =>
+                          this.props.deleteContact(
+                            this.state.id,
+                            this.props.authReducer.subID
+                          )
+                        }
+                      ></DeleteContactModal>
                     </a>
                   </div>
                 </div>
@@ -298,13 +307,65 @@ class EditContact extends Component {
                   onChange={this.onChangeWork}
                   title={"Work"}
                 />
+                <InfoCard
+                  info={this.state.doorCode}
+                  icon={faKey}
+                  onChange={this.onChangeDoorCode}
+                  title={"Code"}
+                />
+                <InfoCard
+                  info={this.state.relationship}
+                  icon={faHeart}
+                  onChange={this.onChangeRelationship}
+                  title={"Status"}
+                />
+                <div style={{ padding: "1vh" }}>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>
+                        <div className="text-center">
+                          <h2>
+                            <FontAwesomeIcon icon={faUsers}></FontAwesomeIcon>{" "}
+                            Group
+                          </h2>
+                        </div>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                      {this.state.disabledEdit ? (
+                        <input
+                          type="text-form"
+                          className="form-control text-center"
+                          value={this.state.label}
+                          readOnly
+                        />
+                      ) : (
+                        <select
+                          style={{ cursor: "pointer" }}
+                          type="text-form-group"
+                          ref="userInput"
+                          className="form-control"
+                          value={this.state.label}
+                          onChange={this.onChangeLabel}
+                        >
+                          {this.props.labelReducer.labels.map((label) => {
+                            return (
+                              <option key={label} value={label}>
+                                {label}     
+                              </option>
+                            );
+                          })}
+                        </select>
+                      )}
+                    </CardBody>
+                  </Card>
+                </div>
               </Row>
-              <div className="text-center">
+              <div className="text-center" style={{ margin: "5vh" }}>
                 <input
-                  style={{ padding: "1%" }}
                   type="submit"
                   value="Save changes"
-                  className="btn btn-primary"
+                  className="btn btn-primary btn-lg"
                 />
               </div>
             </fieldset>
@@ -320,7 +381,7 @@ class EditContact extends Component {
   }
 }
 
-EditContact.propTypes = {
+ContactPage.propTypes = {
   contactReducer: PropTypes.object.isRequired,
   authReducer: PropTypes.object.isRequired,
   userLogin: PropTypes.func.isRequired,
@@ -331,6 +392,7 @@ EditContact.propTypes = {
 const mapStateToProps = (state) => ({
   contactReducer: state.contactReducer,
   authReducer: state.authReducer,
+  labelReducer: state.labelReducer,
 });
 
 export default connect(mapStateToProps, {
@@ -339,4 +401,4 @@ export default connect(mapStateToProps, {
   getContacts,
   setContactsLoading,
   deleteContact,
-})(withAuth(EditContact));
+})(withAuth(ContactPage));

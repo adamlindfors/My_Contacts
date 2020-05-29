@@ -43,7 +43,7 @@ class Home extends Component {
     const mainContent = this.props.authReducer.subID ? (
       <div>
         {this.props.contactReducer.search === "" &&
-        this.props.contactReducer.label === "" ? (
+        this.props.labelReducer.label === "" ? (
           <h1>
             <User />
           </h1>
@@ -57,16 +57,12 @@ class Home extends Component {
         <div className="container h-100">
           <div className="row h-100 align-items-center">
             <div className="col-12 text-center">
-              <Link
-                to="/"
-                className="navbar-brand"
-                onClick={() => this.props.setLabel("")}
-              >
+              <Link to="/" className="navbar-brand">
                 <img src={ContactsLogo} alt="logo" style={{ width: "5vh" }} />
               </Link>
               <h1 className="font-weight-light">Welcome to My Contacts</h1>
               <p className="lead">
-                A great way to store info about your family and friends.
+                A great way to store information about your family and friends.
               </p>
               <button className="btn btn-dark btn-lg mr-2" onClick={this.login}>
                 Register
@@ -90,6 +86,7 @@ Home.propTypes = {
 const mapStateToProps = (state) => ({
   contactReducer: state.contactReducer,
   authReducer: state.authReducer,
+  labelReducer: state.labelReducer,
 });
 
 //Connect component to the store

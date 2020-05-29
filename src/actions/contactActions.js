@@ -7,10 +7,6 @@ import {
   LOGOUT_CONTACTS,
   FAVORITE_CONTACT,
   SEARCH_CONTACT,
-  ADD_LABEL,
-  GET_LABELS,
-  SET_LABEL,
-  DELETE_LABEL,
 } from "./types";
 
 export const getContacts = (subID) => (dispatch) => {
@@ -79,51 +75,4 @@ export const searchContact = (search) => (dispatch) => {
     type: SEARCH_CONTACT,
     payload: search,
   });
-};
-
-export const setLabel = (label) => (dispatch) => {
-  dispatch({
-    type: SET_LABEL,
-    payload: label,
-  });
-};
-
-export const deleteLabel = (label, subID) => (dispatch) => {
-  console.log("Before delete axios");
-  axios
-    .delete("/contacts/deletelabel", { params: { label, subID } })
-    .then((res) =>
-      dispatch({
-        type: DELETE_LABEL,
-        payload: label,
-      })
-    );
-};
-
-export const addLabel = (label, subID) => (dispatch) => {
-  axios
-    .post("/contacts/addLabel", { label }, { params: { subID } })
-    .then((res) =>
-      dispatch({
-        type: ADD_LABEL,
-        payload: label,
-      })
-    )
-    .catch((err) => console.log(err));
-};
-
-export const getLabels = (subID) => (dispatch) => {
-  console.log("BEFORE AXIOS GETLABELS");
-  console.log(subID);
-  //dispatch(setContactsLoading());
-  axios
-    .get("/contacts/getLabels", { params: { subID } })
-    .then((res) => {
-      console.log(res);
-      dispatch({
-        type: GET_LABELS,
-        payload: res.data,
-      });
-    })
-    .catch((err) => console.log(err));
 };

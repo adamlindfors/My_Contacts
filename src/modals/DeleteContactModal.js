@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { deleteLabel } from "../actions/contactActions";
+import { deleteLabel } from "../actions/labelActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -16,8 +16,8 @@ class DeleteLabelModal extends Component {
   };
 
   componentDidMount() {
-    if (this.props.contactReducer.labels[0]) {
-      this.setState({ label: this.props.contactReducer.labels[0] });
+    if (this.props.labelReducer.labels[0]) {
+      this.setState({ label: this.props.labelReducer.labels[0] });
     }
   }
 
@@ -39,7 +39,13 @@ class DeleteLabelModal extends Component {
             <Button variant="secondary" onClick={this.props.onHide}>
               Cancel
             </Button>
-            <Button variant="danger" onClick={this.props.onDelete}>
+            <Button
+              variant="danger"
+              onClick={() => {
+                this.props.onDelete();
+                window.location = "/";
+              }}
+            >
               Delete
             </Button>
           </Modal.Footer>
@@ -56,6 +62,7 @@ DeleteLabelModal.propTypes = {
 const mapStateToProps = (state) => ({
   contactReducer: state.contactReducer,
   authReducer: state.authReducer,
+  labelReducer: state.labelReducer,
 });
 
 export default connect(mapStateToProps, { deleteLabel })(DeleteLabelModal);

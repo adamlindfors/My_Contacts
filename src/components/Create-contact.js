@@ -12,45 +12,26 @@ import {
   faBirthdayCake,
   faBriefcase,
   faEnvelope,
+  faUsers,
+  faKey,
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import { Card, CardBody, CardTitle, CardHeader, Row } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../App.css";
-
-const InfoCard = (props) => (
-  <div style={{ padding: "1vh" }}>
-    <Card>
-      <CardHeader>
-        <CardTitle>
-          <div className="text-center">
-            <h2>
-              <FontAwesomeIcon icon={props.icon}></FontAwesomeIcon>
-              {"  " + props.title}
-            </h2>
-          </div>
-        </CardTitle>
-      </CardHeader>
-      <CardBody>
-        <input
-          type="text-form"
-          className="form-control"
-          onChange={props.onChange}
-          placeholder={props.title}
-        />
-      </CardBody>
-    </Card>
-  </div>
-);
+import InfoCard from "./InfoCard";
 
 class CreateContact extends Component {
   state = {
     name: "",
     address: "",
-    phoneNumber: 0,
+    phoneNumber: "",
     image: "",
     work: "",
     email: "",
+    doorCode: "",
     birthday: "",
+    relationship: "",
     label: "",
   };
 
@@ -70,7 +51,6 @@ class CreateContact extends Component {
 
   async componentDidUpdate() {
     this.checkAuthentication();
-    console.log(this.state.label);
   }
 
   onChangeName = (e) => {
@@ -115,6 +95,18 @@ class CreateContact extends Component {
     });
   };
 
+  onChangeRelationship = (e) => {
+    this.setState({
+      relationship: e.target.value,
+    });
+  };
+
+  onChangeDoorCode = (e) => {
+    this.setState({
+      doorCode: e.target.value,
+    });
+  };
+
   onImageSuccess = async (res) => {
     await res;
     this.setState({
@@ -124,10 +116,7 @@ class CreateContact extends Component {
 
   passBody = () => {
     return (
-      <FontAwesomeIcon
-        icon={faCamera}
-        className="fas fa-camera fa-2x"
-      ></FontAwesomeIcon>
+      <FontAwesomeIcon icon={faCamera} className="fa-2x"></FontAwesomeIcon>
     );
   };
 
@@ -141,7 +130,9 @@ class CreateContact extends Component {
       label: this.state.label,
       work: this.state.work,
       email: this.state.email,
+      doorCode: this.state.doorCode,
       birthday: this.state.birthday,
+      relationship: this.state.relationship,
     };
 
     this.props.addContact(newContact, this.props.authReducer.subID);
@@ -163,11 +154,12 @@ class CreateContact extends Component {
                       : "https://res.cloudinary.com/myContacts/image/fetch/g_face,c_fill,r_max,w_300,h_300/https://res.cloudinary.com/mycontacts/image/upload/v1589640571/myContacts/g1gk0riburccmbjzxgzr.png"
                   }
                   data-holder-rendered="true"
+                  alt=""
                 />
               </div>
               <div className="col ">
                 <input
-                  className="form-control form-control-lg"
+                  className="form-control form-control-lg text-center"
                   ref="userInput"
                   required
                   value={this.state.name}
@@ -185,7 +177,6 @@ class CreateContact extends Component {
                 passBody={this.passBody}
               />
             </div>
-
             <hr />
             <Row lg="4" sm="2" md="3" xs="1">
               <InfoCard
@@ -217,13 +208,56 @@ class CreateContact extends Component {
                 onChange={this.onChangeWork}
                 title={"Work"}
               />
+              <InfoCard
+                info={this.state.doorCode}
+                icon={faKey}
+                onChange={this.onChangeDoorCode}
+                title={"Code"}
+              />
+              <InfoCard
+                info={this.state.relationship}
+                icon={faHeart}
+                onChange={this.onChangeRelationship}
+                title={"Status"}
+              />
+              <div style={{ padding: "1vh" }}>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>
+                      <div className="text-center">
+                        <h2>
+                          <FontAwesomeIcon icon={faUsers}></FontAwesomeIcon>{" "}
+                          Group
+                        </h2>
+                      </div>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardBody>
+                    <select
+                      style={{ cursor: "pointer" }}
+                      ref="userInput"
+                      className="form-control"
+                      value={this.state.label}
+                      onChange={this.onChangeLabel}
+                    >
+                      <option>No label</option>
+                      {this.props.labelReducer.labels.map((label) => {
+                        return (
+                          <option key={label} value={label}>
+                            {label}     
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </CardBody>
+                </Card>
+              </div>
             </Row>
-            <div className="text-center">
+            <div className="text-center" style={{ margin: "5vh" }}>
               <input
-                style={{ padding: "1%" }}
                 type="submit"
                 value="Save Contact"
-                className="btn btn-primary"
+                className="btn btn-primary btn-lg"
               />
             </div>
           </fieldset>
@@ -244,6 +278,7 @@ CreateContact.propTypes = {
 const mapStateToProps = (state) => ({
   contactReducer: state.contactReducer,
   authReducer: state.authReducer,
+  labelReducer: state.labelReducer,
 });
 
 export default connect(mapStateToProps, { addContact, setAuth, userLogin })(

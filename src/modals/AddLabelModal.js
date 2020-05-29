@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { addLabel } from "../actions/contactActions";
+import { addLabel } from "../actions/labelActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 

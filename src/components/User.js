@@ -21,15 +21,17 @@ class User extends Component {
     await res;
     this.props.addUserImage(res, this.props.authReducer.subID);
   };
+
   passBody = () => {
     return (
       <FontAwesomeIcon
         icon={faCamera}
-        className="fas fa-camera fa-sm"
+        className="fa-sm"
         style={{ cursor: "pointer" }}
       ></FontAwesomeIcon>
     );
   };
+
   render() {
     return (
       <div>
