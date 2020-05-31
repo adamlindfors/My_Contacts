@@ -23,8 +23,9 @@ We also use:
 * [Cloudinary](https://cloudinary.com/) - For Image uploading and storage
 
 ### Screen casts
-* [Mid course screencast
-](https://www.youtube.com/watch?v=uphe7jRGu-Y)
+* [Mid course screencast](https://www.youtube.com/watch?v=uphe7jRGu-Y)
+* [Project Screencast](https://www.youtube.com/watch?v=LZ54RAhoL4g)
+* [Individual oral code screencast - Adam Morén](https://www.youtube.com/watch?v=g4EaAPcxP1E)
 
 
 
